@@ -15,7 +15,7 @@
     * Sorting can be used for duplication prevention
         * skip duplicate in sorted array
         
-        ~~~
+        ```java
         /* while loop */
         int low = start;
         int high = end;
@@ -36,7 +36,7 @@
         	}
         	...
         }
-        ~~~
+        ```
 
         
 * References
