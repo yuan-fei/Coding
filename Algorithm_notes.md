@@ -12,15 +12,13 @@
 
 * KMP: String matching with O(m+n)
 	* Jump table generation: 
+			
+		0|1|2|3|4|5|6|7|8|9
+		---|---|---|---|---|---|---|---|---|---|
+		a|b|a|b|c|a|b|a|b|a
+		-1|-1|0|1|-1|0|1|2|3|2
+	
 		* The longest common prefix: **T[0..k] == T[m-k..m] => next[m] = k**
-		
-			i.e. jump table for a pattern
-		
-				0|1|2|3|4|5|6|7|8|9
-				---|---|---|---|---|---|---|---|---|---|
-				a|b|a|b|c|a|b|a|b|a
-				-1|-1|0|1|-1|0|1|2|3|2
-				
 		* idea
 		
 			```
@@ -28,10 +26,10 @@
 			case T[m] == T[next[m-1]] => next[m] = next[m-1] + 1
 			// element 9
 			case T[m] != T[next[m-1]] => check
-										T[m] == T[next[next[m-1]] + 1], 
-										T[m] == T[next[next[next[m-1]]] + 1]
-										... 
-										until find it or reach the end
+							T[m] == T[next[next[m-1]] + 1], 
+							T[m] == T[next[next[next[m-1]]] + 1]
+							... 
+							until find it or reach the end
 			```
 		* Time complexity: Why O(m)
 			* Nested loops
