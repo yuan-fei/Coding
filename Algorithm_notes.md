@@ -3,8 +3,11 @@
 * K-sum problem
 	* 2-sum, 3-sum, 4-sum
 		* 2-sum
-           * In unsorted array, hash table helps to find all non-duplicated solutions in O(n), with an extra O(n) hash table space.
-           * In a sorted array, 2-pointer search can be used for find all non-duplicated solutions in O(n), with extra O(1) space.
+			* In unsorted array, hash table helps to find all non-duplicated solutions in O(n), with an extra O(n) hash table space.
+			* In a sorted array, 2-pointer search can be used for find all non-duplicated solutions in O(n), with extra O(1) space.
+		* 3-sum, 3-sum closest
+			* step wise linear search
+       	
 	* [K-sum solution](https://cs.stackexchange.com/questions/2973/generalised-3sum-k-sum-problem)
        * K is even: generate a sorted list S of all sum of k/2, and solve 2 sum problem (check if S contains both x, -x). Time complexity O(n^(k/2))
        * K is odd: generate a sorted list S of all sum of (k-1)/2, solve 3 sum problem (for each input a, check if S contains both x, -a-x). Time complexity O(n^((k+1)/2))
