@@ -133,6 +133,11 @@
 				* So 2m cost at most => O(m)
 	* Match with help of jump table
 	
+* Misceleneous
+	* [Next Permutation](https://leetcode.com/problems/next-permutation)
+		* TC = O(n). observation the pattern and combine the reversing array and binary search
+	* [Median of 2 sorted arrays](https://leetcode.com/problems/median-of-two-sorted-arrays)
+		* TC = O(log(min(m, n))). Keep the count of numbers in left set and right set equal with order constraints. Binary search.
 * Tricks
 	* Skip duplicates in sorted array: move pointer only once in each loop
         
