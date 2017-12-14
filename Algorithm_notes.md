@@ -133,7 +133,7 @@
 				* So 2m cost at most => O(m)
 	* Match with help of jump table
 	
-* Misceleneous
+* Miscellaneous
 	* [Next Permutation](https://leetcode.com/problems/next-permutation)
 		* TC = O(n). observation the pattern and combine the reversing array and binary search
 	* [Median of 2 sorted arrays](https://leetcode.com/problems/median-of-two-sorted-arrays)
