@@ -36,13 +36,36 @@
  * 
  * 
  */
+
+/*
+Analysis: 
+1. Backtrack: generate element-repeatable subset and check sum. O(2^n)
+2. DP: cs[target] = each candiates + cs[target-candidate]
+*/
 import java.util.*;
 
 class Solution {
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        Map<Integer, List<List>> map = new HashMap<Integer, List<List>>();
-        for (int candidate : candidates) {
-        	 	
-        } 
-    }
+	public List<List<Integer>> combinationSum(int[] candidates, int target) {
+		 List<List<Integer>> result = new ArrayList<List<Integer>>();
+		 List<Integer> currentSet = new ArrayList<Integer>();
+		 elementRepeatableSubset(candidates, target, 0, result, currentSet);
+		 return result;
+	}
+
+	private void elementRepeatableSubset(int[] candidates, int target, int pos, List<List<Integer>> result, List<Integer> currentSet){
+		if(target == 0){
+			result.add(new ArrayList<Integer>(currentSet));
+			return;
+		}
+		
+		if(target < 0){
+			return;
+		}
+
+		for (int i = pos; i < candidates.length; i++) {
+			currentSet.add(candidates[i]);
+			elementRepeatableSubset(candidates, target - candidates[i], i, result, currentSet);
+			currentSet.remove(currentSet.size() - 1);
+		}
+	}
 }
