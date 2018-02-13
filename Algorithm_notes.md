@@ -186,7 +186,23 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 			* **through all the loop, 'next' can be applied at most m times in total! (no repeated element access before next jump to -1)**
 			* So 2m cost at most => O(m)
 * Match with help of jump table
-	
+
+## Dynamic programing
+* When to use DP
+	* Maximum/Minimum
+	* Yes/No 
+	* Solution count
+	* Input can not be sorted/swapped (like sequence, string, but not set)
+* When not to use DP
+	* Find all solutions 
+* DP implementation
+	* Memorize search: cache solution of subproblems
+	* Iteration: build up
+* Related Problems
+	* [longest-palindromic-substring](https://leetcode.com/problems/longest-palindromic-substring): 
+		* O(n^2) with DP: DP on all lengths substring 
+		* O(n) with [Manacher's algo](https://www.felix021.com/blog/read.php?2040): max LPS length symetry around center
+
 ## Miscellaneous
 * [Next Permutation](https://leetcode.com/problems/next-permutation)
 	* TC = O(n). observation the pattern and combine the reversing array and binary search
