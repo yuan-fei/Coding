@@ -218,7 +218,31 @@ for(int low = start; low < high; low++){
 	...
 }
 ```
+* Dummy node for linked list: when the head is not determinated. 
+	* Head might be eliminated or dynamically generated.
+	* Complex 'if' could be used to distinguish the processing between head and other nodes.
 
+```java
+...
+LinkNode dummy = new LinkNode(-1);
+dummy.next = head;
+...
+return dummy.next;
+```
+
+* Slow and fast pointer for linked list: pointer fast starts with head.next
+	* difference of speed = fast - slow
+
+```java
+LinkNode slow = head;
+LinkNode fast = head.next;
+
+while(fast != null and fast.next != null){
+	...
+}
+...
+
+```
     
 ## References
 * [1]: [Leetcode solution](https://www.sigmainfy.com/blog/leetcode-handbook-all-problem-solution-index.html)
