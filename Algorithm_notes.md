@@ -171,9 +171,9 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 	
 		```
 		// element 6,7,8 illustrated above
-		case T[m] == T[next[m-1]] => next[m] = next[m-1] + 1
+		case T[m] == T[next[m-1] + 1] => next[m] = next[m-1] + 1
 		// element 9
-		case T[m] != T[next[m-1]] => check
+		case T[m] != T[next[m-1] + 1] => check
 						T[m] == T[next[next[m-1]] + 1], 
 						T[m] == T[next[next[next[m-1]]] + 1]
 						... 
@@ -187,6 +187,8 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 			* So 2m cost at most => O(m)
 * Match with help of jump table
 
+## DFS and BFS
+
 ## Dynamic programing
 * When to use DP
 	* Maximum/Minimum
@@ -195,14 +197,40 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 	* Input can not be sorted/swapped (like sequence, string, but not set)
 * When not to use DP
 	* Find all solutions 
+* DP category
+	* Matrix DP: Triangle, Unique paths
+	* Sequence: Climb stairs, Word break
+	* 2 sequence: Longest common subsequence/substring, Edit distance
+	* Backpack: K-sum
 * DP implementation
 	* Memorize search: cache solution of subproblems
 	* Iteration: build up
+		* State
+		* Function
+		* Initialization
+		* Answer
+* DP implementation tips
+	* Initialize State array with `length = problem scope + 1`
+
+	```java
+	public boolean wordBreak(String s, List<String> wordDict) {
+	    boolean[] isBreakable = new boolean[s.length() + 1];
+	    //sentinel value for initial state
+	    isBreakable[0] = true;
+	    ...
+	    return isBreakable[s.length()];
+	}
+	```
+	* State in all kinds of problems
+		* Backpack I: `f[i][j]`: the feasibility of any goods in first i goods whose volume can be added up to j.
+		* Backpack II: `f[i][j]`: the max price of any goods in first i goods whose volume can be added up to j.
+		* K-sum: `f[i][j][sum]`: the feasibility/solution # of j numbers in first i numbers that can be added up to 'sum'.
+
 * Related Problems
 	* [longest-palindromic-substring](https://leetcode.com/problems/longest-palindromic-substring): 
 		* O(n^2) with DP: DP on all lengths substring 
 		* O(n) with [Manacher's algo](https://www.felix021.com/blog/read.php?2040): max LPS length symetry around center
-
+	* [word-break](https://leetcode.com/problems/word-break)
 ## Miscellaneous
 * [Next Permutation](https://leetcode.com/problems/next-permutation)
 	* TC = O(n). observation the pattern and combine the reversing array and binary search
