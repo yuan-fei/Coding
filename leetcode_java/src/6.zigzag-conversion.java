@@ -38,20 +38,18 @@ class Solution {
     	if(numRows == 1){
     		return s;
     	}
-    	List<Character>[] strs = new List[numRows];
+    	StringBuffer[] strs = new StringBuffer[numRows];
         for (int i = 0; i < numRows; i++) {
-        	strs[i] = new ArrayList<Character>();
+        	strs[i] = new StringBuffer();
         }
         for (int i = 0; i < s.length(); i++) {
         	int offset = i % (2 * (numRows - 1));
         	int index = numRows - 1 - Math.abs(offset - numRows + 1);
-        	strs[index].add(s.charAt(i));
+        	strs[index].append(s.charAt(i));
         }
         String result = "";
         for (int i = 0; i < numRows; i++) {
-        	for (int j = 0; j < strs[i].size(); j++) {
-        		result+=strs[i].get(j);
-        	}
+           result += strs[i].toString();
         }
         return result;
     }

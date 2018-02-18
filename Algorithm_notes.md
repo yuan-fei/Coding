@@ -206,31 +206,37 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 	* Memorize search: cache solution of subproblems
 	* Iteration: build up
 		* State
+			* Backpack I: `f[i][j]`: the feasibility of any goods in first i goods whose volume can be added up to j.
+			* Backpack II: `f[i][j]`: the max price of any goods in first i goods whose volume can be added up to j.
+			* K-sum: `f[i][j][sum]`: the feasibility/solution # of j numbers in first i numbers that can be added up to 'sum'.
 		* Function
 		* Initialization
+			* Starting point and Boundary: state[0][0], state[0][x], state[x][0]...
+			* **Sometimes**, initialize state array with `length = problem scope + 1` to avoid boudary processing with `if-else`
+		
+			```java
+			public boolean wordBreak(String s, List<String> wordDict) {
+			    boolean[] isBreakable = new boolean[s.length() + 1];
+			    //sentinel value for initial state
+			    isBreakable[0] = true;
+			    for(int i = 1; i <= s.length(); i++){
+			    	...
+			    }
+			    ...
+			    return isBreakable[s.length()];
+			}
+			```
 		* Answer
-* DP implementation tips
-	* Initialize State array with `length = problem scope + 1`
-
-	```java
-	public boolean wordBreak(String s, List<String> wordDict) {
-	    boolean[] isBreakable = new boolean[s.length() + 1];
-	    //sentinel value for initial state
-	    isBreakable[0] = true;
-	    ...
-	    return isBreakable[s.length()];
-	}
-	```
-	* State in all kinds of problems
-		* Backpack I: `f[i][j]`: the feasibility of any goods in first i goods whose volume can be added up to j.
-		* Backpack II: `f[i][j]`: the max price of any goods in first i goods whose volume can be added up to j.
-		* K-sum: `f[i][j][sum]`: the feasibility/solution # of j numbers in first i numbers that can be added up to 'sum'.
-
 * Related Problems
 	* [longest-palindromic-substring](https://leetcode.com/problems/longest-palindromic-substring): 
 		* O(n^2) with DP: DP on all lengths substring 
 		* O(n) with [Manacher's algo](https://www.felix021.com/blog/read.php?2040): max LPS length symetry around center
 	* [word-break](https://leetcode.com/problems/word-break)
+	* [unique-paths-ii](https://leetcode.com/problems/unique-paths-ii)
+	* [climbing-stairs](https://leetcode.com/problems/climbing-stairs)
+	* [palindrome-partitioning-ii](https://leetcode.com/problems/palindrome-partitioning-ii)
+	* [longest-increasing-subsequence](https://leetcode.com/problems/longest-increasing-subsequence)
+
 ## Miscellaneous
 * [Next Permutation](https://leetcode.com/problems/next-permutation)
 	* TC = O(n). observation the pattern and combine the reversing array and binary search
@@ -286,6 +292,23 @@ while(fast != null and fast.next != null){
 }
 ...
 
+```
+* Bit operation:
+	* Check if n is power-of-2: `n & (n-1) == 0`
+	* Get bitmask: n's 1st 1 to the lowest bit: `n & (-n)`
+* Combination implementation
+
+```java
+private int combination(int n, int m){
+	long r = 1;
+	m = Math.min(m, n - m);
+	for (int i = 1; i <= m; i++) {
+		r *= (n - m + i);
+		//avoid overflow
+		r /= i;
+	}
+	return (int)r;
+}
 ```
     
 ## References
