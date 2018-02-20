@@ -239,6 +239,22 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 	* [palindrome-partitioning-ii](https://leetcode.com/problems/palindrome-partitioning-ii)
 	* [longest-increasing-subsequence](https://leetcode.com/problems/longest-increasing-subsequence)
 
+## JAVA Data Structure
+* Queue: use `offer(e)` and `poll()` instead of `add(e)` and `remove()` because they don't throw exceptions when failed.
+* PriorityQueue: Heap implementation in java
+* Map: 
+	* HashMap: unordered, unsorted
+	* TreeMap: sorted by key; read-black tree
+	* LinkedHashMap: ordered by the order of `add` operation; LRU cache implementation
+* Trie (re**trie**val): 
+	* Character by character search (state machine)
+	* Multiple strings as input pattern
+* Related Probles
+	* PriorityQueue: [find-median-from-data-stream](https://leetcode.com/problems/find-median-from-data-stream)
+	* Trie
+		* [implement-trie-prefix-tree](https://leetcode.com/problems/implement-trie-prefix-tree)
+		* [word-search-ii](https://leetcode.com/problems/word-search-ii)
+
 ## Miscellaneous
 * [Next Permutation](https://leetcode.com/problems/next-permutation)
 	* TC = O(n). observation the pattern and combine the reversing array and binary search
