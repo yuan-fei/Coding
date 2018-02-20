@@ -206,6 +206,8 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 	* Memorize search: cache solution of subproblems
 	* Iteration: build up
 		* State
+			* Longest Common Subsequence: `f[i][j]`: length of the longest common subsequence till s1[i], s2[j]
+			* Longest Common Substring: `f[i][j]`: length of the common substring ended with s1[i]=s2[j]
 			* Backpack I: `f[i][j]`: the feasibility of any goods in first i goods whose volume can be added up to j.
 			* Backpack II: `f[i][j]`: the max price of any goods in first i goods whose volume can be added up to j.
 			* K-sum: `f[i][j][sum]`: the feasibility/solution # of j numbers in first i numbers that can be added up to 'sum'.
@@ -294,7 +296,7 @@ while(fast != null and fast.next != null){
 
 ```
 * Bit operation:
-	* Check if n is power-of-2: `n & (n-1) == 0`
+	* Check if n is power-of-2: `(n & (n-1)) == 0`
 	* Get bitmask: n's 1st 1 to the lowest bit: `n & (-n)`
 * Combination implementation
 
