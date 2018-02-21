@@ -188,6 +188,12 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 * Match with help of jump table
 
 ## DFS and BFS
+* Related Problems
+	* [word-ladder](https://leetcode.com/problems/word-ladder)
+	* [word-ladder-ii](https://leetcode.com/problems/word-ladder-ii)
+	* [n-queens](https://leetcode.com/problems/n-queens)
+	* [palindrome-partitioning](https://leetcode.com/problems/palindrome-partitioning)
+	* Topological sort: [course-schedule](https://leetcode.com/problems/course-schedule)
 
 ## Dynamic programing
 * When to use DP

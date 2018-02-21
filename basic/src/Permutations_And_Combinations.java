@@ -8,26 +8,28 @@ public class Permutations_And_Combinations {
 		List<List<Integer>> combinationResult = getSubsets(new int[] { 1, 2, 3, 4, 5 }, 2);
 		combinationResult = getAllSubsets(new int[] { 1, 2, 3, 3, 3 });
 		combinationResult = getAllUniqueSubsets(new int[] { 1, 3, 2, 3, 3 });
-		List<int[]> permutationResult = getFullPermutations(new int[] { 1, 2, 3 });
+		List<List<Integer>> permutationResult = getFullPermutations(new int[] { 1, 2, 3 });
 		System.out.println(permutationResult);
 	}
 
-	public static List<int[]> getFullPermutations(int[] source) {
-		List<int[]> result = new ArrayList<int[]>();
-		_getFullPermutations(result, source, 0);
+	public static List<List<Integer>> getFullPermutations(int[] source) {
+		List<List<Integer>> result = new ArrayList<List<Integer>>();
+		_getFullPermutations(result, new ArrayList<Integer>(), source, 0);
 		return result;
 	}
 
-	private static void _getFullPermutations(List<int[]> result, int[] source, int pos) {
+	private static void _getFullPermutations(List<List<Integer>> result, List<Integer> current, int[] source, int pos) {
 		if (pos == source.length) {
-			result.add(Arrays.copyOf(source, source.length));
+			result.add(new ArrayList<Integer>(current));
 		}
 
 		for (int i = pos; i < source.length; i++) {
 			// in place swap is used instead of the alternative storage
 			// (currentSet)
 			swap(source, pos, i);
-			_getFullPermutations(result, source, pos + 1);
+			current.add(source[pos]);
+			_getFullPermutations(result, current, source, pos + 1);
+			current.remove(current.size() - 1);
 			swap(source, i, pos);
 		}
 	}
