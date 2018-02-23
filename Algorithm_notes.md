@@ -266,6 +266,13 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 	* TC = O(n). observation the pattern and combine the reversing array and binary search
 * [Median of 2 sorted arrays](https://leetcode.com/problems/median-of-two-sorted-arrays)
 	* TC = O(log(min(m, n))). Keep the count of numbers in left set and right set equal with order constraints. Binary search.
+* Single number: 
+	* [single-number-ii](https://leetcode.com/problems/single-number-ii): A general solution provided by felixhao28 in his post in [this](https://leetcode.com/problems/single-number-ii/discuss/43296/An-General-Way-to-Handle-All-this-sort-of-questions.) thread
+		* For each bit of INT (0 ~ 31), count the bit of all the n numbers and mod by k (the count of repeats). If the result bit > 0, the except number's bit = 1; otherwise, the except number's bit = 0.
+	* [single-number-iii](https://leetcode.com/problems/single-number-iii): group by the distiguished bit of the result of xor.
+* Boyer-Moore majority vote: [1/2 Majority votes](https://leetcode.com/problems/majority-element), [1/3 Majority votes](https://leetcode.com/problems/majority-element-ii)
+	* Intuition for 1/k majority votes: eliminate at most 1 majority vote in each k votes
+	* Distributedable: slice the array and DC will return correct result
 
 ## Tricks
 * <a name='skip_duplicates_in_sorted_array'></a>Skip duplicates in **sorted** array: move pointer only once in each loop
@@ -319,7 +326,7 @@ while(fast != null and fast.next != null){
 ```
 * Bit operation:
 	* Check if n is power-of-2: `(n & (n-1)) == 0`
-	* Get bitmask: n's 1st 1 to the lowest bit: `n & (-n)`
+	* Get bitmask: n's right-most 1: `n & (-n)`
 * Combination implementation
 
 ```java
