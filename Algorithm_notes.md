@@ -212,11 +212,38 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 	* Memorize search: cache solution of subproblems
 	* Iteration: build up
 		* State
-			* Longest Common Subsequence: `f[i][j]`: length of the longest common subsequence till s1[i], s2[j]
-			* Longest Common Substring: `f[i][j]`: length of the common substring ended with s1[i]=s2[j]
-			* Backpack I: `f[i][j]`: the feasibility of any goods in first i goods whose volume can be added up to j.
-			* Backpack II: `f[i][j]`: the max price of any goods in first i goods whose volume can be added up to j.
-			* K-sum: `f[i][j][sum]`: the feasibility/solution # of j numbers in first i numbers that can be added up to 'sum'.
+			* Single state
+				* Longest Common Subsequence: `f[i][j]`: length of the longest common subsequence till s1[i], s2[j]
+				* Longest Common Substring: `f[i][j]`: length of the common substring ended with s1[i]=s2[j]
+				* Backpack I: `f[i][j]`: the feasibility of any goods in first i goods whose volume can be added up to j.
+				* Backpack II: `f[i][j]`: the max price of any goods in first i goods whose volume can be added up to j.
+				* K-sum: `f[i][j][sum]`: the feasibility/solution # of j numbers in first i numbers that can be added up to 'sum'.
+			* State Machine
+				* best-time-to-buy-and-sell-stock-with-cooldown ([analysis](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/discuss/75928/Share-my-DP-solution-(By-State-Machine-Thinking))) 
+					* state:
+					
+					```
+					state machine: 
+					* bought[i]: hold->bought[i+1]; sell->sold[i+1]. 
+					* sold[i]: hold->cooldown[i+1]. 
+					* cooldown[i]: hold->cooldown[i+1]; buy->bought[i+1]
+					```
+					
+					* function
+				
+					```
+bought[i] = max(bought[i - 1], cooldown[i - 1] - prices[i - 1]);
+sold[i] = bought[i - 1] + prices[i - 1];
+cooldown[i] = max(cooldown[i - 1], sold[i - 1]);
+					```
+				* best-time-to-buy-and-sell-stock-iv ([analysis](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/discuss/54150/State-machine-is-the-easiest-way-to-understand-stock-problem-could-solve-all-the-stock-problem-in-leetcode))
+					* State: `Bought[i][j]`: max profit till day i - 1 with j - 1 transaction, and the last state is in 'Bought'; `Sold[i][j]`: max profit till day i - 1 with j - 1 transaction, and the last state is in 'Sold'
+					
+					```
+					Bought[i][j] = max(Bought[i - 1][j], Sold[i - 1][j - 1] - price[i - 1])
+					Sold[i][j] = max(Sold[i - 1][j], Bought[i - 1][j] + price[i - 1])
+					```
+
 		* Function
 		* Initialization
 			* Starting point and Boundary: state[0][0], state[0][x], state[x][0]...
@@ -244,6 +271,21 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 	* [climbing-stairs](https://leetcode.com/problems/climbing-stairs)
 	* [palindrome-partitioning-ii](https://leetcode.com/problems/palindrome-partitioning-ii)
 	* [longest-increasing-subsequence](https://leetcode.com/problems/longest-increasing-subsequence)
+	* [best-time-to-buy-and-sell-stock-with-cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown)
+	* [best-time-to-buy-and-sell-stock-iv](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv)
+	* [best-time-to-buy-and-sell-stock-with-transaction-fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee)
+	* [maximum-product-subarray](https://leetcode.com/problems/maximum-product-subarray)
+
+## Prefix Sum
+* Problems about consecutive subarray sum can be solved by prefix sum: 
+
+```
+Let prefixSum[i] = sum(num[0], sum[1], ..., sum[i])
+thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
+```
+* Related Problems
+	* [maximum-subarray](https://leetcode.com/problems/maximum-subarray)
+	* [minimum-size-subarray-sum](https://leetcode.com/problems/minimum-size-subarray-sum)
 
 ## JAVA Data Structure
 * Queue: use `offer(e)` and `poll()` instead of `add(e)` and `remove()` because they don't throw exceptions when failed.
@@ -326,6 +368,7 @@ while(fast != null and fast.next != null){
 ```
 * Bit operation:
 	* Check if n is power-of-2: `(n & (n-1)) == 0`
+	* Check if n is power-of-4: `((num & (num - 1)) == 0) && ((num & 0x55555555) == num)`
 	* Get bitmask: n's right-most 1: `n & (-n)`
 * Combination implementation
 

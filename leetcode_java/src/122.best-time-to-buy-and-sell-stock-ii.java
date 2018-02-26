@@ -19,16 +19,37 @@
  */
 class Solution {
     public int maxProfit(int[] prices) {
-    	if(prices == null || prices.length == 0){
-    		return 0;
-    	}
+        return solve2(prices);
+    }
+
+    private int solve1(int[] prices){
+        if(prices == null || prices.length == 0){
+            return 0;
+        }
         int maxProfit = 0;
         for (int i = 1; i < prices.length; i++) {
-        	int increment = prices[i] - prices[i - 1];
-        	if(increment > 0){
-        		maxProfit += increment;
-        	}
+            int increment = prices[i] - prices[i - 1];
+            if(increment > 0){
+                maxProfit += increment;
+            }
         }
         return maxProfit;
+    }
+
+    private int solve2(int[] prices){
+        if(prices == null || prices.length == 0){
+            return 0;
+        }
+
+        int[] boughtState = new int[prices.length + 1];
+        int[] soldState = new int[prices.length + 1];
+        boughtState[0] = -prices[0];
+        soldState[0] = 0;
+        for (int i = 1; i <= prices.length; i++) {
+            boughtState[i] = Math.max(boughtState[i - 1], soldState[i - 1] - prices[i - 1]);
+            soldState[i] = Math.max(soldState[i - 1], boughtState[i - 1] + prices[i - 1]);
+        }
+
+        return soldState[prices.length];
     }
 }
