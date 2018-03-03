@@ -275,6 +275,8 @@ cooldown[i] = max(cooldown[i - 1], sold[i - 1]);
 	* [best-time-to-buy-and-sell-stock-iv](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv)
 	* [best-time-to-buy-and-sell-stock-with-transaction-fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee)
 	* [maximum-product-subarray](https://leetcode.com/problems/maximum-product-subarray)
+	* [regular-expression-matching](https://leetcode.com/problems/regular-expression-matching)
+	* [wildcard-matching](https://leetcode.com/problems/wildcard-matching/)
 
 ## Prefix Sum
 * Problems about consecutive subarray sum can be solved by prefix sum: 
