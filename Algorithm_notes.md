@@ -56,10 +56,13 @@
 
 ## Rotated sorted array
 * Rotated sorted array without duplicated element
-	* A[0..k] increases monotonically, A[k+1..n] increases monotonically
-	* A[0] > A[n]	
-	* Binary search with O(logn) applies: **recursively**, when some consecutive elements from start or end eliminated, the elements left form a sub rotated sorted array .
-* Rotated sorted array with duplicated element can be processed in at least O(n)
+	* Left sorted part A[0..k] increases monotonically, and right sorted part A[k+1..n] increases monotonically
+	* Binary search with O(logn) applies: **recursively**. A[mid] falls in either
+		1. left sorted part: A[low] <= A[mid], then A[mid..high] is a rotated sorted subarray
+		2. right sorted part: A[mid] <= A[high], then A[low..mid] is a rotated sorted subarray
+
+		choose to stay in sorted part or rotated sorted part
+* Rotated sorted array with duplicated element must be processed in at least O(n)
 * Related Problems
 	* [Search in rotated sorted array](https://leetcode.com/problems/search-in-rotated-sorted-array)
 	* [Find minimum in rotated sorted array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array)
@@ -316,7 +319,8 @@ thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 	* [single-number-iii](https://leetcode.com/problems/single-number-iii): group by the distiguished bit of the result of xor.
 * Boyer-Moore majority vote: [1/2 Majority votes](https://leetcode.com/problems/majority-element), [1/3 Majority votes](https://leetcode.com/problems/majority-element-ii)
 	* Intuition for 1/k majority votes: eliminate at most 1 majority vote in each k votes
-	* Distributedable: slice the array and DC will return correct result
+	* Implementation: 1/k majority requires k-1 candidate space for there are at most k-1 competence for the majority
+	* Distributable: slice the array and DC will return correct result
 
 ## Tricks
 * <a name='skip_duplicates_in_sorted_array'></a>Skip duplicates in **sorted** array: move pointer only once in each loop
@@ -355,19 +359,55 @@ dummy.next = head;
 return dummy.next;
 ```
 
-* Slow and fast pointer for linked list: pointer fast starts with head.next
-	* difference of speed = fast - slow
+* Slow and fast pointer for linked list: 
+	* Key implementation: pointer fast starts with head.next
+		* fast steps n first, and slow.next will point to the nth node to the last which is handy for node operation (i.e. removal)
 
 ```java
 LinkNode slow = head;
 LinkNode fast = head.next;
 
-while(fast != null and fast.next != null){
-	...
+// move fast n steps first
+
+while(fast != null && fast.next != null){
+	slow = slow.next;
+	fast = fast.next.next;
 }
 ...
 
 ```
+* Floyd's Tortoise and Hare: cycle detection and find cycle entrance 
+	* Key implementation: slow and fast point to same node initially
+		* cycle detection: fast and slow meet at Len(cycle) - Len(Non-Cycle)
+		* cycle entrance: after met, rewind slow to start node and move slow and fast with same speed until the 2nd meet, the node where they meet again is the cycle entrance.
+	* Related Problems: 
+		* [linked-list-cycle-ii](https://leetcode.com/problems/linked-list-cycle-ii/)
+		* [find-the-duplicate-number](https://leetcode.com/problems/find-the-duplicate-number)
+
+```
+LinkNode slow = head;
+LinkNode fast = head.next;
+
+// cycle detection
+while(fast != null && fast.next != null){
+	slow = slow.next;
+	fast = fast.next.next;
+	if(fast.val == slow.val){
+		break;
+	}
+}
+if(fast == null || fast.next == null){
+	return null;
+}
+// find the cycle entrance
+slow = head;
+while(slow != head){
+	slow = slow.next;
+	fast = fast.next;
+}
+return slow;
+```
+
 * Bit operation:
 	* Check if n is power-of-2: `(n & (n-1)) == 0`
 	* Check if n is power-of-4: `((num & (num - 1)) == 0) && ((num & 0x55555555) == num)`
