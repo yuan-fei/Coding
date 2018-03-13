@@ -48,11 +48,18 @@
 		return -1;
 	}
 	```	
+* Kinds of Binary search spaces
+	* array index: when array is sorted
+	* value range: when array is unsorted
+		* [find-the-duplicate-number](https://leetcode.com/problems/find-the-duplicate-number)
+		* [kth-smallest-element-in-a-sorted-matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix)
 * Related Problems
 	* [Search for a range](https://leetcode.com/problems/search-for-a-range/)
 	* [Search insert position](https://leetcode.com/problems/search-insert-position): index of first element greater or equal to target
 	* [Find first bad version](https://leetcode.com/problems/first-bad-version)
 	* [Find peak element](https://leetcode.com/problems/find-peak-element)
+	* [find-the-duplicate-number](https://leetcode.com/problems/find-the-duplicate-number)
+	* [kth-smallest-element-in-a-sorted-matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix)
 
 ## Rotated sorted array
 * Rotated sorted array without duplicated element
