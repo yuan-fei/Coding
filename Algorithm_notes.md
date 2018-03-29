@@ -202,8 +202,16 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 	* [word-ladder](https://leetcode.com/problems/word-ladder)
 	* [word-ladder-ii](https://leetcode.com/problems/word-ladder-ii)
 	* [n-queens](https://leetcode.com/problems/n-queens)
+	* [sudoku-solver](https://leetcode.com/problems/sudoku-solver)
 	* [palindrome-partitioning](https://leetcode.com/problems/palindrome-partitioning)
 	* Topological sort: [course-schedule](https://leetcode.com/problems/course-schedule)
+
+## Backtracking
+* backtracking can be implemented by DFS
+* backtrack state: track available candidates for each step
+	* matrix input: use a matrxi with same dimension
+	 	* [n-queens](https://leetcode.com/problems/n-queens)
+		* [sudoku-solver](https://leetcode.com/problems/sudoku-solver)
 
 ## Dynamic programing
 * When to use DP
@@ -328,6 +336,20 @@ thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 	* Intuition for 1/k majority votes: eliminate at most 1 majority vote in each k votes
 	* Implementation: 1/k majority requires k-1 candidate space for there are at most k-1 competence for the majority
 	* Distributable: slice the array and DC will return correct result
+* Rotate array
+	* swap by reverse
+	* juggling rotate: [Why use GCD](https://stackoverflow.com/questions/23321216/rotating-an-array-using-juggling-algorithm)
+* [Reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling)
+	* Randomly sample n numbers in unknown sized stream with equal probability (n/total for which total is changing all the time)
+* In place swap: check missing number
+	
+	```
+	// Invariant: A[i] = i
+	if(A[i] != i){
+		swap(A[i], A[A[i]]);
+	}
+	```
+	* [first-missing-positive](https://leetcode.com/problems/first-missing-positive)
 
 ## Tricks
 * <a name='skip_duplicates_in_sorted_array'></a>Skip duplicates in **sorted** array: move pointer only once in each loop
