@@ -308,6 +308,7 @@ thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 	* [minimum-size-subarray-sum](https://leetcode.com/problems/minimum-size-subarray-sum)
 
 ## JAVA Data Structure
+* Stack: check `StackTrick` class
 * Queue: use `offer(e)` and `poll()` instead of `add(e)` and `remove()` because they don't throw exceptions when failed.
 * PriorityQueue: Heap implementation in java
 * Map: 
@@ -339,6 +340,7 @@ thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 * Rotate array
 	* swap by reverse
 	* juggling rotate: [Why use GCD](https://stackoverflow.com/questions/23321216/rotating-an-array-using-juggling-algorithm)
+* Sampling and Shuffling: Check SamplingAndShuffling class
 * [Reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling)
 	* Randomly sample n numbers in unknown sized stream with equal probability (n/total for which total is changing all the time)
 * In place swap: check missing number
