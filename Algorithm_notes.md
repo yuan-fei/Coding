@@ -307,6 +307,17 @@ thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 	* [maximum-subarray](https://leetcode.com/problems/maximum-subarray)
 	* [minimum-size-subarray-sum](https://leetcode.com/problems/minimum-size-subarray-sum)
 
+## Math
+
+* Bit operation:
+	* Check if n is power-of-2: `(n & (n-1)) == 0`
+	* Check if n is power-of-4: `((num & (num - 1)) == 0) && ((num & 0x55555555) == num)`
+	* Get bitmask: n's right-most 1: `n & (-n)`
+* Factorial factors: 
+	* how many p in n! (the largest k which makes p^k devides n!)
+		*  f(n, p) = ⌊n/p⌋ + ⌊n/(p^2)⌋ +...
+	* [Trailing zeros of n!] (https://leetcode.com/problems/factorial-trailing-zeroes): how many 5s in n!
+
 ## JAVA Data Structure
 * Stack: check `StackTrick` class
 * Queue: use `offer(e)` and `poll()` instead of `add(e)` and `remove()` because they don't throw exceptions when failed.
@@ -439,10 +450,6 @@ while(slow != head){
 return slow;
 ```
 
-* Bit operation:
-	* Check if n is power-of-2: `(n & (n-1)) == 0`
-	* Check if n is power-of-4: `((num & (num - 1)) == 0) && ((num & 0x55555555) == num)`
-	* Get bitmask: n's right-most 1: `n & (-n)`
 * Combination implementation
 
 ```java
