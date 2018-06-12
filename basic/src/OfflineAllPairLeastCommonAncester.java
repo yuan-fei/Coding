@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,11 +17,10 @@ public class OfflineAllPairLeastCommonAncester {
 		TreeNode<Integer>[] nodes = new TreeNode[7];
 		for (int i = 0; i < nodes.length; i++) {
 			nodes[i] = new TreeNode<Integer>(i);
-			nodes[i].children = new ArrayList<TreeNode<Integer>>();
 		}
-		nodes[0].children = Arrays.asList(nodes[1], nodes[2]);
-		nodes[1].children = Arrays.asList(nodes[3], nodes[4]);
-		nodes[2].children = Arrays.asList(nodes[5], nodes[6]);
+		nodes[0].children.addAll(Arrays.asList(nodes[1], nodes[2]));
+		nodes[1].children.addAll(Arrays.asList(nodes[3], nodes[4]));
+		nodes[2].children.addAll(Arrays.asList(nodes[5], nodes[6]));
 		lca(nodes[0]);
 	}
 

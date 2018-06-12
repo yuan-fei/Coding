@@ -1,5 +1,6 @@
 package basic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TreeNode<T> {
@@ -8,5 +9,6 @@ public class TreeNode<T> {
 
 	public TreeNode(T v) {
 		val = v;
+		children = new ArrayList<TreeNode<T>>();
 	}
 }
