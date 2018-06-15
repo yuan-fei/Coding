@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
+import basic.Graph;
+import basic.GraphEdge;
 import basic.GraphNode;
 import utils.Util;
 
@@ -20,21 +22,18 @@ public class GraphSearch<T> {
 		GraphNode<String> x = new GraphNode<String>("x");
 		GraphNode<String> u = new GraphNode<String>("u");
 		GraphNode<String> y = new GraphNode<String>("y");
-		s.children.add(w);
-		s.children.add(r);
-		r.children.add(v);
-		w.children.add(t);
-		w.children.add(x);
-		x.children.add(y);
-		x.children.add(u);
-		x.children.add(t);
-		t.children.add(u);
-		y.children.add(u);
-		List<GraphNode<String>> nodes = Arrays.asList(s, w, r, v, t, x, u, v);
+		Graph<String> graph = new Graph<String>();
+		graph.addVertex(s).addVertex(w).addVertex(r).addVertex(v).addVertex(t).addVertex(x).addVertex(u).addVertex(y);
+		graph.addEdge(new GraphEdge<String>(s, w)).addEdge(new GraphEdge<String>(s, r))
+				.addEdge(new GraphEdge<String>(r, v)).addEdge(new GraphEdge<String>(w, t))
+				.addEdge(new GraphEdge<String>(w, x)).addEdge(new GraphEdge<String>(x, y))
+				.addEdge(new GraphEdge<String>(x, u)).addEdge(new GraphEdge<String>(x, t))
+				.addEdge(new GraphEdge<String>(t, u)).addEdge(new GraphEdge<String>(y, u));
+
 		GraphSearch<String> gs = new GraphSearch<String>();
-		List<List<GraphNode<String>>> result = gs.bfs(nodes);
+		List<List<GraphNode<String>>> result = gs.bfs(graph);
 		gs.output(result);
-		result = gs.dfs(nodes);
+		result = gs.dfs(graph);
 		gs.output(result);
 	}
 
@@ -52,17 +51,17 @@ public class GraphSearch<T> {
 	Map<GraphNode<T>, Integer> startTime = new HashMap<GraphNode<T>, Integer>();
 	Map<GraphNode<T>, Integer> endTime = new HashMap<GraphNode<T>, Integer>();
 
-	public List<List<GraphNode<T>>> dfs(List<GraphNode<T>> nodes) {
+	public List<List<GraphNode<T>>> dfs(Graph<T> graph) {
 		visited.clear();
 		startTime.clear();
 		endTime.clear();
 		timer = 0;
 		List<List<GraphNode<T>>> result = new ArrayList<List<GraphNode<T>>>();
-		for (GraphNode<T> node : nodes) {
+		for (GraphNode<T> node : graph.vertices) {
 			visited.putIfAbsent(node, 0);
 			if (visited.get(node) == 0) {
 				List<GraphNode<T>> scc = new ArrayList<GraphNode<T>>();
-				dfsHelper(node, visited, startTime, endTime, scc);
+				dfsHelper(graph, node, scc);
 				result.add(scc);
 			}
 		}
@@ -70,53 +69,52 @@ public class GraphSearch<T> {
 		return result;
 	}
 
-	public void dfsHelper(GraphNode<T> g, Map<GraphNode<T>, Integer> visited, Map<GraphNode<T>, Integer> startTime,
-			Map<GraphNode<T>, Integer> endTime, List<GraphNode<T>> result) {
-		result.add(g);
-		visited.put(g, 1);
-		startTime.put(g, timer++);
-		for (GraphNode<T> child : g.children) {
-			visited.putIfAbsent(child, 0);
-			if (visited.get(child) == 0) {
-				dfsHelper(child, visited, startTime, endTime, result);
+	public void dfsHelper(Graph<T> g, GraphNode<T> r, List<GraphNode<T>> result) {
+		result.add(r);
+		visited.put(r, 1);
+		startTime.put(r, timer++);
+		for (GraphEdge<T> edge : g.edges.getOrDefault(r, Collections.<GraphEdge<T>>emptyList())) {
+			visited.putIfAbsent(edge.target, 0);
+			if (visited.get(edge.target) == 0) {
+				dfsHelper(g, edge.target, result);
 			}
 		}
-		visited.put(g, 2);
-		endTime.put(g, timer++);
+		visited.put(r, 2);
+		endTime.put(r, timer++);
 	}
 
-	public List<List<GraphNode<T>>> bfs(List<GraphNode<T>> nodes) {
+	public List<List<GraphNode<T>>> bfs(Graph<T> graph) {
 		timer = 0;
 		visited.clear();
 		startTime.clear();
 		endTime.clear();
 		List<List<GraphNode<T>>> result = new ArrayList<List<GraphNode<T>>>();
-		for (GraphNode<T> node : nodes) {
+		for (GraphNode<T> node : graph.vertices) {
 			visited.putIfAbsent(node, 0);
 			if (visited.get(node) == 0) {
-				result.add(bfs(node));
+				result.add(bfsHelper(graph, node));
 			}
 		}
 		return result;
 	}
 
-	public List<GraphNode<T>> bfs(GraphNode<T> g) {
+	public List<GraphNode<T>> bfsHelper(Graph<T> g, GraphNode<T> r) {
 		List<GraphNode<T>> result = new ArrayList<GraphNode<T>>();
 		Queue<GraphNode<T>> queue = new LinkedList<GraphNode<T>>();
-		visited.put(g, 0);
-		startTime.put(g, timer++);
-		queue.offer(g);
+		visited.put(r, 0);
+		startTime.put(r, timer++);
+		queue.offer(r);
 		while (!queue.isEmpty()) {
 			GraphNode<T> n = queue.poll();
 			visited.put(n, 2);
 			endTime.put(n, timer++);
 			result.add(n);
-			for (GraphNode<T> child : n.children) {
-				visited.putIfAbsent(child, 0);
-				if (visited.get(child) == 0) {
-					visited.put(child, 1);
-					startTime.put(child, timer++);
-					queue.offer(child);
+			for (GraphEdge<T> edge : g.edges.getOrDefault(n, Collections.<GraphEdge<T>>emptyList())) {
+				visited.putIfAbsent(edge.target, 0);
+				if (visited.get(edge.target) == 0) {
+					visited.put(edge.target, 1);
+					startTime.put(edge.target, timer++);
+					queue.offer(edge.target);
 				}
 			}
 		}

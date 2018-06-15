@@ -1,11 +1,12 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import basic.Graph;
+import basic.GraphEdge;
 import basic.GraphNode;
 import utils.Util;
 
@@ -14,6 +15,7 @@ import utils.Util;
  */
 public class StronglyConnectedComponentForDirectedGraph {
 	public static void main(String[] args) {
+		Graph<String> graph = new Graph<String>();
 		GraphNode<String> a = new GraphNode<String>("a");
 		GraphNode<String> b = new GraphNode<String>("b");
 		GraphNode<String> c = new GraphNode<String>("c");
@@ -22,21 +24,15 @@ public class StronglyConnectedComponentForDirectedGraph {
 		GraphNode<String> f = new GraphNode<String>("f");
 		GraphNode<String> g = new GraphNode<String>("g");
 		GraphNode<String> h = new GraphNode<String>("h");
-		a.children.add(b);
-		b.children.add(e);
-		e.children.add(a);
-		b.children.add(f);
-		e.children.add(f);
-		b.children.add(c);
-		f.children.add(g);
-		g.children.add(f);
-		c.children.add(d);
-		d.children.add(c);
-		c.children.add(g);
-		d.children.add(h);
-		g.children.add(h);
-		List<GraphNode<String>> nodes = Arrays.asList(h, a, b, c, d, e, f, g);
-		List<List<GraphNode<String>>> sccs = sscWithDFS(nodes);
+		graph.addVertex(c).addVertex(b).addVertex(a).addVertex(d).addVertex(e).addVertex(f).addVertex(g).addVertex(h);
+		graph.addEdge(new GraphEdge<String>(a, b)).addEdge(new GraphEdge<String>(b, e))
+				.addEdge(new GraphEdge<String>(e, a)).addEdge(new GraphEdge<String>(b, f))
+				.addEdge(new GraphEdge<String>(e, f)).addEdge(new GraphEdge<String>(b, c))
+				.addEdge(new GraphEdge<String>(f, g)).addEdge(new GraphEdge<String>(g, f))
+				.addEdge(new GraphEdge<String>(c, d)).addEdge(new GraphEdge<String>(d, c))
+				.addEdge(new GraphEdge<String>(c, g)).addEdge(new GraphEdge<String>(d, h))
+				.addEdge(new GraphEdge<String>(g, h));
+		List<List<GraphNode<String>>> sccs = sscWithDFS(graph);
 		output(sccs);
 	}
 
@@ -48,25 +44,25 @@ public class StronglyConnectedComponentForDirectedGraph {
 		}
 	}
 
-	public static <T> List<List<GraphNode<T>>> sscWithDFS(List<GraphNode<T>> nodes) {
+	public static <T> List<List<GraphNode<T>>> sscWithDFS(Graph<T> graph) {
 		Map<GraphNode<T>, Integer> visited = new HashMap<GraphNode<T>, Integer>();
 		List<GraphNode<T>> nodesByFinishTime = new ArrayList<GraphNode<T>>();
-		for (GraphNode<T> node : nodes) {
+		for (GraphNode<T> node : graph.vertices) {
 			visited.putIfAbsent(node, 0);
 			if (visited.get(node) == 0) {
-				dfs1(node, visited, nodesByFinishTime);
+				dfs1(graph, node, visited, nodesByFinishTime);
 			}
 		}
 
 		Collections.reverse(nodesByFinishTime);
-		List<GraphNode<T>> transposedNodes = transposeGraph(nodesByFinishTime);
+		Graph<T> transposedGraph = transposeAndSortGraph(graph, nodesByFinishTime);
 		List<List<GraphNode<T>>> sccs = new ArrayList<List<GraphNode<T>>>();
 		visited.clear();
-		for (GraphNode<T> node : transposedNodes) {
+		for (GraphNode<T> node : transposedGraph.vertices) {
 			visited.putIfAbsent(node, 0);
 			if (visited.get(node) == 0) {
 				List<GraphNode<T>> scc = new ArrayList<GraphNode<T>>();
-				dfs2(node, visited, scc);
+				dfs2(transposedGraph, node, visited, scc);
 				sccs.add(scc);
 			}
 		}
@@ -76,48 +72,45 @@ public class StronglyConnectedComponentForDirectedGraph {
 	/**
 	 * DFS Output nodes in finish time ascending order
 	 */
-	private static <T> void dfs1(GraphNode<T> g, Map<GraphNode<T>, Integer> visited, List<GraphNode<T>> result) {
-		visited.put(g, 1);
-		for (GraphNode<T> child : g.children) {
-			visited.putIfAbsent(child, 0);
-			if (visited.get(child) == 0) {
-				dfs1(child, visited, result);
+	private static <T> void dfs1(Graph<T> g, GraphNode<T> root, Map<GraphNode<T>, Integer> visited,
+			List<GraphNode<T>> result) {
+		visited.put(root, 1);
+		for (GraphEdge<T> edge : g.edges.getOrDefault(root, Collections.<GraphEdge<T>>emptyList())) {
+			visited.putIfAbsent(edge.target, 0);
+			if (visited.get(edge.target) == 0) {
+				dfs1(g, edge.target, visited, result);
 			}
 		}
-		result.add(g);
-		visited.put(g, 2);
+		result.add(root);
+		visited.put(root, 2);
 	}
 
-	private static <T> void dfs2(GraphNode<T> g, Map<GraphNode<T>, Integer> visited, List<GraphNode<T>> scc) {
-		visited.put(g, 1);
-		scc.add(g);
-		for (GraphNode<T> child : g.children) {
-			visited.putIfAbsent(child, 0);
-			if (visited.get(child) == 0) {
-				dfs2(child, visited, scc);
+	private static <T> void dfs2(Graph<T> g, GraphNode<T> root, Map<GraphNode<T>, Integer> visited,
+			List<GraphNode<T>> scc) {
+		visited.put(root, 1);
+		scc.add(root);
+		for (GraphEdge<T> edge : g.edges.getOrDefault(root, Collections.<GraphEdge<T>>emptyList())) {
+			visited.putIfAbsent(edge.target, 0);
+			if (visited.get(edge.target) == 0) {
+				dfs2(g, edge.target, visited, scc);
 			}
 		}
-		visited.put(g, 2);
+		visited.put(root, 2);
 	}
 
 	/**
 	 * nodes in list must be in finish time descending order
 	 */
-	private static <T> List<GraphNode<T>> transposeGraph(List<GraphNode<T>> nodes) {
-		Map<GraphNode<T>, GraphNode<T>> map = new HashMap<GraphNode<T>, GraphNode<T>>();
-		List<GraphNode<T>> result = new ArrayList<GraphNode<T>>();
+	private static <T> Graph<T> transposeAndSortGraph(Graph<T> g, List<GraphNode<T>> nodes) {
+		Graph<T> tg = new Graph<T>();
+		tg.vertices = nodes;
 		for (int i = 0; i < nodes.size(); i++) {
-			GraphNode<T> n = new GraphNode<T>(nodes.get(i).val);
-			map.put(nodes.get(i), n);
-			result.add(n);
-		}
-		for (int i = 0; i < nodes.size(); i++) {
-			for (GraphNode<T> child : nodes.get(i).children) {
+			for (GraphEdge<T> edge : g.edges.getOrDefault(nodes.get(i), Collections.<GraphEdge<T>>emptyList())) {
 				// This guarantee the children is stored in finish time descending order
-				map.get(child).children.add(map.get(nodes.get(i)));
+				tg.addEdge(edge.reverse());
 			}
 		}
-		return result;
+		return tg;
 	}
 
 }
