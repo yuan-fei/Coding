@@ -1,13 +1,9 @@
-import java.util.Collection;
-import java.util.HashMap;
+package graph;
+
 import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
-import basic.Graph;
-import basic.GraphEdge;
-import basic.GraphNode;
+import basic.SortedMapByValue;
 import basic.UnionFindSet;
 import utils.Util;
 
@@ -41,17 +37,13 @@ public class MinimumSpanningTree {
 				.addEdge(new GraphEdge<String>(h, i, 7)).addEdge(new GraphEdge<String>(g, i, 6))
 				.addEdge(new GraphEdge<String>(g, h, 1)).addEdge(new GraphEdge<String>(f, g, 2));
 		Graph<String> mst = mstWithKruskal(graph);
-		output(mst.edges.values());
+		output(mst.getEdges());
 		mst = mstWithPrim(graph, a);
-		output(mst.edges.values());
+		output(mst.getEdges());
 	}
 
-	private static void output(Collection<List<GraphEdge<String>>> edges) {
-		for (List<GraphEdge<String>> scc : edges) {
-			System.out.println(Util.toString(scc.stream().map(n -> {
-				return n.toString();
-			}).collect(Collectors.toList())));
-		}
+	private static void output(List<GraphEdge<String>> edges) {
+		System.out.println(Util.toString(edges));
 	}
 
 	/** O(ElgV) */
@@ -62,8 +54,8 @@ public class MinimumSpanningTree {
 		}
 
 		// Edges ordered by weight
-		List<GraphEdge<T>> edgesOrderByWeight = g.edges.values().stream().flatMap(List::stream)
-				.sorted(new GraphEdge.ComparatorByWeight<T>(true)).collect(Collectors.toList());
+		List<GraphEdge<T>> edgesOrderByWeight = g.getEdges().stream().sorted(new GraphEdge.ComparatorByWeight<T>(true))
+				.collect(Collectors.toList());
 		Graph<T> mst = new Graph<T>();
 		mst.vertices = g.vertices;
 		for (GraphEdge<T> e : edgesOrderByWeight) {
@@ -79,19 +71,18 @@ public class MinimumSpanningTree {
 	public static <T> Graph<T> mstWithPrim(Graph<T> g, GraphNode<T> r) {
 		Graph<T> mst = new Graph<T>();
 		mst.vertices = g.vertices;
-		Map<GraphNode<T>, GraphEdge<T>> map = new HashMap<GraphNode<T>, GraphEdge<T>>();
-		PriorityQueue<GraphEdge<T>> queue = new PriorityQueue<GraphEdge<T>>(new GraphEdge.ComparatorByWeight<T>(true));
+		SortedMapByValue<GraphNode<T>, GraphEdge<T>> map = new SortedMapByValue<GraphNode<T>, GraphEdge<T>>(
+				new GraphEdge.ComparatorByWeight<T>(true));
 		for (GraphNode<T> node : g.vertices) {
-			if (node != r) {
+			if (node.equals(r)) {
 				map.put(node, new GraphEdge<T>(node, node, Double.POSITIVE_INFINITY));
-				queue.offer(map.get(node));
+			} else {
+				map.put(r, new GraphEdge<T>(r, r, 0));
 			}
 		}
-		map.put(r, new GraphEdge<T>(r, r, 0));
-		queue.offer(map.get(r));
+
 		while (!map.isEmpty()) {
-			GraphEdge<T> minEdge = queue.poll();
-			map.remove(minEdge.target);
+			GraphEdge<T> minEdge = map.removeFirst().getValue();
 			mst.addEdge(minEdge);
 			List<GraphEdge<T>> edges = g.edges.get(minEdge.target);
 			if (edges != null) {
@@ -99,8 +90,6 @@ public class MinimumSpanningTree {
 					GraphEdge<T> curMinEdge = map.get(e.target);
 					if (curMinEdge != null && curMinEdge.weight > e.weight) {
 						map.put(e.target, e);
-						queue.remove(curMinEdge);
-						queue.add(e);
 					}
 				}
 			}

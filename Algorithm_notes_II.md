@@ -35,9 +35,14 @@
 * Negative weights circle: a circle whose sum of weights is negative
 	* A graph with negative weights circle has no shortest paths
 	* A graph with both negative weights and circle, but not negative weight circle can have shortest paths
-* Bellman-Ford: O(VE)
-	* No constraint for edge weight: support SSSP with negiative weights, can be used to check existance of a negative weight circle
-* Dijkstra: O((V+E)lgV)
-	* Can be used only for non-negative weight graph for the triangle inequity: D(u, v)+D(v, w) >= D(u, w)
+* SSSP for general directed graph
+	* Bellman-Ford: O(VE)
+		* support SSSP with negiative weights, can be used to check existance of a negative weight circle
+* SSSP for DAG
+	* Topological sort + relax edges in vertex order: O(V+E)
+		* Diameter/Longest path/Critical path of DAG 
+* SSSP for DG with non-negative weights
+	* Dijkstra: O((V+E)lgV)
+		* Can be used only for non-negative weight graph for the triangle inequity: D(u, v)+D(v, w) >= D(u, w)
 
 ## <a name='All_Pairs_Shortest_Paths'></a>All-Pairs Shortest Paths

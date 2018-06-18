@@ -1,10 +1,9 @@
+package graph;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import basic.Graph;
-import basic.GraphEdge;
-import basic.GraphNode;
 import basic.UnionFindSet;
 
 public class StronglyConnectedComponentForUndirectedGraph {
@@ -62,8 +61,8 @@ public class StronglyConnectedComponentForUndirectedGraph {
 	}
 
 	public static <T> List<Graph<T>> sscWithDFS(Graph<T> graph) {
-		GraphSearch<T> gs = new GraphSearch<T>();
-		List<List<GraphNode<T>>> nodes = gs.dfs(graph);
+		GraphSearch<T> gs = new GraphSearch<T>(graph);
+		List<List<GraphNode<T>>> nodes = gs.dfs();
 		List<Graph<T>> sccs = new ArrayList<Graph<T>>();
 		for (List<GraphNode<T>> scc : nodes) {
 			Graph<T> g = generateSubGraph(graph, scc);
@@ -73,8 +72,8 @@ public class StronglyConnectedComponentForUndirectedGraph {
 	}
 
 	public static <T> List<Graph<T>> sscWithBFS(Graph<T> graph) {
-		GraphSearch<T> gs = new GraphSearch<T>();
-		List<List<GraphNode<T>>> nodes = gs.bfs(graph);
+		GraphSearch<T> gs = new GraphSearch<T>(graph);
+		List<List<GraphNode<T>>> nodes = gs.bfs();
 		List<Graph<T>> sccs = new ArrayList<Graph<T>>();
 		for (List<GraphNode<T>> scc : nodes) {
 			Graph<T> g = generateSubGraph(graph, scc);

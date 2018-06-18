@@ -428,13 +428,13 @@ while(fast != null && fast.next != null){
 
 ```
 LinkNode slow = head;
-LinkNode fast = head.next;
+LinkNode fast = head;
 
 // cycle detection
 while(fast != null && fast.next != null){
 	slow = slow.next;
 	fast = fast.next.next;
-	if(fast.val == slow.val){
+	if(slow == fast){
 		break;
 	}
 }

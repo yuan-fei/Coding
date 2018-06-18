@@ -1,10 +1,9 @@
-package basic;
+package graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import utils.Util;
 
@@ -23,6 +22,23 @@ public class Graph<T> {
 		edges.putIfAbsent(e.source, new ArrayList<GraphEdge<T>>());
 		edges.get(e.source).add(e);
 		return this;
+	}
+
+	public Graph<T> removeEdge(GraphEdge<T> e) {
+		List<GraphEdge<T>> edgeList = edges.get(e.source);
+		edgeList.remove(e);
+		if (edgeList.isEmpty()) {
+			edges.remove(e.source);
+		}
+		return this;
+	}
+
+	public List<GraphEdge<T>> getEdges() {
+		List<GraphEdge<T>> flattendEdges = new ArrayList<GraphEdge<T>>();
+		for (List<GraphEdge<T>> edgeList : edges.values()) {
+			flattendEdges.addAll(edgeList);
+		}
+		return flattendEdges;
 	}
 
 	public Graph<T> getTransposedGraph() {
@@ -44,7 +60,7 @@ public class Graph<T> {
 		sb.append("Vertices: ");
 		sb.append(Util.toString(vertices));
 		sb.append("\nEdges: ");
-		sb.append(Util.toString(edges.values().stream().flatMap(List::stream).collect(Collectors.toList())));
+		sb.append(Util.toString(getEdges()));
 		return sb.toString();
 	}
 }

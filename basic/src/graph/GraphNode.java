@@ -1,4 +1,4 @@
-package basic;
+package graph;
 
 public class GraphNode<T> {
 	public T val;
