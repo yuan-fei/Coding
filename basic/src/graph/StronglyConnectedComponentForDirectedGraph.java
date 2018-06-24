@@ -1,4 +1,5 @@
 package graph;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import java.util.stream.Collectors;
 import utils.Util;
 
 /**
- * Strongly Connected Component for directed graph
+ * Strongly Connected Component for directed graph: O(V+E)
  */
 public class StronglyConnectedComponentForDirectedGraph {
 	public static void main(String[] args) {

@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,29 @@ public class Graph<T> {
 			flattendEdges.addAll(edgeList);
 		}
 		return flattendEdges;
+	}
+
+	public double[][] getAdjacentMatrix() {
+		Map<GraphNode<T>, Integer> map = getVerticeIndexMapping();
+
+		double[][] adjMatrix = new double[vertices.size()][vertices.size()];
+		for (int i = 0; i < adjMatrix.length; i++) {
+			Arrays.fill(adjMatrix[i], Double.POSITIVE_INFINITY);
+			adjMatrix[i][i] = 0;
+		}
+
+		for (GraphEdge<T> edge : getEdges()) {
+			adjMatrix[map.get(edge.source)][map.get(edge.target)] = edge.weight;
+		}
+		return adjMatrix;
+	}
+
+	public Map<GraphNode<T>, Integer> getVerticeIndexMapping() {
+		Map<GraphNode<T>, Integer> map = new HashMap<GraphNode<T>, Integer>();
+		for (int i = 0; i < vertices.size(); i++) {
+			map.put(vertices.get(i), i);
+		}
+		return map;
 	}
 
 	public Graph<T> getTransposedGraph() {

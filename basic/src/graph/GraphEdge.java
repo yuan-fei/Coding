@@ -14,7 +14,7 @@ public class GraphEdge<T> {
 	}
 
 	public GraphEdge(GraphNode<T> source, GraphNode<T> target) {
-		this(source, target, 0);
+		this(source, target, 1);
 	}
 
 	public GraphEdge<T> reverse() {
