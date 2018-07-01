@@ -133,6 +133,45 @@ public class GraphSearch<T> {
 		return result;
 	}
 
+	public List<GraphEdge<T>> bfsFindPath(GraphNode<T> s, GraphNode<T> t) {
+		return bfsFindPathHelper(graph, s, t);
+	}
+
+	private List<GraphEdge<T>> bfsFindPathHelper(Graph<T> g, GraphNode<T> r, GraphNode<T> t) {
+		Map<GraphNode<T>, GraphEdge<T>> pathMapping = new HashMap<GraphNode<T>, GraphEdge<T>>();
+
+		List<GraphEdge<T>> result = new ArrayList<GraphEdge<T>>();
+		Queue<GraphNode<T>> queue = new LinkedList<GraphNode<T>>();
+		visited.put(r, 0);
+		startTime.put(r, timer++);
+		queue.offer(r);
+		while (!queue.isEmpty()) {
+			GraphNode<T> n = queue.poll();
+			if (n == t) {
+				break;
+			}
+			visited.put(n, 2);
+			endTime.put(n, timer++);
+			for (GraphEdge<T> edge : g.edges.getOrDefault(n, Collections.<GraphEdge<T>>emptyList())) {
+				visited.putIfAbsent(edge.target, 0);
+				if (visited.get(edge.target) == 0) {
+					visited.put(edge.target, 1);
+					startTime.put(edge.target, timer++);
+					queue.offer(edge.target);
+					pathMapping.put(edge.target, edge);
+				}
+			}
+		}
+		GraphNode<T> parent = t;
+		while (pathMapping.containsKey(parent)) {
+			GraphEdge<T> e = pathMapping.get(parent);
+			result.add(e);
+			parent = e.source;
+		}
+		Collections.reverse(result);
+		return result;
+	}
+
 	public List<GraphNode<T>> topologicalSort() {
 		visited.clear();
 		startTime.clear();

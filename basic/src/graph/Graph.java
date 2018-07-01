@@ -2,6 +2,7 @@ package graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,11 @@ public class Graph<T> {
 			flattendEdges.addAll(edgeList);
 		}
 		return flattendEdges;
+	}
+
+	public GraphEdge<T> getEdge(GraphNode<T> s, GraphNode<T> t) {
+		List<GraphEdge<T>> edgeList = edges.getOrDefault(s, Collections.<GraphEdge<T>>emptyList());
+		return edgeList.stream().filter(e -> e.target == t).findFirst().orElse(null);
 	}
 
 	public double[][] getAdjacentMatrix() {

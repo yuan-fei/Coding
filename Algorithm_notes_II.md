@@ -74,3 +74,12 @@
 				* For each v, run Dijikstra with `O((V+E)lgV)`, which is in total `O(V(V+E)lgV)`, for sparse graph: E << V, so `O(V^2*lgV)`
 * Application
 	* Transitive closure: all reachable pairs
+
+## <a name='Maximum_Flow'></a>Maximum Flow
+* Flow network: DAG with capacity on edge >= 0
+	* flow conservation: total flow-in of a vertex = total flow-out of a vertex
+	* maximum flow = minimum cut
+* Ford-Fulkerson method:
+	* Find augment path in a residual network, consume it
+* Edmonds-Karp algorithm: O(VE^2)
+	* Ford-Fulkerson method implementation with BFS for augment path searching
