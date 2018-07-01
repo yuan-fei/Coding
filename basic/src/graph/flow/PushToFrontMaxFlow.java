@@ -1,15 +1,12 @@
 package graph.flow;
 
+import java.util.List;
+
 import graph.Graph;
 import graph.GraphEdge;
 import graph.GraphNode;
 
-/**
- * Find max flow in a network with push-relabel operation in O(EV^2). Idea: only
- * flow from high position to low position. Invariant: height(u) <= height(v) +
- * 1
- */
-public class GenericPushRelabelMaxFlow {
+public class PushToFrontMaxFlow {
 
 	public static void main(String[] args) {
 		Graph<String> g = new Graph<String>();
@@ -29,26 +26,26 @@ public class GenericPushRelabelMaxFlow {
 		System.out.println(g);
 		ResidualNetworkState<String> st = getMaxFlow(g, s, t);
 		System.out.println(st);
+
 	}
 
 	private static <T> ResidualNetworkState<T> getMaxFlow(Graph<T> g, GraphNode<T> s, GraphNode<T> t) {
-		PushRelabelResidualNetworkState<T> r = new PushRelabelResidualNetworkState<T>(g, s, t);
-		boolean operated = true;
-		while (operated) {
-			operated = false;
-			for (GraphNode<T> u : r.getResidualVertices()) {
-				if (r.isRelabelApplicable(u)) {
-					r.relabel(u);
-					operated = true;
-				}
-				for (GraphEdge<T> e : r.getResidualEdges(u)) {
-					if (r.isPushApplicable(u, e.target)) {
-						r.push(u, e.target);
-						operated = true;
-					}
-				}
+		AdmissibleNetworkState<T> r = new AdmissibleNetworkState<>(g, s, t);
+		List<GraphNode<T>> checkList = r.getResidualVertices();
+		checkList.remove(s);
+		checkList.remove(t);
+		int i = 0;
+		while (i < checkList.size()) {
+			GraphNode<T> u = checkList.get(i);
+			int oldHeight = r.height.get(u);
+			r.discharge(u);
+			if (r.height.get(u) > oldHeight) {
+				checkList.add(0, checkList.remove(i));
+				i = 0;
 			}
+			i++;
 		}
 		return r;
 	}
+
 }

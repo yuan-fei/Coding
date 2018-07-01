@@ -1,7 +1,11 @@
-package graph;
+package graph.flow;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import graph.Graph;
+import graph.GraphEdge;
+import graph.GraphNode;
 
 public class PushRelabelResidualNetworkState<T> extends ResidualNetworkState<T> {
 
@@ -36,24 +40,22 @@ public class PushRelabelResidualNetworkState<T> extends ResidualNetworkState<T> 
 		preflow.put(v, preflow.get(v) + deltaFlow);
 	}
 
-	private boolean isOverflowing(GraphNode<T> u) {
-		return preflow.get(u) > 0;
+	public boolean isOverflowing(GraphNode<T> u) {
+		return u != source && u != target && preflow.get(u) > 0;
 	}
 
-	private boolean IsPushApplicable(GraphNode<T> u, GraphNode<T> v) {
+	public boolean isPushApplicable(GraphNode<T> u, GraphNode<T> v) {
 		double residualCapacity = getResidualCapacity(u, v);
 		int heightDiff = height.get(u) - height.get(v);
 		return isOverflowing(u) && residualCapacity > 0 && (heightDiff == 1);
 	}
 
-	private boolean IsRelabelApplicable(GraphNode<T> u) {
+	public boolean isRelabelApplicable(GraphNode<T> u) {
 		if (!isOverflowing(u)) {
 			return false;
 		}
-		for (GraphEdge<T> e : getResidualNetworkEdges(u)) {
-			if (height.get(u) > height.get(e.target))
-				;
-			{
+		for (GraphEdge<T> e : getResidualEdges(u)) {
+			if (height.get(u) > height.get(e.target)) {
 				return false;
 			}
 		}
@@ -64,8 +66,8 @@ public class PushRelabelResidualNetworkState<T> extends ResidualNetworkState<T> 
 		if (!isOverflowing(u)) {
 			return -1;
 		}
-		int lowestHeight = 0;
-		for (GraphEdge<T> e : getResidualNetworkEdges(u)) {
+		int lowestHeight = Integer.MAX_VALUE;
+		for (GraphEdge<T> e : getResidualEdges(u)) {
 			if (height.get(u) <= height.get(e.target)) {
 				lowestHeight = Math.min(lowestHeight, height.get(e.target));
 			} else {
@@ -78,7 +80,7 @@ public class PushRelabelResidualNetworkState<T> extends ResidualNetworkState<T> 
 	public void push(GraphNode<T> u, GraphNode<T> v) {
 		double rc = getResidualCapacity(u, v);
 		double f = Math.min(preflow.get(u), rc);
-		updateFlow(u, v, rc + f);
+		updateFlow(u, v, getFlow(u, v) + f);
 		movePreflow(u, v, f);
 	}
 
@@ -87,5 +89,16 @@ public class PushRelabelResidualNetworkState<T> extends ResidualNetworkState<T> 
 		if (newHeight >= 0) {
 			height.put(u, newHeight + 1);
 		}
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append("\nPreflow:");
+		sb.append(preflow);
+		sb.append("\nHeight:");
+		sb.append(height);
+		return sb.toString();
 	}
 }

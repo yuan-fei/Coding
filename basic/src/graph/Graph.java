@@ -20,6 +20,16 @@ public class Graph<T> {
 		return this;
 	}
 
+	public List<GraphNode<T>> getNeighborVertices(GraphNode<T> u) {
+		List<GraphNode<T>> neighbors = new ArrayList<GraphNode<T>>();
+		for (GraphNode<T> v : vertices) {
+			if (getEdge(u, v) != null || getEdge(v, u) != null) {
+				neighbors.add(v);
+			}
+		}
+		return neighbors;
+	}
+
 	public Graph<T> addEdge(GraphEdge<T> e) {
 		edges.putIfAbsent(e.source, new ArrayList<GraphEdge<T>>());
 		edges.get(e.source).add(e);

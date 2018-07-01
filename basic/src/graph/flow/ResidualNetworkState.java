@@ -1,4 +1,4 @@
-package graph;
+package graph.flow;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import graph.Graph;
+import graph.GraphEdge;
+import graph.GraphNode;
 import utils.Util;
 
 public class ResidualNetworkState<T> {
@@ -25,16 +28,16 @@ public class ResidualNetworkState<T> {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("net flow: " + getNetworkFlow());
+		sb.append("Net flow: " + getNetworkFlow());
 		List<GraphEdge<T>> flattendEdges = new ArrayList<GraphEdge<T>>();
 		for (Entry<GraphNode<T>, Map<GraphNode<T>, Double>> sourceEntry : flow.entrySet()) {
 			for (Entry<GraphNode<T>, Double> targetEntry : sourceEntry.getValue().entrySet()) {
 				flattendEdges.add(new GraphEdge<T>(sourceEntry.getKey(), targetEntry.getKey(), targetEntry.getValue()));
 			}
 		}
-		sb.append("\nflow network: ");
+		sb.append("\nFlow network: ");
 		sb.append(Util.toString(flattendEdges));
-		sb.append("\nresidual network: ");
+		sb.append("\nResidual network: ");
 		sb.append(getResidualNetwork());
 		return sb.toString();
 	}
@@ -49,12 +52,16 @@ public class ResidualNetworkState<T> {
 		Graph<T> residualNetwork = new Graph<T>();
 		residualNetwork.vertices.addAll(g.vertices);
 		for (GraphNode<T> u : g.vertices) {
-			residualNetwork.edges.put(u, getResidualNetworkEdges(u));
+			residualNetwork.edges.put(u, getResidualEdges(u));
 		}
 		return residualNetwork;
 	}
 
-	protected List<GraphEdge<T>> getResidualNetworkEdges(GraphNode<T> u) {
+	public List<GraphNode<T>> getResidualVertices() {
+		return new ArrayList<GraphNode<T>>(g.vertices);
+	}
+
+	public List<GraphEdge<T>> getResidualEdges(GraphNode<T> u) {
 		List<GraphEdge<T>> edges = new ArrayList<GraphEdge<T>>();
 		for (GraphNode<T> v : g.vertices) {
 			double rc = getResidualCapacity(u, v);

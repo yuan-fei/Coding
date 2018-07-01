@@ -6,10 +6,9 @@ import graph.Graph;
 import graph.GraphEdge;
 import graph.GraphNode;
 import graph.GraphSearch;
-import graph.ResidualNetworkState;
 
 /**
- * Find max flow in a network with O(VE^2). A implementation of Ford-Fulkerson
+ * Find max flow in a network in O(VE^2). A implementation of Ford-Fulkerson
  * method
  */
 public class EdmondsKarpMaxFlow {

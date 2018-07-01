@@ -81,5 +81,12 @@
 	* maximum flow = minimum cut
 * Ford-Fulkerson method:
 	* Find augment path in a residual network, consume it
-* Edmonds-Karp algorithm: O(VE^2)
+* Edmonds-Karp algorithm: `O(VE^2)`
 	* Ford-Fulkerson method implementation with BFS for augment path searching
+* Push-Relabel algorithm: `O(EV^2)`
+	* Only flow from 'high' to 'low'
+		* preflow(v): flow-in of v
+		* push: flow from one overflow (preflow(v)>0) vertex to another vertex
+		* relabel: adjust height of overflow vertex in order to flow out
+* Relabel to front algorithm:`O(V^3)`
+	* 
