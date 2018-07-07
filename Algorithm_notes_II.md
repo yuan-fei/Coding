@@ -79,7 +79,7 @@
 * Flow network: DAG with capacity on edge >= 0
 	* flow conservation: total flow-in of a vertex = total flow-out of a vertex
 	* maximum flow = minimum cut
-* Ford-Fulkerson method:
+* Ford-Fulkerson method: `O(E * max-flow)`
 	* Find augment path in a residual network, consume it
 * Edmonds-Karp algorithm: `O(VE^2)`
 	* Ford-Fulkerson method implementation with BFS for augment path searching
@@ -89,4 +89,27 @@
 		* push: flow from one overflow (preflow(v)>0) vertex to another vertex
 		* relabel: adjust height of overflow vertex in order to flow out
 * Relabel to front algorithm:`O(V^3)`
-	* 
+	* Admissible network: `h(u) = h(v) + 1`
+	* Keep topological order
+* Bipartite max matching
+	* Max-size matching
+		* Max flow: `O(VE)`
+			* Convert to a flow network
+				* Add a super source s connect to every vertice in part X each with unit capacity.
+				* Add a super target t connect to every vertice in part Y each with unit capacity.
+				* Add all edges between X and Y with unit capacity
+			* With Ford-Fulkerson method the max-flow of converted flow network is at most V/2, thus O(V * E)
+		* Hopcroft-Karp: `O(EV^0.5)` (CLRS 26.6)
+			* Alternative/Augmenting path: start with unmatched vertex in U, end with unmatched vertex in V, and the edges between belongs alternatively to Matched (M) and Unmatched (E-M) groups.
+			* Intuitives: Find vertext disjoint shortest alternativve path, augment with them (XOR) until no such path exists.
+			* Implementation: BFS + DFS
+				* BFS: mark all possible shortest alternative paths
+				* DFS: check and update matching with the alternative paths
+	* Max-weight matching
+		* Kuhn-Munkres (Hungarian algorithm): `O(V^3)` ([http://www.cse.ust.hk/%7Egolin/COMP572/Notes/Matching.pdf](http://www.cse.ust.hk/%7Egolin/COMP572/Notes/Matching.pdf))
+			* Assume there is a perfect matching. This can be done by adding zero-weight edges to all missing pair.
+			* Intuitive: find perfect matching in equality graph
+				* Labeling vertices: `L(u) + L(v) >= Weight(u,v)`
+				* Equality Graph: verteices and edges with  `L(u) + L(v) = Weight(u,v)`
+				* Kuhn-Munkres Theorem: A perfect matching in equality graph is a max weight matching
+				* Extend equality graph with relabeling, always pick a new vertex with minimum slack into euqality graph which will bring the total labeling of euqaity graph least decrease

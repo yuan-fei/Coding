@@ -31,7 +31,7 @@ public class GenericPushRelabelMaxFlow {
 		System.out.println(st);
 	}
 
-	private static <T> ResidualNetworkState<T> getMaxFlow(Graph<T> g, GraphNode<T> s, GraphNode<T> t) {
+	public static <T> ResidualNetworkState<T> getMaxFlow(Graph<T> g, GraphNode<T> s, GraphNode<T> t) {
 		PushRelabelResidualNetworkState<T> r = new PushRelabelResidualNetworkState<T>(g, s, t);
 		boolean operated = true;
 		while (operated) {

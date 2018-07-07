@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import utils.Util;
 
@@ -28,6 +30,10 @@ public class Graph<T> {
 			}
 		}
 		return neighbors;
+	}
+
+	public Set<GraphNode<T>> getNeighborVertices(Set<GraphNode<T>> s) {
+		return s.stream().flatMap(u -> getNeighborVertices(u).stream()).collect(Collectors.toSet());
 	}
 
 	public Graph<T> addEdge(GraphEdge<T> e) {
@@ -53,9 +59,9 @@ public class Graph<T> {
 		return flattendEdges;
 	}
 
-	public GraphEdge<T> getEdge(GraphNode<T> s, GraphNode<T> t) {
-		List<GraphEdge<T>> edgeList = edges.getOrDefault(s, Collections.<GraphEdge<T>>emptyList());
-		return edgeList.stream().filter(e -> e.target == t).findFirst().orElse(null);
+	public GraphEdge<T> getEdge(GraphNode<T> u, GraphNode<T> v) {
+		List<GraphEdge<T>> edgeList = edges.getOrDefault(u, Collections.<GraphEdge<T>>emptyList());
+		return edgeList.stream().filter(e -> e.target == v).findFirst().orElse(null);
 	}
 
 	public double[][] getAdjacentMatrix() {

@@ -6,6 +6,7 @@ import graph.Graph;
 import graph.GraphEdge;
 import graph.GraphNode;
 
+/** Find max flow in a network with push-relabel operation in O(V^3) */
 public class PushToFrontMaxFlow {
 
 	public static void main(String[] args) {
@@ -29,7 +30,7 @@ public class PushToFrontMaxFlow {
 
 	}
 
-	private static <T> ResidualNetworkState<T> getMaxFlow(Graph<T> g, GraphNode<T> s, GraphNode<T> t) {
+	public static <T> ResidualNetworkState<T> getMaxFlow(Graph<T> g, GraphNode<T> s, GraphNode<T> t) {
 		AdmissibleNetworkState<T> r = new AdmissibleNetworkState<>(g, s, t);
 		List<GraphNode<T>> checkList = r.getResidualVertices();
 		checkList.remove(s);
