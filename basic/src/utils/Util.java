@@ -2,7 +2,9 @@ package utils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.IntPredicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Util {
 	public static <T> String toString(List<T> l) {
@@ -27,5 +29,9 @@ public class Util {
 				dest[i][j] = src[i][j];
 			}
 		}
+	}
+
+	public static int indexOfFirst(double[] arr, IntPredicate filter) {
+		return IntStream.range(0, arr.length).filter(filter).findFirst().orElse(-1);
 	}
 }

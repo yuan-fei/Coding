@@ -21,3 +21,43 @@
 * Matrix inversion: `O(n^3)`
 	* Matrix inversion <=> solve equation `AX = I`
 		* LUP decomposition for solving each `Ax=e_i` of I
+
+## <a name='Linear_Programming'></a>Linear Programming
+* Standard form: used for define problem
+	
+	
+	~~~
+	Maximize: sum(c[j] * x[j]), where j = 1 ~ n
+	Subject to: 
+	(i) sum_i(a[i, j] * x[j]) <= b[i] where i = 1 ~ m, j = 1 ~ n
+	(ii) x[j] >= 0 where j = 1 ~ n
+	~~~
+
+	* maximize objective, '<=' ineuality constraint, varaibles non-negative constraint
+	* transform to standard form
+		* minimize objective: maximize negation objective
+		* equality constraint: `=` <=> `>= and <=`
+		* `>=` inequality constraint: negation for `<=`
+		* variables x[i] not non-negative: introduce 2 non-negative aux variables for `xl`, `xr`, and define `x[i] = xl - xr`
+* Slack form: used for Simplex method
+
+	~~~
+	Maximize: sum(c[j] * x[j]), where j = 1 ~ n
+	let x[n+i] = b[i] - sum_i(a[i, j] * x[j]) where i = 1 ~ m, j = 1 ~ n
+	Subject to: x[j] >= 0 where j = 1 ~ n + m
+	
+	~~~
+	
+	* slack variables(`x[n+i]`), basic variables (variables on the left of equation) and non-basic variables (variables on the right of equation)
+* Possible solutions of a LP problem
+	* no feasible solution satifies all constraints
+	* has 1 optimal solution
+	* unbounded: objective can be positive infinite
+* Simplex method
+	* Change non-basic variables to basic variables by transformation among euqavalent slack forms until all the coefficients in objective are non-positive
+	* pivot: roll in new basic variable and roll out old basic variable
+	* initialize-simplex: check if feasible by solving a auxiliary LP problem
+* Duality in LP problem
+	* Primal problem: `maximize cx where Ax <= b, x >= 0`
+	* Dual problem: `minimize by where transpose(A)y >= c, y>=0`
+	* LP duality: `cx* = by*` where `x*` and `y*` are solutions when the primal and dual problems get their optimal value
