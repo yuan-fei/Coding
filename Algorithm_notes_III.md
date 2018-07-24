@@ -54,9 +54,15 @@
 	* has 1 optimal solution
 	* unbounded: objective can be positive infinite
 * Simplex method
+	* Intuitive: 
+		* The constraints defines a **simplex** which is a **convex** region in solution space, and the optimal objective value must be obtained on one vertex of the region.
+		* Simplex method first check objective value on 1 vertex and moves along the edge to its neighbor vertex whose objective value is non-decreasing
+		* Simplex terminates at a local optima when all neighbors have smaller objective value
 	* Change non-basic variables to basic variables by transformation among euqavalent slack forms until all the coefficients in objective are non-positive
 	* pivot: roll in new basic variable and roll out old basic variable
-	* initialize-simplex: check if feasible by solving a auxiliary LP problem
+	* initialize-simplex: 
+		* check if feasible by solving a auxiliary LP problem
+		* find a initial feasible solution where to start from 
 * Duality in LP problem
 	* Primal problem: `maximize cx where Ax <= b, x >= 0`
 	* Dual problem: `minimize by where transpose(A)y >= c, y>=0`
