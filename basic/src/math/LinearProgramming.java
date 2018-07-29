@@ -1,4 +1,4 @@
-package matrix;
+package math;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import matrix.LinearProgramming.SolutionType;
+import math.LinearProgramming.SolutionType;
 import utils.Util;
 
 public class LinearProgramming {
