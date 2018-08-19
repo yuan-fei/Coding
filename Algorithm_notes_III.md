@@ -251,3 +251,36 @@
 			* Based on Floyd's tortoise and hare algorithm: 
 				* Create a cycle: x<sub>i</sub> = x<sub>i-1</sub><sup>2</sup>-c mod n
 				* Find 2 number meet in the cycle: x<sub>i</sub> ≡ x<sub>j</sub> mod p, where p is a factor of n, so that gcd(x<sub>i</sub> - x<sub>j</sub>, n) = p
+
+## <a name='Computational_Geometry'></a>Computational Geometry
+* segment
+	* Vector's product: p<sub>1</sub>(x<sub>1</sub>,y<sub>1</sub>), p<sub>2</sub>(x<sub>2</sub>,y<sub>2</sub>)
+		* dot product: p<sub>1</sub> . p<sub>2</sub> = x<sub>1</sub>x<sub>2</sub> - y<sub>1</sub>y<sub>2</sub>
+			* vector cosine similarity
+			* p<sub>1</sub> . p<sub>2</sub> = |p<sub>1</sub>||p<sub>2</sub>|cos\<p<sub>1</sub>, p<sub>2</sub>>
+		* cross product: p<sub>1</sub> * p<sub>2</sub> = x<sub>1</sub>y<sub>2</sub> - x<sub>2</sub>y<sub>1</sub>
+			* Area of parrelelogram with direction: |p<sub>1</sub> * p<sub>2</sub>| = |p<sub>1</sub>||p<sub>2</sub>|sin\<p<sub>1</sub>, p<sub>2</sub>>
+			* Sign: + means counter-clockwise, - means clockwise
+	* 2 segments intersection
+		* 2 segments intersects if
+			1. Each segment straddles the line containing the other, or
+			2. An endpoint of one segment lies on the other segment.
+	* Any segments intersection: determining whether any two line segments in a set of segments intersect
+		* Sweep line (Shamos-Hoey algorithm): O(nlogn)
+			* Sweep from left to right while keeping a total order of active segements, only the adjacent segments could have chance to intersect
+				* sweep line status: ordering of active segments that the sweep line intersects
+				* event point schedule: where sweep line stops to add new segment or to remove inactive segment
+* Convex Hull: CH(Q)
+	* Graham's scan algorithm: O(nlogn)
+		1. Choose initial point p<sub>0</sub> who has the lowest y, it must be the point of CH
+		2. Sort other points by the polar angle of p<sub>0</sub>p<sub>i</sub> in couter-clockwise order, and the choose the point with max |p<sub>0</sub>p<sub>i</sub>| if multiple points have the same polar angle. 
+		3. For the sorted points (p<sub>0</sub>,...,p<sub>k</sub> ), maintain a stack S for points, for each point p<sub>i</sub>
+			* push point p<sub>i</sub> if  angle of S<sub>top-1</sub>S<sub>top</sub>, S<sub>top</sub>p<sub>i</sub> is counter-clockwise
+			* pop S<sub>top</sub> if  angle of S<sub>top-1</sub>S<sub>top</sub>, S<sub>top</sub>p<sub>i</sub> is clockwise
+	* Javis's march algorithm: O(nh) where h is the number of vertices of convex hull
+		1. Choose initial point p<sub>0</sub> who has the lowest y, it must be the point of CH
+		2. For p<sub>0</sub>, pick the point p<sub>i</sub> which p<sub>0</sub>p<sub>i</sub> has the lowest polar angle, and for p<sub>i</sub>, pick the point p<sub>i</sub> which p<sub>i</sub>p<sub>i+1</sub> has the lowest polar angle...
+* Closest pair of points: O(nlogn)
+	* Devide and Concur
+		1. Split the points set into 2 by splitter x=a, recursively get minimum distance from each part, and d = min(d<sub>l</sub>, d<sub>r</sub>).
+		2. Check if points between 2 parts has shorter distance. for each point in region (a-d, a+d) with y sorted, only check the points not d higher above it. It can be proven that at most 7 points have to be checked. 
