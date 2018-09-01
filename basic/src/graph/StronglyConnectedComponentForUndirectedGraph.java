@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import basic.UnionFindSet;
+import tree.UnionFindSet;
 
 public class StronglyConnectedComponentForUndirectedGraph {
 	public static void main(String[] args) {

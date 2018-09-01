@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import basic.TreeNode;
+import tree.TreeNode;
 
 public class LeastCommonAncester {
 

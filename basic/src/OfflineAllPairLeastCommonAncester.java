@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import basic.TreeNode;
-import basic.UnionFindSet;
+import tree.TreeNode;
+import tree.UnionFindSet;
 
 /**
  * Tarjan's offline Least common ancester algorithm with union find set

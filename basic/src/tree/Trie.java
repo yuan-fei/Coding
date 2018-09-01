@@ -1,4 +1,4 @@
-package basic;
+package tree;
 
 public class Trie {
 

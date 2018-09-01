@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import basic.SortedMapByValue;
-import basic.UnionFindSet;
+import tree.UnionFindSet;
 import utils.Util;
 
 public class MinimumSpanningTree {
