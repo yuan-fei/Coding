@@ -38,5 +38,7 @@
 	* rotation: left rotate and right rotate helps to reshape a subtree
 	* insert: insert as BST, and make the node red, do insert fix up for red parent-child case (property 4)
 	* delete: delete as BST, do insert fix up for bh imbalance case (property 5)
+	
 ![RBT insert fix up](pics/RBT-insert-fixup.jpg)
+
 ![RBT delete fix up](pics/RBT-delete-fixup.jpg)
