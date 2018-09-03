@@ -34,6 +34,10 @@
 		3. Every leaf (NIL) is black.
 		4. If a node is red, then both its children are black.
 		5. For each node, all simple paths from the node to descendant leaves contain the same number of black nodes. 
+	* Balanced: no path is twice as long as others. h <= 2log(n+1)
+* Left Lean RBT: Only left child can be red
+	* LLRBT is equavalent to 2-3/2-3-4 tree (B tree with minimum degree = 2)
+	* It has simpler implementation
 * Implementation
 	* rotation: left rotate and right rotate helps to reshape a subtree
 	* insert: insert as BST, and make the node red, do insert fix up for red parent-child case (property 4)
