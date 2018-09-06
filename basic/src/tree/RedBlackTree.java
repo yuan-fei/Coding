@@ -1,5 +1,7 @@
 package tree;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,14 +9,14 @@ import java.util.Queue;
 
 import math.SamplingAndShuffling;
 
-public class RedBlackTree<K extends Comparable<K>> {
+public class RedBlackTree<K extends Comparable<K>, N extends AbstractRedBlackTreeNode<K, N>> {
 
 	public static void main(String[] args) {
 		testRandom();
 	}
 
 	private static void test() {
-		RedBlackTree<Integer> rbt = new RedBlackTree<Integer>();
+		RedBlackTree<Integer, RedBlackTreeNode<Integer>> rbt = new RedBlackTree<Integer, RedBlackTreeNode<Integer>>();
 		int[] k = new int[] { 1, 2, 4, 0, 6, 5, 3 };
 		System.out.println("Insert");
 		System.out.println(Arrays.toString(k));
@@ -32,7 +34,7 @@ public class RedBlackTree<K extends Comparable<K>> {
 	}
 
 	private static void testRandom() {
-		RedBlackTree<Integer> rbt = new RedBlackTree<Integer>();
+		RedBlackTree<Integer, RedBlackTreeNode<Integer>> rbt = new RedBlackTree<Integer, RedBlackTreeNode<Integer>>();
 		int[] k = SamplingAndShuffling.shuffle(7);
 		System.out.println("Insert");
 		System.out.println(Arrays.toString(k));
@@ -49,16 +51,16 @@ public class RedBlackTree<K extends Comparable<K>> {
 		}
 	}
 
-	RedBlackTreeNode<K> root;
+	N root;
 
 	public void print() {
-		Queue<RedBlackTreeNode<K>> q = new LinkedList<RedBlackTreeNode<K>>();
+		Queue<N> q = new LinkedList<N>();
 		q.offer(root);
 		while (!q.isEmpty()) {
 			int cnt = q.size();
 			String s = "";
 			for (int i = 0; i < cnt; i++) {
-				RedBlackTreeNode<K> n = q.poll();
+				N n = q.poll();
 				s += (n + ",");
 				if (n != null) {
 					q.offer(n.leftChild);
@@ -70,11 +72,11 @@ public class RedBlackTree<K extends Comparable<K>> {
 		System.out.println();
 	}
 
-	public RedBlackTreeNode<K> search(K key) {
-		return searchRecursive(key, root);
+	public N search(K key) {
+		return search(key, root);
 	}
 
-	public RedBlackTreeNode<K> searchRecursive(K key, RedBlackTreeNode<K> root) {
+	public N search(K key, N root) {
 		if (root == null) {
 			return null;
 		}
@@ -82,24 +84,24 @@ public class RedBlackTree<K extends Comparable<K>> {
 		if (result == 0) {
 			return root;
 		} else if (result < 0) {
-			return searchRecursive(key, root.leftChild);
+			return search(key, root.leftChild);
 		} else {
-			return searchRecursive(key, root.rightChild);
+			return search(key, root.rightChild);
 		}
 	}
 
-	private boolean isNullOrBlack(RedBlackTreeNode<K> r) {
+	private boolean isNullOrBlack(N r) {
 		return r == null || r.color == Color.B;
 	}
 
-	private boolean isRed(RedBlackTreeNode<K> r) {
+	private boolean isRed(N r) {
 		return r != null && r.color == Color.R;
 	}
 
-	public RedBlackTree<K> insert(K k) {
-		RedBlackTreeNode<K> insertedNode;
+	public RedBlackTree<K, N> insert(K k) {
+		N insertedNode;
 		if (root == null) {
-			root = new RedBlackTreeNode<K>(k, Color.B);
+			root = newNode(k, Color.B);
 			insertedNode = root;
 		} else {
 			insertedNode = insert(k, root);
@@ -110,19 +112,45 @@ public class RedBlackTree<K extends Comparable<K>> {
 		return this;
 	}
 
-	private RedBlackTreeNode<K> insert(K k, RedBlackTreeNode<K> r) {
+	protected N newNode(K k, Color c) {
+		Class<N> claz = (Class<N>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+		try {
+			return (N) claz.getConstructor(k.getClass(), c.getClass()).newInstance(k, c);
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	protected N insert(K k, N r) {
 		if (r != null) {
 			int result = k.compareTo(r.key);
 			if (result < 0) {
 				if (r.leftChild == null) {
-					r.setLChild(new RedBlackTreeNode<K>(k, Color.R));
+					r.setLeftChild(newNode(k, Color.R));
 					return r.leftChild;
 				} else {
 					return insert(k, r.leftChild);
 				}
 			} else if (result > 0) {
 				if (r.rightChild == null) {
-					r.setRChild(new RedBlackTreeNode<K>(k, Color.R));
+					r.setRightChild(newNode(k, Color.R));
 					return r.rightChild;
 				} else {
 					return insert(k, r.rightChild);
@@ -135,7 +163,7 @@ public class RedBlackTree<K extends Comparable<K>> {
 		}
 	}
 
-	private void fixUpInsert(RedBlackTreeNode<K> r) {
+	private void fixUpInsert(N r) {
 		while (true) {
 			if (r.parent == null) { // root
 				r.color = Color.B;
@@ -183,40 +211,42 @@ public class RedBlackTree<K extends Comparable<K>> {
 	}
 
 	/** Assume r.rightChild!=null */
-	private void leftRotate(RedBlackTreeNode<K> r) {
-		RedBlackTreeNode<K> y = r.rightChild;
-		r.setRChild(y.leftChild);
+	protected N leftRotate(N r) {
+		N y = r.rightChild;
+		r.setRightChild(y.leftChild);
 		if (r.parent == null) {
 			root = y;
 			y.parent = null;
 		} else {
 			if (r.parent.leftChild == r) {
-				r.parent.setLChild(y);
+				r.parent.setLeftChild(y);
 			} else {
-				r.parent.setRChild(y);
+				r.parent.setRightChild(y);
 			}
 		}
-		y.setLChild(r);
+		y.setLeftChild(r);
+		return y;
 	}
 
 	/** Assume r.leftChild!=null */
-	private void rightRotate(RedBlackTreeNode<K> r) {
-		RedBlackTreeNode<K> y = r.leftChild;
-		r.setLChild(y.rightChild);
+	protected N rightRotate(N r) {
+		N y = r.leftChild;
+		r.setLeftChild(y.rightChild);
 		if (r.parent == null) {
 			root = y;
 			y.parent = null;
 		} else {
 			if (r.parent.leftChild == r) {
-				r.parent.setLChild(y);
+				r.parent.setLeftChild(y);
 			} else {
-				r.parent.setRChild(y);
+				r.parent.setRightChild(y);
 			}
 		}
-		y.setRChild(r);
+		y.setRightChild(r);
+		return y;
 	}
 
-	private void flipColor(RedBlackTreeNode<K> r) {
+	private void flipColor(N r) {
 		Color c = r.color;
 		if (r.leftChild != null) {
 			r.color = r.leftChild.color;
@@ -230,11 +260,11 @@ public class RedBlackTree<K extends Comparable<K>> {
 	}
 
 	public void delete(K k) {
-		List<RedBlackTreeNode<K>> nodes = deleteRecursive(k, root);
+		List<N> nodes = delete(k, root);
 		print();
 		System.out.println("fix");
-		RedBlackTreeNode<K> deleteNode = nodes.get(0);
-		RedBlackTreeNode<K> fixNode = nodes.get(1);
+		N deleteNode = nodes.get(0);
+		N fixNode = nodes.get(1);
 		if (deleteNode == root) {
 			root = null;
 		} else if (deleteNode.color == Color.B) {
@@ -243,7 +273,7 @@ public class RedBlackTree<K extends Comparable<K>> {
 	}
 
 	/** Assume r is p's child, and p is imbalanced with left and right child */
-	private void fixUpDelete(RedBlackTreeNode<K> p, RedBlackTreeNode<K> x) {
+	private void fixUpDelete(N p, N x) {
 		while (true) {
 			if (p == null) { // x is root
 				x.color = Color.B;
@@ -309,26 +339,26 @@ public class RedBlackTree<K extends Comparable<K>> {
 	}
 
 	/** Assume r is not null */
-	private List<RedBlackTreeNode<K>> deleteRecursive(K k, RedBlackTreeNode<K> r) {
+	protected List<N> delete(K k, N r) {
 
-		RedBlackTreeNode<K> deleteNode = null;
-		RedBlackTreeNode<K> fixNode = null;
+		N deleteNode = null;
+		N fixNode = null;
 		int result = k.compareTo(r.key);
 		if (result < 0) {
 			if (r.leftChild != null) {
-				return deleteRecursive(k, r.leftChild);
+				return delete(k, r.leftChild);
 			}
 		} else if (result > 0) {
 			if (r.rightChild != null) {
-				return deleteRecursive(k, r.rightChild);
+				return delete(k, r.rightChild);
 			}
 		} else {
 			if (r.leftChild == null && r.rightChild == null) {
 				if (r.parent != null) {
 					if (r.parent.leftChild == r) {
-						r.parent.setLChild(null);
+						r.parent.setLeftChild(null);
 					} else {
-						r.parent.setRChild(null);
+						r.parent.setRightChild(null);
 					}
 				}
 				deleteNode = r;
@@ -336,20 +366,19 @@ public class RedBlackTree<K extends Comparable<K>> {
 				if (r.leftChild != null) {
 					deleteNode = findMax(r.leftChild);
 					if (deleteNode.parent.leftChild == deleteNode) {
-						deleteNode.parent.setLChild(deleteNode.leftChild);
+						deleteNode.parent.setLeftChild(deleteNode.leftChild);
 						fixNode = deleteNode.leftChild;
 					} else {
-						deleteNode.parent.setRChild(deleteNode.leftChild);
+						deleteNode.parent.setRightChild(deleteNode.leftChild);
 						fixNode = deleteNode.leftChild;
 					}
-
 				} else {
 					deleteNode = findMin(r.rightChild);
 					if (deleteNode.parent.leftChild == deleteNode) {
-						deleteNode.parent.setLChild(deleteNode.rightChild);
+						deleteNode.parent.setLeftChild(deleteNode.rightChild);
 						fixNode = deleteNode.rightChild;
 					} else {
-						deleteNode.parent.setRChild(deleteNode.rightChild);
+						deleteNode.parent.setRightChild(deleteNode.rightChild);
 						fixNode = deleteNode.rightChild;
 					}
 				}
@@ -359,14 +388,14 @@ public class RedBlackTree<K extends Comparable<K>> {
 		return Arrays.asList(deleteNode, fixNode);
 	}
 
-	private RedBlackTreeNode<K> findMin(RedBlackTreeNode<K> r) {
+	private N findMin(N r) {
 		if (r.leftChild != null) {
 			return findMin(r.leftChild);
 		}
 		return r;
 	}
 
-	private RedBlackTreeNode<K> findMax(RedBlackTreeNode<K> r) {
+	private N findMax(N r) {
 		if (r.rightChild != null) {
 			return findMax(r.rightChild);
 		}
