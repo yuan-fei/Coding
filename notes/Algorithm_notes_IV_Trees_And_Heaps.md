@@ -43,6 +43,39 @@
 	* insert: insert as BST, and make the node red, do insert fix up for red parent-child case (property 4)
 	* delete: delete as BST, do insert fix up for bh imbalance case (property 5)
 	
-![RBT insert fix up](pics/RBT-insert-fixup.jpg)
+![RBT insert fix up](../pics/RBT-insert-fixup.jpg)
 
-![RBT delete fix up](pics/RBT-delete-fixup.jpg)
+![RBT delete fix up](../pics/RBT-delete-fixup.jpg)
+
+## <a name='OS_Tree'></a>Order Statistics Tree
+* OS Tree: dynamic order statistic with O(logn)
+	* operations supported: select the ith element, rank of a element
+	* augment of RBT
+			* size: # of nodes in subtree
+
+		
+## <a name='Interval_Tree'></a>Interval Tree
+* Interval Tree: find overlap of intervals with O(logn)
+	* operations supported: find an overlap interval of the given interval
+ 	* augment of RBT
+	 	* left end of interval as key
+		* max right: max right end in the subtree
+
+## <a name='Mergeable_Heap'></a>Mergeable Heap
+* Mergeable heap:
+	* support oprtations: insert, minimum, extractMin, union, deceaseKey, delete
+	* usally bad performance for search operation
+* Binomial heap: worst case O(logn)
+	* Binomial tree B<sub>k</sub>: 2 B<sub>k-1</sub> binomial subtrees for which take 1 subtree's root as the other subtree's left child
+		* height k = logn
+		* The root of B<sub>k</sub> has degree k which corresponding to k children from left to right: B<sub>k-1</sub>, B<sub>k-2</sub>, ..., B<sub>0</sub>
+	* Binomial heap H:
+		* each binomial tree is a minimu heap whose key is larger than its parent
+		* binomial trees are ordered by the degree of their root and no duplicate degree is allowed in the root list
+	* Implementation
+		* union 2 heaps is a base operation of others
+* Fibnacci Heap: amortized O(1) for most opertaion except O(logn) for extractMin and delete
+	* Implementation
+		* An unordered list of heaps, and a 'min' point to minimum heap top element
+		* Only extractMin will reorganize the list
+		* A 'mark' indicates whether a node has lost a child since it became a child of its parent. The 'mark' enforces the sub tree be cut and re-added as a new heap, which garantees the 'extractMin' runs in O(logn)
