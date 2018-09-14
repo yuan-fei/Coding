@@ -34,4 +34,19 @@ public class Util {
 	public static int indexOfFirst(double[] arr, IntPredicate filter) {
 		return IntStream.range(0, arr.length).filter(filter).findFirst().orElse(-1);
 	}
+
+	public static int lowerSquareRoot(int u) {
+		double exp = Math.floor((Math.log10(u) / Math.log10(2)) / 2);
+		return (int) Math.pow(2, exp);
+	}
+
+	public static int upperSquareRoot(int u) {
+		double exp = Math.ceil((Math.log10(u) / Math.log10(2)) / 2);
+		return (int) Math.pow(2, exp);
+	}
+
+	public static boolean isPowerOfTwo(int x) {
+		return (x > 0) && (x & (x - 1)) == 0;
+
+	}
 }

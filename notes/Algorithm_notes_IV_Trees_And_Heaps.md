@@ -61,6 +61,31 @@
 	 	* left end of interval as key
 		* max right: max right end in the subtree
 
+## <a name='vEB_Tree'></a>van Emde Boas Tree
+* van Emde Boas Tree: priority queue operations in O(loglogu)
+	* Optimized bitmap: NO sort needed
+	* Keys are integers in range [0, u) with no duplicate
+	* SEARCH, INSERT, DELETE, MINIMUM, MAXIMUM, SUCCESSOR, and PREDECESSOR in O(loglogu)
+	* Data structure
+		* size: range
+		* min: minimum element in subtree
+		* max: maximum element in subtree
+		* cluster: each vEB node of size u has a cluster of size u<sup>1/2</sup> in which each cluster node is a vEB node of size u<sup>1/2</sup>.
+		* summary: each vEB node has a summary for its cluster, indicating which cluster has elements.
+	* The cluster hierarchical structure decrease the height
+	* The summary helps to locate the non-null cluster fast so that we can jump around
+
+
+![RBT delete fix up](../pics/vEB.jpg)
+vEB tree with elements [2, 3, 4, 5, 7, 14, 15]
+
+## <a name='Union_Find_Set'></a>Union-Find Set
+* union-find set: Build MCC in O(V+E)
+	* Construct MCC(max connected component) dynamically
+	* Operations
+		* union
+		* find
+
 ## <a name='Mergeable_Heap'></a>Mergeable Heap
 * Mergeable heap:
 	* support oprtations: insert, minimum, extractMin, union, deceaseKey, delete
