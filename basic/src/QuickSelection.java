@@ -37,7 +37,7 @@ public class QuickSelection {
 
 	private static int partition(int[] arr, int start, int end) {
 		int j = start;
-		int pivot = end;
+		int pivot = arr[end];
 		for (int i = start; i < end; i++) {
 			if (arr[i] < pivot) {
 				swap(arr, i, j);

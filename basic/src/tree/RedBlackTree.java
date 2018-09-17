@@ -5,11 +5,12 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 
 import math.SamplingAndShuffling;
 
-public class RedBlackTree<K extends Comparable<K>, N extends AbstractRedBlackTreeNode<K, N>> {
+public class RedBlackTree<K extends Comparable<K>, N extends AbstractRedBlackTreeNode<K, N>> implements ISearchable<K> {
 
 	public static void main(String[] args) {
 		testRandom();
@@ -98,7 +99,7 @@ public class RedBlackTree<K extends Comparable<K>, N extends AbstractRedBlackTre
 		return r != null && r.color == Color.R;
 	}
 
-	public RedBlackTree<K, N> insert(K k) {
+	public void insert(K k) {
 		N insertedNode;
 		if (root == null) {
 			root = newNode(k, Color.B);
@@ -109,7 +110,6 @@ public class RedBlackTree<K extends Comparable<K>, N extends AbstractRedBlackTre
 		// print();
 		// System.out.println("after fix: ");
 		fixUpInsert(insertedNode);
-		return this;
 	}
 
 	protected N newNode(K k, Color c) {
@@ -400,5 +400,103 @@ public class RedBlackTree<K extends Comparable<K>, N extends AbstractRedBlackTre
 			return findMax(r.rightChild);
 		}
 		return r;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return root == null;
+	}
+
+	@Override
+	public boolean member(K k) {
+		return search(k) != null;
+	}
+
+	@Override
+	public Optional<K> minimum() {
+		N min = findMin(root);
+		if (min != null) {
+			return Optional.of(min.key);
+		} else {
+			return Optional.empty();
+		}
+	}
+
+	@Override
+	public Optional<K> maximum() {
+		N max = findMax(root);
+		if (max != null) {
+			return Optional.of(max.key);
+		} else {
+			return Optional.empty();
+		}
+	}
+
+	@Override
+	public Optional<K> predecessor(K k) {
+		if (member(k)) {
+			N pre = predecessor(root, k);
+			if (pre != null) {
+				return Optional.of(pre.key);
+			}
+		}
+		return Optional.empty();
+	}
+
+	private N predecessor(N r, K k) {
+		if (r == null) {
+			return null;
+		} else {
+			int cmp = r.key.compareTo(k);
+			if (cmp == 0) {
+				return findMax(r.leftChild);
+			} else if (cmp > 0) {
+				return predecessor(r.leftChild, k);
+			} else {
+				N pre = predecessor(r.rightChild, k);
+				if (pre == null) {
+					return r;
+				} else {
+					return pre;
+				}
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see tree.ISearchable#successor(K)
+	 */
+	@Override
+	public Optional<K> successor(K k) {
+		if (member(k)) {
+			N succ = successor(root, k);
+			if (succ != null) {
+				return Optional.of(succ.key);
+			}
+		}
+		return Optional.empty();
+	}
+
+	private N successor(N r, K k) {
+		if (r == null) {
+			return null;
+		} else {
+			int cmp = r.key.compareTo(k);
+			if (cmp == 0) {
+				return findMin(r.rightChild);
+			} else if (cmp < 0) {
+				return successor(r.rightChild, k);
+			} else {
+				N succ = successor(r.leftChild, k);
+				if (succ == null) {
+					return r;
+				} else {
+					return succ;
+				}
+			}
+		}
+
 	}
 }

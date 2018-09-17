@@ -81,10 +81,15 @@ vEB tree with elements [2, 3, 4, 5, 7, 14, 15]
 
 ## <a name='Union_Find_Set'></a>Union-Find Set
 * union-find set: Build MCC in O(V+E)
-	* Construct MCC(max connected component) dynamically
-	* Operations
-		* union
-		* find
+	* Construct MCC(max connected component) dynamically: repeatedly find and union
+		* union(x, y): union the set contains x and the set contains y
+		* find-set(x): find the representative of set contains x
+	* Implementation
+		* Represent set as rooted tree: each node has a pointer to its parent
+		* Keep counter 'rank' as # of elements in the set
+	* Optimization
+		* Union by rank: during union operation, link set with higher rank to set with lower rank
+		* Path compression: during find-set, flatten the tree by make each node in the tree directly point to the root
 
 ## <a name='Mergeable_Heap'></a>Mergeable Heap
 * Mergeable heap:
