@@ -1,19 +1,22 @@
+package sorting;
+
 import java.util.Arrays;
 
-public class QuickSort {
+public class QuickSort implements ISorting {
 
 	public static void main(String[] args) {
 		int[] nums = new int[] { 3, 2, 5, 4, 7, 9, 7 };
-		quickSort(nums, 0, nums.length - 1);
+		QuickSort q = new QuickSort();
+		q.sort(nums);
 		print(nums);
 		nums = new int[] { 1, 2, 3, 4, 7, 9 };
-		quickSort(nums, 0, nums.length - 1);
+		q.sort(nums);
 		print(nums);
 		nums = new int[0];
-		quickSort(nums, 0, nums.length - 1);
+		q.sort(nums);
 		print(nums);
 		nums = new int[] { 1 };
-		quickSort(nums, 0, nums.length - 1);
+		q.sort(nums);
 		print(nums);
 	}
 
@@ -21,7 +24,11 @@ public class QuickSort {
 		System.out.println(Arrays.toString(nums));
 	}
 
-	public static void quickSort(int[] nums, int start, int end) {
+	public void sort(int[] nums) {
+		quickSort(nums, 0, nums.length - 1);
+	}
+
+	public void quickSort(int[] nums, int start, int end) {
 		if (start >= end) {
 			return;
 		}
@@ -30,7 +37,7 @@ public class QuickSort {
 		quickSort(nums, pivot + 1, end);
 	}
 
-	private static int partition(int[] nums, int start, int end) {
+	private int partition(int[] nums, int start, int end) {
 		int firstGreaterIndex = start;
 		int pivot = nums[end];
 		for (int i = start; i < end; i++) {
@@ -43,7 +50,7 @@ public class QuickSort {
 		return firstGreaterIndex;
 	}
 
-	private static void swap(int[] nums, int i, int j) {
+	private void swap(int[] nums, int i, int j) {
 		int tmp = nums[i];
 		nums[i] = nums[j];
 		nums[j] = tmp;

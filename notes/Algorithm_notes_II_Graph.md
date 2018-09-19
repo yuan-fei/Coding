@@ -101,11 +101,11 @@
 			* With Ford-Fulkerson method the max-flow of converted flow network is at most V/2, thus O(V * E)
 		* Hopcroft-Karp: `O(EV^0.5)` (CLRS 26.6)
 			* Alternative/Augmenting path: start with unmatched vertex in U, end with unmatched vertex in V, and the edges between belongs alternatively to Matched (M) and Unmatched (E-M) groups.
-			* Intuitives: Find vertext disjoint shortest alternativve path, augment with them (XOR) until no such path exists.
+			* Intuitives: Find vertex disjoint shortest alternative path, augment with them (XOR) until no such path exists.
 			* Implementation: BFS + DFS
 				* BFS: mark all possible shortest alternative paths
 				* DFS: check and update matching with the alternative paths
-	* Max-weight matching
+	* Max-weight matching (assignment problem)
 		* Kuhn-Munkres (Hungarian algorithm): `O(V^3)` ([http://www.cse.ust.hk/%7Egolin/COMP572/Notes/Matching.pdf](http://www.cse.ust.hk/%7Egolin/COMP572/Notes/Matching.pdf))
 			* Assume there is a perfect matching. This can be done by adding zero-weight edges to all missing pair.
 			* Intuitive: find perfect matching in equality graph

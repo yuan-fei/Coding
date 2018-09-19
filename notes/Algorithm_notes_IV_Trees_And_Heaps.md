@@ -1,12 +1,34 @@
 # Notes
 
+## Sorting
+* Comparison based: O(nlogn) ~ O(n^2)
+	* 
+* Counting based: O(k+n)
+	* Counting sort: O(k+n)
+		* all elements in array are in range [0, k)
+		* foundamental step of radix sort
+		* it is **Stable**
+		* implementation
+			* counter map for counting occurance of elements with same value in the input array; resulting array for stableness
+			* calculate the max index of each element presented in counter map
+			* output the resulting elements to resulting array from their max indices reversely
+	* Radix sort: O(d*n)
+		* all elements are at most d digits
+		* sort from least to most significant digit: less intermediate results
+		* require stable sorting alg for each digit sorting
+	* Bucket sort
+		* elements are distributed evenly in buckets
+		* it is **Stable**
+		* buckets are sorted, elements in each bucket are sorted respectively
+
+
 ## <a name='BTree'></a>B Tree
 * B Tree: worst case O(tlog<sub>t</sub>n)
 	* Minimum degree constraint: 
 		* for non-root node: t-1 <= #keys <= 2t-1 
 		* for non-root internal node: t <= #children <= 2t 
 	* Balanced: all leaves have the same depth, which is the height of tree: h <= log<sub>t</sub>(n+1)/2
-	* Hierarchical: good for cache/index implementation - architeccture leverage of different kinds of storage
+	* Hierarchical: good for cache/index implementation - architecture leverage of different kinds of storage
 	* Fast node insertion or deletion: O(tlog<sub>t</sub>n)
 	* Grow upwards: Only when root is full and a split is performed at root will a B tree increase its height; other split does not affect the height
 
@@ -90,6 +112,16 @@ vEB tree with elements [2, 3, 4, 5, 7, 14, 15]
 	* Optimization
 		* Union by rank: during union operation, link set with higher rank to set with lower rank
 		* Path compression: during find-set, flatten the tree by make each node in the tree directly point to the root
+
+## <a name='Priority Queue'></a>Priority Queue
+* Heap: O(logn)
+	* Min-Heap: H(i) < H(leftChild(i)) and H(i) < H(rightChild(i))
+	* support operations: extractMin (O(logn)), insert (O(logn)), decreaseKey(O(logn))
+	* Implementation
+		* foundamental operation: 
+			* minHeapify(i)/siftDown(i) to adjust a subheap rooted i and keep the min-heap requirement
+			* decreaseKey(i, K)/siftUp(i) to adjust the heap above i and keep the min-heap requirement
+		* operations like build-heap and heap-sort are based on the foundamental operations and swap
 
 ## <a name='Mergeable_Heap'></a>Mergeable Heap
 * Mergeable heap:

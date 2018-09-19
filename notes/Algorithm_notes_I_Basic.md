@@ -324,7 +324,7 @@ thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 * PriorityQueue: Heap implementation in java
 * Map: 
 	* HashMap: unordered, unsorted
-	* TreeMap: sorted by key; read-black tree
+	* TreeMap: sorted by key; red-black tree
 	* LinkedHashMap: ordered by the order of `add` operation; LRU cache implementation
 * Trie (re**trie**val): 
 	* Character by character search (state machine)
