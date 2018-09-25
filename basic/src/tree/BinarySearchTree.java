@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Queue;
+import java.util.Stack;
 
 public class BinarySearchTree<K extends Comparable<K>> implements ISearchable<K> {
 
@@ -18,6 +19,21 @@ public class BinarySearchTree<K extends Comparable<K>> implements ISearchable<K>
 			System.out.println("min-max" + bst.minimum() + ":" + bst.maximum());
 		}
 
+		System.out.println("traversal");
+		System.out.println("\npre-rec: ");
+		bst.preOrderTraverseRec();
+		System.out.println("\npre-it: ");
+		bst.preOrderTraverseIterative();
+		System.out.println("\nin-rec: ");
+		bst.inOrderTraverseRec();
+		System.out.println("\nin-it: ");
+		bst.inOrderTraverseIterative();
+		System.out.println("\npost-rec: ");
+		bst.postOrderTraverseRec();
+		System.out.println("\npost-it: ");
+		bst.postOrderTraverseIterative();
+		System.out.println();
+
 		System.out.println("pre-succ");
 		for (int i : k) {
 			System.out.println(i + ":" + bst.predecessor(i) + ":" + bst.successor(i));
@@ -30,6 +46,7 @@ public class BinarySearchTree<K extends Comparable<K>> implements ISearchable<K>
 			bst.print();
 			System.out.println("min-max" + bst.minimum() + ":" + bst.maximum());
 		}
+
 	}
 
 	BinaryTreeNode<K> root;
@@ -270,7 +287,97 @@ public class BinarySearchTree<K extends Comparable<K>> implements ISearchable<K>
 				}
 			}
 		}
+	}
 
+	void visit(BinaryTreeNode<K> n) {
+		System.out.print(n + ",");
+	}
+
+	public void preOrderTraverseRec() {
+		preOrderTraverseRec(root);
+	}
+
+	private void preOrderTraverseRec(BinaryTreeNode<K> r) {
+		if (r != null) {
+			visit(r);
+			preOrderTraverseRec(r.left);
+			preOrderTraverseRec(r.right);
+		}
+	}
+
+	public void inOrderTraverseRec() {
+		inOrderTraverseRec(root);
+	}
+
+	private void inOrderTraverseRec(BinaryTreeNode<K> r) {
+		if (r != null) {
+			inOrderTraverseRec(r.left);
+			visit(r);
+			inOrderTraverseRec(r.right);
+		}
+
+	}
+
+	public void postOrderTraverseRec() {
+		postOrderTraverseRec(root);
+	}
+
+	private void postOrderTraverseRec(BinaryTreeNode<K> r) {
+		if (r != null) {
+			postOrderTraverseRec(r.left);
+			postOrderTraverseRec(r.right);
+			visit(r);
+		}
+
+	}
+
+	public void preOrderTraverseIterative() {
+		Stack<BinaryTreeNode<K>> s = new Stack<BinaryTreeNode<K>>();
+		s.push(root);
+		while (!s.isEmpty()) {
+			BinaryTreeNode<K> n = s.pop();
+			visit(n);
+			if (n.right != null) {
+				s.push(n.right);
+			}
+			if (n.left != null) {
+				s.push(n.left);
+			}
+		}
+	}
+
+	public void inOrderTraverseIterative() {
+		Stack<BinaryTreeNode<K>> s = new Stack<BinaryTreeNode<K>>();
+		BinaryTreeNode<K> n = root;
+		while (n != null || !s.isEmpty()) {
+			if (n != null) {
+				s.push(n);
+				n = n.left;
+			} else {
+				n = s.pop();
+				visit(n);
+				n = n.right;
+			}
+		}
+	}
+
+	public void postOrderTraverseIterative() {
+		Stack<BinaryTreeNode<K>> s = new Stack<BinaryTreeNode<K>>();
+		BinaryTreeNode<K> n = root;
+		BinaryTreeNode<K> lastVisited = null;
+		while (n != null || !s.isEmpty()) {
+			if (n != null) {
+				s.push(n);
+				n = n.left;
+			} else {
+				if (lastVisited == s.peek().right || null == s.peek().right) {
+					lastVisited = s.pop();
+					visit(lastVisited);
+				} else {
+					n = s.peek().right;
+				}
+			}
+		}
 	}
 }
 
