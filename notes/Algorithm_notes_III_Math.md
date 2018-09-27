@@ -314,4 +314,4 @@
 * [Bertrand ballot problem](https://en.wikipedia.org/wiki/Bertrand%27s_ballot_theorem)
 * sampling and shuffle
 	* shuffle: Programming pearls
-	* [reservior sampling](https://en.wikipedia.org/wiki/Reservoir_sampling)
+	* [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling)
