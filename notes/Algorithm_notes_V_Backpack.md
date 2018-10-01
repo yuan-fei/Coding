@@ -62,7 +62,8 @@
 		}
 		~~~
 	
-		*	The only difference is update direction: backward for 0-1; forward for complete
+		* The only difference is update direction:
+			* backward for 0-1: state[j] update is only affected by state[t] where t is before j, backward update can avoid the case that state[j] is updated after state[t] is updated in the same item round, which means current item is packed twice
 	* Problem solution with code snippet
 		* Max size that the backpack can be filled
 			* state[j]: max size that the backpack with volume j can be filled
