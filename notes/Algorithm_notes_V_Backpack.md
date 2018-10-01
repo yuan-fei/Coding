@@ -7,6 +7,7 @@
 			* 0-1 Backpack: each item can be chosen at most once
 	 		* Complete Backpack: each item can be chosen infinite times
 			* Multiple Backpack: the amount of each item is given, and each item i can be chosen at most amount<sub>i</sub> times.
+			* Grouped Backpack: items are grouped into k groups and at most 1 item an be chosen in each group
 		* problem:
 			1. Max size that the backpack can be filled
 			2. Max total value of items that can be packed into the backpack
@@ -15,12 +16,16 @@
 				* item conbination as solution
 			4. How many different sizes can be populated by the items
 	* Problem convertion
-		* Complete Backpack: 2 way of recursions
-			* inefficient: `state[i][j] = max(state[i-1][j - k * size[i]] + value[i]) while j >= k * size[i]`
-			* efficient: `state[i][j] = max(state[i-1][j], state[i][j - size[i]] + value[i])`
+		* 2 implementation of Complete Backpack
+			1. state[i-1] based solution: inefficient
+			`state[i][j] = max(state[i - 1][j], state[i - 1][j - k * size[i]] + value[i]) while j >= k * size[i]`
+			2. state[i] based solution: efficient
+			`state[i][j] = max(state[i - 1][j], state[i][j - size[i]] + value[i])`
 		* Multiple Backpack
 			* Convert to 0-1 backpack problem by treating an item of size s<sub>i</sub> and amount a<sub>i</sub> as a<sub>i</sub> items each of size s<sub>i</sub>
-			* Employ the inefficient recursions of complete backpack problem: `state[i][j] = max(state[i-1][j - k * size[i]] + value[i]) while j >= k * size[i] and k <= amount[i]`
+			* Employ the 'state[i-1] based solution' of complete backpack problem: `state[i][j] = max(state[i-1][j - k * size[i]] + value[i]) while j >= k * size[i] and k <= amount[i]`
+		* Grouped Backpack
+			* Employ the 'state[i-1] based solution' of complete backpack problem: `state[i][j] = max(state[i - 1][j], state[i-1][j - size[i][k]] + value[i][k]) while j >= size[i][k]`
 	* Basic code snippet
 
 		~~~
@@ -97,3 +102,4 @@
 * reference
 	* 《挑战程序设计竞赛》
 	* lintcode backpack ladder
+	* http://blog.sina.com.cn/s/blog_8cf6e8d90100zldn.html
