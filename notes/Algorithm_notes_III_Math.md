@@ -311,6 +311,12 @@
 		* full binray tree
 		* all parenthesis matching
 		* lattice path
+* Stirling number (Concrete Math)
+	* Type I (n cycles k): devide a set of n distinct numbers to k non-empty circle
+		* StirlingI(n, k) = (n-1) * StirlingI(n-1, k) + StirlingI(n-1, k-1)
+	* Type II (n subsets k): devide a set of n distinct numbers to k non-empty set
+		* StirlingII(n, k) = k * StirlingII(n-1, k) + StirlingII(n-1, k-1)
+			* Consider the 2 scenarios of how to place the last element
 * [Bertrand ballot problem](https://en.wikipedia.org/wiki/Bertrand%27s_ballot_theorem)
 * sampling and shuffle
 	* shuffle: Programming pearls
