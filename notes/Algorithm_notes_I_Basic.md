@@ -3,6 +3,7 @@
 ## <a name='Binary_search'></a>Binary search
 	
 * Binary search template
+	* `end = nums.length`: make sure last element (nums[nums.length - 1]) is not ignored
 	* `start + 1 < end`: jump out the loop when only less then 3 elements left (2 or 1 element(s))
 		* make sure **mid never overlap with start or end**, which avoid the infinite loop
 	* `mid = start + (end - start)/2`: avoid numeric overflow
@@ -310,9 +311,16 @@ thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 ## Math
 
 * Bit operation:
-	* Check if n is power-of-2: `(n & (n-1)) == 0`
-	* Check if n is power-of-4: `((num & (num - 1)) == 0) && ((num & 0x55555555) == num)`
-	* Get bitmask: n's right-most 1: `n & (-n)`
+	* Shift operator: i << k left shift k%32 times (**do not truncate for k > 32**); >> signed right shift; >>> unsigned right shift
+	* Bit mask for lowest k bits: (k>=32)? -1 : (1 << k) - 1
+	* Bit mask for bits i to j: (j-i+1>=32)? -1 : ((1 << (j-i+1)) - 1) << i
+	* Clear lowest 1: n & (n-1)
+		* How many bits are set in a given integer: repeatedly clear lowest 1
+		* Check if n is power-of-2: only 1 bit is set `n > 0 && (n & (n-1)) == 0`
+		* Check if n is power-of-4: `((num & (num - 1)) == 0) && ((num & 0x55555555) == num)`
+	* Get bitmask: n's lowest 1: `n & (-n)`
+		* Clear lowest 1: `n - (n & (-n))`
+		* Check if n is power-of-2: only 1 bit is set `n == (n & (n-1))`
 * Factorial factors: 
 	* how many p in n! (the largest k which makes p^k devides n!)
 		*  f(n, p) = ⌊n/p⌋ + ⌊n/(p^2)⌋ +...

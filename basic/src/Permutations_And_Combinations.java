@@ -7,7 +7,9 @@ public class Permutations_And_Combinations {
 	public static void main(String[] args) {
 		List<List<Integer>> combinationResult = getSubsets(new int[] { 1, 2, 3, 4, 5 }, 2);
 		combinationResult = getAllSubsets(new int[] { 1, 2, 3, 3, 3 });
+		System.out.println(combinationResult);
 		combinationResult = getAllUniqueSubsets(new int[] { 1, 3, 2, 3, 3 });
+		System.out.println(combinationResult);
 		List<List<Integer>> permutationResult = getFullPermutations(new int[] { 1, 2, 3 });
 		System.out.println(permutationResult);
 	}

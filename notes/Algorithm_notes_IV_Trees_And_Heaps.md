@@ -123,6 +123,45 @@ vEB tree with elements [2, 3, 4, 5, 7, 14, 15]
 			* decreaseKey(i, K)/siftUp(i) to adjust the heap above i and keep the min-heap requirement
 		* operations like build-heap and heap-sort are based on the foundamental operations and swap
 
+## <a name='Binary_Indexed_Tree'></a>Binary Indexed Tree
+* Binary Indexed Tree: Optimized for sub-array sum
+	* operations: O(logn) for prefix sum query, range sum query; O(logn) for array update
+	* idea: 
+		* Array based tree index: 1-based index array BIT
+		* ranges of input array A are indexed by BIT: 
+			* BIT(n) = A[n - 2<sup>r</sup> + 1] +...+ A[n], where r is the # of trailing 0s of n
+			* Prefix_sum(n): constantly remove rightmost 1 of n's binary representation, and sum BIT(n)
+				* prefix_sum(1011) = BIT(1011) + BIT(1010) + BIT(1000)
+	* implementation:
+		* quick remove rightmost 1 of n's binary representation with O(1): n - (n & (-n))
+	* application: range sum query, count 1s in bitmap
+
+* Reference:
+	* [Topcoder](http://community.topcoder.com/tc?module=Static&d1=tutorials&d2=binaryIndexedTrees)
+	* [Chinese translation](http://www.hawstein.com/posts/binary-indexed-trees.html)
+
+![BIT](../pics/BIT.png)
+
+## <a name='Segment_Tree'></a>Segment Tree
+* Segment Tree: Optimized for sub-array count, min/max, sum
+	* operations: O(logn) for range query ; O(logn) for array update
+	* Idea: 
+		* index ranges of input array
+		* For a range query, find the indexed ranges that added up to the range
+	* SegmentTree vs. Binary Indexed Tree
+		* indexing the ranges of input array
+			* Segment tree index is built top-down, it has to be rebuilt when input array size changes.
+			* BIT index is built bottom-up, it's extensible with input array size changes.
+		* Space
+			* Segment Tree requires O(2n)
+			* BIT requires O(n+1)
+		* Implementation
+			* BIT has less code than segment tree
+	* application: RMQ (Range Minimum Query)
+		* [Count of Smaller Numbers After Self](https://www.lintcode.com/problem/count-of-smaller-numbers-after-self)
+
+![SegmentTree](../pics/segmentTree.jpg)
+
 ## <a name='Mergeable_Heap'></a>Mergeable Heap
 * Mergeable heap:
 	* support oprtations: insert, minimum, extractMin, union, deceaseKey, delete

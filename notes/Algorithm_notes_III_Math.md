@@ -286,6 +286,8 @@
 		2. Check if points between 2 parts has shorter distance. for each point in region (a-d, a+d) with y sorted, only check the points not d higher above it. It can be proven that at most 7 points have to be checked. 
 
 ## <a name='Math_problem'></a>Math Problem
+* The # of factor p in n! (the largest k which makes p^k devides n!)
+	*  f(n, p) = ⌊n/p⌋ + ⌊n/(p^2)⌋ +...
 * [Birthday paradox](https://en.wikipedia.org/wiki/Birthday_problem): Probs of born on same day
 	* The prob. of at least 1 pair out of k people have the same birthday is 100% when k=367, 99% when k=70, and **50% when k=23**
 	* The expected # of pair of people who have same birthday among k people is k(k-1)/2n (n is # of days in a year)
