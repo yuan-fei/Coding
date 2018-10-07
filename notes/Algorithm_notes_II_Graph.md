@@ -113,3 +113,7 @@
 				* Equality Graph: verteices and edges with  `L(u) + L(v) = Weight(u,v)`
 				* Kuhn-Munkres Theorem: A perfect matching in equality graph is a max weight matching
 				* Extend equality graph with relabeling, always pick a new vertex with minimum slack into euqality graph which will bring the total labeling of euqaity graph least decrease
+
+## Reference
+* [CLRS solutions I](https://walkccc.github.io/CLRS)
+* [CLRS solutions II](http://sites.math.rutgers.edu/~ajl213/CLRS)

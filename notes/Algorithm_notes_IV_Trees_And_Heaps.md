@@ -2,7 +2,7 @@
 
 ## Sorting
 * Comparison based: O(nlogn) ~ O(n^2)
-	* 
+	* Quick Sort, Merge Sort, Heap Sort, Bubble sort...
 * Counting based: O(k+n)
 	* Counting sort: O(k+n)
 		* all elements in array are in range [0, k)
@@ -160,7 +160,7 @@ vEB tree with elements [2, 3, 4, 5, 7, 14, 15]
 	* application: RMQ (Range Minimum Query)
 		* [Count of Smaller Numbers After Self](https://www.lintcode.com/problem/count-of-smaller-numbers-after-self)
 
-![SegmentTree](../pics/segmentTree.jpg)
+![SegmentTree](../pics/SegmentTree.jpg)
 
 ## <a name='Mergeable_Heap'></a>Mergeable Heap
 * Mergeable heap:
