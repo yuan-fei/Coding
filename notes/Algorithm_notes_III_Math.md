@@ -286,40 +286,45 @@
 		2. Check if points between 2 parts has shorter distance. for each point in region (a-d, a+d) with y sorted, only check the points not d higher above it. It can be proven that at most 7 points have to be checked. 
 
 ## <a name='Math_problem'></a>Math Problem
-* The # of factor p in n! (the largest k which makes p^k devides n!)
-	*  f(n, p) = ⌊n/p⌋ + ⌊n/(p^2)⌋ +...
-* [Birthday paradox](https://en.wikipedia.org/wiki/Birthday_problem): Probs of born on same day
-	* The prob. of at least 1 pair out of k people have the same birthday is 100% when k=367, 99% when k=70, and **50% when k=23**
-	* The expected # of pair of people who have same birthday among k people is k(k-1)/2n (n is # of days in a year)
-	* Collision problem: the expected number of N-bit hashes that can be generated before getting a collision is not 2<sup>N</sup>, but rather only 2<sup>N⁄2</sup>
-* [Coupon collecter's problem](https://en.wikipedia.org/wiki/Coupon_collector%27s_problem): collect all coupons and win
-	* indicator variable X<sub>i</sub>: \# of a single coupon collection. E(X<sub>i</sub>)=1/p<sub>i</sub> for X<sub>i</sub> has geometric distribution
-	* E(X<sub>1</sub>+...+X<sub>n</sub>) = n(1+1/2+1/3+...+1/n) = nH<sub>n</sub>
-	* Expected # of collection for all coupons is O(nlnn)
-* Hiring problem:
-	* interview n ranked candidates 1 by 1, and always hire the candidates with higher rank
-		* What is the expected # of total hiring?
-			* indicator variable X<sub>i</sub>: candidate i gets hired. E(X<sub>i</sub>) = 1/i when i is the one with the largest rank among the candidates interviewed before him.
-			* E(X<sub>1</sub>+...+X<sub>n</sub>) = 1+1/2+1/3+...1/n = H<sub>n</sub>
-		* What is the probs of hiring k candidates out of n in total?
-			* Prob(n, k) = (1/n) * Prob(n-1, k-1) + ((n-1)/n) * Prob(n-1,k)
-				* consider if candidate with rank 1 is the last interviewer
-			* Prob(n, k) = (1/n) * sum(Prob(i-1, k-1)) where k <= i <= n
-				* consider the candidate with rank 1 at position k, k+1, ..., n
-* [Catalan number](https://en.wikipedia.org/wiki/Catalan_number)
-	* Catalan(n) = sum(Catalan(i)*Catalan(n-i)) where 0 <= i <= n
-	* Catalan(n) = C(2n, n) - C(2n, n+1) = C(2n, n)/(n+1)
-	* Counting: 
-		* full binray tree
-		* all parenthesis matching
-		* lattice path
-* Stirling number (Concrete Math)
-	* Type I (n cycles k): devide a set of n distinct numbers to k non-empty circle
-		* StirlingI(n, k) = (n-1) * StirlingI(n-1, k) + StirlingI(n-1, k-1)
-	* Type II (n subsets k): devide a set of n distinct numbers to k non-empty set
-		* StirlingII(n, k) = k * StirlingII(n-1, k) + StirlingII(n-1, k-1)
-			* Consider the 2 scenarios of how to place the last element
-* [Bertrand ballot problem](https://en.wikipedia.org/wiki/Bertrand%27s_ballot_theorem)
-* sampling and shuffle
-	* shuffle: Programming pearls
-	* [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling)
+* Number theory
+	* The # of factor p in n! (the largest k which makes p^k devides n!)
+		*  f(n, p) = ⌊n/p⌋ + ⌊n/(p^2)⌋ +...
+	*  Lattice point (x, y are both integer) on a line (from (a, b) to (c, d))
+		*  gcd(c-a, d-b) + 1
+		*  [Reference explaination](https://math.stackexchange.com/questions/628117/how-to-count-lattice-points-on-a-line): consider the representation of y in term of x
+* Combinatonics and probability
+	* [Birthday paradox](https://en.wikipedia.org/wiki/Birthday_problem): Probs of born on same day
+		* The prob. of at least 1 pair out of k people have the same birthday is 100% when k=367, 99% when k=70, and **50% when k=23**
+		* The expected # of pair of people who have same birthday among k people is k(k-1)/2n (n is # of days in a year)
+		* Collision problem: the expected number of N-bit hashes that can be generated before getting a collision is not 2<sup>N</sup>, but rather only 2<sup>N⁄2</sup>
+	* [Coupon collecter's problem](https://en.wikipedia.org/wiki/Coupon_collector%27s_problem): collect all coupons and win
+		* indicator variable X<sub>i</sub>: \# of a single coupon collection. E(X<sub>i</sub>)=1/p<sub>i</sub> for X<sub>i</sub> has geometric distribution
+		* E(X<sub>1</sub>+...+X<sub>n</sub>) = n(1+1/2+1/3+...+1/n) = nH<sub>n</sub>
+		* Expected # of collection for all coupons is O(nlnn)
+	* Hiring problem:
+		* interview n ranked candidates 1 by 1, and always hire the candidates with higher rank
+			* What is the expected # of total hiring?
+				* indicator variable X<sub>i</sub>: candidate i gets hired. E(X<sub>i</sub>) = 1/i when i is the one with the largest rank among the candidates interviewed before him.
+				* E(X<sub>1</sub>+...+X<sub>n</sub>) = 1+1/2+1/3+...1/n = H<sub>n</sub>
+			* What is the probs of hiring k candidates out of n in total?
+				* Prob(n, k) = (1/n) * Prob(n-1, k-1) + ((n-1)/n) * Prob(n-1,k)
+					* consider if candidate with rank 1 is the last interviewer
+				* Prob(n, k) = (1/n) * sum(Prob(i-1, k-1)) where k <= i <= n
+					* consider the candidate with rank 1 at position k, k+1, ..., n
+	* [Catalan number](https://en.wikipedia.org/wiki/Catalan_number)
+		* Catalan(n) = sum(Catalan(i)*Catalan(n-i)) where 0 <= i <= n
+		* Catalan(n) = C(2n, n) - C(2n, n+1) = C(2n, n)/(n+1)
+		* Counting: 
+			* full binray tree
+			* all parenthesis matching
+			* lattice path
+	* Stirling number (Concrete Math)
+		* Type I (n cycles k): devide a set of n distinct numbers to k non-empty circle
+			* StirlingI(n, k) = (n-1) * StirlingI(n-1, k) + StirlingI(n-1, k-1)
+		* Type II (n subsets k): devide a set of n distinct numbers to k non-empty set
+			* StirlingII(n, k) = k * StirlingII(n-1, k) + StirlingII(n-1, k-1)
+				* Consider the 2 scenarios of how to place the last element
+	* [Bertrand ballot problem](https://en.wikipedia.org/wiki/Bertrand%27s_ballot_theorem)
+	* sampling and shuffle
+		* shuffle: Programming pearls
+		* [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling)
