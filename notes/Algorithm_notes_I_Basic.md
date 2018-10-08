@@ -3,8 +3,10 @@
 ## <a name='Binary_search'></a>Binary search
 	
 * Binary search template
-	* `end = nums.length`: make sure last element (nums[nums.length - 1]) is not ignored
-	* `start + 1 < end`: jump out the loop when only less then 3 elements left (2 or 1 element(s))
+	* `if (nums.length == 0)`: handle empty array
+	* `start + 1 < end`: 
+		* skip array with only 1 or 2 elements
+		* jump out the loop when only less then 3 elements left (2 or 1 element(s))
 		* make sure **mid never overlap with start or end**, which avoid the infinite loop
 	* `mid = start + (end - start)/2`: avoid numeric overflow
 	* `end = mid or start = mid`: no need to mid + 1 or mid - 1
@@ -16,7 +18,7 @@
 			return -1;
 		}
 		int start = 0;
-		int end = nums.length;
+		int end = nums.length - 1;
 		/** 1. Jump out of the loop when there are less than 3 elements left */
 		while (start + 1 < end) {
 			/** 2. avoid numeric overflow */
@@ -426,6 +428,27 @@ while(fast != null && fast.next != null){
 ...
 
 ```
+
+* Merge intervals
+
+```
+if (intervals.size() <= 1) {
+    return intervals;
+}
+List<Interval> res = new ArrayList<Interval>();
+Interval last = intervals.get(0);
+for (int i = 1; i < intervals.size(); i++) {
+	Interval cur = intervals.get(i);
+	if (cur.start > last.end) {
+		res.add(last);
+		last = cur;
+	} else {
+		last.end = Math.max(last.end, cur.end);
+	}
+}
+res.add(last);
+```
+
 * Floyd's Tortoise and Hare: cycle detection and find cycle entrance 
 	* Key implementation: slow and fast point to same node initially
 		* cycle detection: fast and slow meet at Len(cycle) - Len(Non-Cycle)

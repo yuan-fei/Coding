@@ -27,6 +27,27 @@
  * }
  */
 class Solution {
+
+    public static List<Interval> merge(List<Interval> intervals) {
+        if (intervals.size() <= 1) {
+            return intervals;
+        }
+        intervals.sort(Comparator.comparing(i -> i.start));
+        List<Interval> res = new ArrayList<Interval>();
+        Interval last = intervals.get(0);
+        for (int i = 1; i < intervals.size(); i++) {
+            Interval cur = intervals.get(i);
+            if (cur.start > last.end) {
+                res.add(last);
+                last = cur;
+            } else {
+                last.end = Math.max(last.end, cur.end);
+            }
+        }
+        res.add(last);
+        return res;
+    }
+
 	class Point{
 		int val;
 		boolean isStart;
@@ -35,7 +56,7 @@ class Solution {
 			isStart = s;
 		}
 	}
-    public List<Interval> merge(List<Interval> intervals) {
+    public List<Interval> merge2(List<Interval> intervals) {
     	List<Interval> result = new ArrayList<Interval>();
     	List<Point> ps = new ArrayList<Point>();
         for (Interval itvl: intervals) {
