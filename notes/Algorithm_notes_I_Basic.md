@@ -474,7 +474,7 @@ if(fast == null || fast.next == null){
 }
 // find the cycle entrance
 slow = head;
-while(slow != head){
+while(slow != fast){
 	slow = slow.next;
 	fast = fast.next;
 }

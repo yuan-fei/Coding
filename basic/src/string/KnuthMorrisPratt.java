@@ -1,5 +1,6 @@
+package string;
 
-public class SubString {
+public class KnuthMorrisPratt {
 
 	/**
 	 * KMP algorithm

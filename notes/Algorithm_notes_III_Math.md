@@ -161,7 +161,7 @@
 			* Corrolary: if S<sup>'</sup> ⊂ S, then |S<sup>'</sup>| <= |S|/2
 		* generator
 			* generator 'a' generates subgroup **⟨a⟩** by repeatedly apply operation ⊕ to itself: ⟨a⟩ = {a<sup>(k)</sup>: k >= 1}
-				* For ℤ<sup>*</sup><sub>n</sub>, a<sup>(k)</sup> = ka
+				* For (ℤ<sub>n</sub>, +<sub>n</sub>), a<sup>(k)</sup> = ka mod n
 				* For ℤ<sup>*</sup><sub>7</sub>, ⟨2⟩ = {1,2,4}, ⟨3⟩ = {1,2,3,4,5,6}
 		* The order of a generator ord(a): smallest number t that a<sup>(t)</sup> = e
 			* i.e., For ℤ<sup>*</sup><sub>7</sub>, ord(2) = 3, ord(3) = 6
