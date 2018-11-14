@@ -72,7 +72,7 @@
 		2. right sorted part: A[mid] <= A[high], then A[low..mid] is a rotated sorted subarray
 
 		choose to stay in sorted part or rotated sorted part
-* Rotated sorted array with duplicated element must be processed in at least O(n)
+* Rotated sorted array with duplicated element must be processed in at least O(n): consider [2,2,2,2,2,1,2] and [2,1,2,2,2,2,2]
 * Related Problems
 	* [Search in rotated sorted array](https://leetcode.com/problems/search-in-rotated-sorted-array)
 	* [Find minimum in rotated sorted array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array)
@@ -163,6 +163,7 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 	* 2-sum
 		* [2-sum](https://leetcode.com/problems/two-sum): In unsorted array with duplicated elements, hash table helps to find all unique solutions in O(n), with an extra O(n) hash table space. 
 		* [2-sum in sorted array](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted): In a sorted array with duplicated elements, [Step wise linear search](#Step_wise_linear_search) can be used for find all unique solutions in O(n), with extra O(1) space. 
+		* [2-sum less or equal to target](https://www.lintcode.com/problem/two-sum-less-than-or-equal-to-target/description): two pointer meet-in-the-middle
 	* 3-sum, 3-sum closest
 		* Sort the array, for each element do [2-sum in sorted array](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted). Time complexity O(n^2).
    	
@@ -170,6 +171,8 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
    * K is even: generate a sorted list S of all sum of k/2, and solve 2 sum problem (check if S contains both x, -x). Time complexity O(n^(k/2))
    * K is odd: generate a sorted list S of all sum of (k-1)/2, solve 3 sum problem (for each input a, check if S contains both x, -a-x). Time complexity O(n^((k+1)/2))
    * The time complexity for K sum is O(n^ceiling(k/2))
+* Related problems
+	* [plane maximum rectangle](https://www.lintcode.com/problem/plane-maximum-rectangle/description): fix diagonal and find the other 2 points
 
 ## KMP: String matching with O(m+n)
 * Jump table generation: 
@@ -299,6 +302,22 @@ cooldown[i] = max(cooldown[i - 1], sold[i - 1]);
 	* [regular-expression-matching](https://leetcode.com/problems/regular-expression-matching)
 	* [wildcard-matching](https://leetcode.com/problems/wildcard-matching/)
 
+## Greedy
+* Activity Selection
+	* Given tasks each with start and end, find the max # of tasks that can be scheduled sequentially
+	* Given intervals each with start and end, find the min # of shoots that can eliminate all intervals (1 shoot at x can eliminate all intervals that intersect at x) ([Shooting baloons](https://mp.weixin.qq.com/s/iSHP4MJq-EkwjitMlPkT8g))
+* Longest increasing sequence (LIS)
+	* O(n^2) for DP, O(nlogn) for non-DP
+	* non-DP
+		1. An increasing sequence of length L would like its last element to be as small as possible
+		2. Invariant: denote le(L) the last element of current increasing sequence with length L (might not be the LIS's prefix) , if L<sub>a</sub> < L<sub>b</sub> then  le(L<sub>a</sub>) < le(L<sub>b</sub>)
+		3. The idea is to keep le(L) - the last element of length L - and update it when there is a smaller one, or more strictly, if a new element is greater than the le(L - 1) and smaller than le(L), then update le(L) to make it better.
+		4. For a new element, it can be simply a binary search to find the le(L) to update since the invariant in 2
+	* [Patience sorting and duality](http://www.cs.princeton.edu/courses/archive/spring13/cos423/lectures/LongestIncreasingSubsequence-2x2.pdf)
+		* LIS's non-DP solution is the first stage of patient sorting
+		* The strong duality: the length of longest increasing subsequence = the min # of piles of non-increasing subsequence
+		* Related problems: [Least non-increasing subsequence](https://www.lintcode.com/problem/least-subsequences/description)
+
 ## Prefix Sum
 * Problems about consecutive subarray sum can be solved by prefix sum: 
 
@@ -331,10 +350,13 @@ thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 ## JAVA Data Structure
 * Stack: check `StackTrick` class
 * Queue: use `offer(e)` and `poll()` instead of `add(e)` and `remove()` because they don't throw exceptions when failed.
+* Deque (ArrayDeque, LinkedList): enqueue and dequeue from both end. Used as sliding window
+	* pollFisrt(), pollLast(), offerFisrt(), offerFisrt()
 * PriorityQueue: Heap implementation in java
 * Map: 
 	* HashMap: unordered, unsorted
 	* TreeMap: sorted by key; red-black tree
+		* pollFisrtEntry(), firstEntry(), firstKey()
 	* LinkedHashMap: ordered by the order of `add` operation; LRU cache implementation
 * Trie (re**trie**val): 
 	* Character by character search (state machine)
@@ -389,14 +411,20 @@ while (low < high){
 	...
 }
     
-/* for loop */
-int low = start;
-int high = end;
-for(int low = start; low < high; low++){
+/* for loop 1 */
+for(int low = start; low < end; low++){
 	if(low != start && a[low] == a[low - 1]]){
 		continue;
 	}
 	...
+}
+
+/* for loop 2 */
+int left = -1;
+for(int i = start; i < end; i++){
+	if(i == start || a[left] != a[i]){
+		left = i;
+	}
 }
 ```
 * Dummy node for linked list: when the head is not determinated. 

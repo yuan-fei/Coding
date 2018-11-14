@@ -185,7 +185,7 @@
 					* x<sub>i</sub> = x<sub>0</sub> + i(n/d) mod n, where x<sub>0</sub> is the initial solution
 			* Corrolaries
 				* if a is prime to n, then there is only 1 solution
-				* if b = 1, then ax ≡ 1 (mod n) is finding mulplicative inverse a<sup>-1</sup>
+				* if b = 1, then ax ≡ 1 (mod n) is finding **mulplicative inverse** a<sup>-1</sup>
 					* a has a multiplicative inverse a<sup>-1</sup> if and only if a is prime to n
 	* Solving linear equation group: {x ≡ r<sub>i</sub> (mod n<sub>i</sub>)}
 		* Chinese remainder theorem
@@ -292,7 +292,15 @@
 	*  Lattice point (x, y are both integer) on a line (from (a, b) to (c, d))
 		*  gcd(c-a, d-b) + 1
 		*  [Reference explaination](https://math.stackexchange.com/questions/628117/how-to-count-lattice-points-on-a-line): consider the representation of y in term of x
+	*  Quick Modular multiplicative inverse with a large prime modulo ([ref1](https://www.quora.com/How-do-I-find-the-value-of-nCr-1000000007-for-the-large-number-n-n-10-6-in-C), [ref2](https://www.geeksforgeeks.org/modular-multiplicative-inverse-1-n)): DP in O(n)
+		*  inverse(x) = (inverse(p%x)(x-p/x))%x
+	*  Quick nCr % p with large p ([ref](https://www.geeksforgeeks.org/queries-of-ncrp-in-o1-time-complexity/)): 
+		*  nCr % p = (Fact(n) * inverseFact(n-r) * inverseFact(r))%p
 * Combinatonics and probability
+	* Useful combinatonics formula
+		* C(n, 1) + C(n, 3) + ... = C(n, 0) + C(n, 2) + ... = 2<sup>n-1<sup>
+		* Vandermonde's Identity: C(m + n, r) = Sum(C(n, k)*C(m, r - k)) for k = 0 ~ r
+			* C(m + n, m) = Sum(C(n, k)*C(m, k)) for k = 0 ~ m
 	* [Birthday paradox](https://en.wikipedia.org/wiki/Birthday_problem): Probs of born on same day
 		* The prob. of at least 1 pair out of k people have the same birthday is 100% when k=367, 99% when k=70, and **50% when k=23**
 		* The expected # of pair of people who have same birthday among k people is k(k-1)/2n (n is # of days in a year)

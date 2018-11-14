@@ -3,12 +3,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class K_Sum {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println(kSum(new int[] { 1, 2, 3, 4 }, 2, 5)); // 2
+		System.out.println(twoSumLessThanOrEqualTo(new int[] { 2, 7, 11, 15 }, 24));
+		TreeMap<String, String> tm;
+
 	}
 
 	public static int[] twoSum(int[] nums, int target) {
@@ -25,7 +29,6 @@ public class K_Sum {
 		return new int[0];
 	}
 
-	
 	public static List<List<Integer>> threeSum(int[] nums) {
 		List<List<Integer>> results = new ArrayList<List<Integer>>();
 		if (nums != null && nums.length >= 3) {
@@ -40,7 +43,7 @@ public class K_Sum {
 					twoSumResult.add(0, target);
 				}
 				results.addAll(twoSumResults);
-			}	
+			}
 		}
 		return results;
 	}
@@ -73,6 +76,7 @@ public class K_Sum {
 		}
 		return results;
 	}
+
 	/*
 	 * count of soluotion to K-sum
 	 */
@@ -100,5 +104,25 @@ public class K_Sum {
 			}
 		}
 		return state[nums.length][k][target];
+	}
+
+	/* Count # of nums[i] + nums[j] <= target */
+	public static int twoSumLessThanOrEqualTo(int[] nums, int target) {
+		if (nums.length < 2) {
+			return 0;
+		}
+		Arrays.sort(nums);
+		int low = 0;
+		int high = nums.length - 1;
+		int cnt = 0;
+		while (low < high) {
+			if (nums[low] + nums[high] <= target) {
+				cnt += high - low;
+				low++;
+			} else {
+				high--;
+			}
+		}
+		return cnt;
 	}
 }

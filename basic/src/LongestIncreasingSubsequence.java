@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class LongestIncreaseingSubsequence {
+public class LongestIncreasingSubsequence {
 
 	public static void main(String[] args) {
 		System.out.println(solve(new int[] { 4, 2, 3, 1, 5 })); // 3
@@ -28,7 +28,11 @@ public class LongestIncreaseingSubsequence {
 		return res;
 	}
 
-	/** O(nlogn) */
+	/**
+	 * Patient sorting: O(nlogn)
+	 * 
+	 * http://www.cs.princeton.edu/courses/archive/spring13/cos423/lectures/LongestIncreasingSubsequence-2x2.pdf
+	 */
 	public static int solveWithBinarySearch(int[] a) {
 		// state[i] min last element with LIS length i
 		int[] state = new int[a.length + 1];

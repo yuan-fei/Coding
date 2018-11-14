@@ -37,11 +37,11 @@ public class Power {
 		return res;
 	}
 
-	public static long modularExp(int base, int exp, long n) {
+	public static long modularExp(int base, long exp, long n) {
 		return modularExpRecursive(base, exp, n);
 	}
 
-	private static long modularExpRecursive(int base, int exp, long n) {
+	private static long modularExpRecursive(int base, long exp, long n) {
 		if (exp == 0) {
 			return 1;
 		} else if (exp % 2 == 1) {

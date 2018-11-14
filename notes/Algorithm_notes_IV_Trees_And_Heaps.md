@@ -112,6 +112,8 @@ vEB tree with elements [2, 3, 4, 5, 7, 14, 15]
 	* Optimization
 		* Union by rank: during union operation, link set with higher rank to set with lower rank
 		* Path compression: during find-set, flatten the tree by make each node in the tree directly point to the root
+* Problems:
+	* [driving problem](https://www.lintcode.com/problem/driving-problem/description)
 
 ## <a name='Priority Queue'></a>Priority Queue
 * Heap: O(logn)
