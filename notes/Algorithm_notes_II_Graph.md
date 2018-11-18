@@ -93,6 +93,8 @@
 	* Keep topological order
 * Bipartite max matching
 	* Max-size matching
+		* Hungarian: `O(VE)`
+			* DFS implemention (See 'BipartiteMaxMatchingByHungarian')
 		* Max flow: `O(VE)`
 			* Convert to a flow network
 				* Add a super source s connect to every vertice in part X each with unit capacity.
@@ -113,6 +115,8 @@
 				* Equality Graph: verteices and edges with  `L(u) + L(v) = Weight(u,v)`
 				* Kuhn-Munkres Theorem: A perfect matching in equality graph is a max weight matching
 				* Extend equality graph with relabeling, always pick a new vertex with minimum slack into euqality graph which will bring the total labeling of euqaity graph least decrease
+			* DFS implementation [ref](http://www.cnblogs.com/wenruo/p/5264235.html)
+				* DFS for augmentation
 
 ## Reference
 * [CLRS solutions I](https://walkccc.github.io/CLRS)

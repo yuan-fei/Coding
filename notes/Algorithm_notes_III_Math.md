@@ -261,6 +261,8 @@
 		* cross product: p<sub>1</sub> * p<sub>2</sub> = x<sub>1</sub>y<sub>2</sub> - x<sub>2</sub>y<sub>1</sub>
 			* Area of parrelelogram with direction: |p<sub>1</sub> * p<sub>2</sub>| = |p<sub>1</sub>||p<sub>2</sub>|sin\<p<sub>1</sub>, p<sub>2</sub>>
 			* Sign: + means counter-clockwise, - means clockwise
+		* rotate: counter-clockwise by θ
+			* x' = xcosθ - ysinθ, y' = xsinθ + ycosθ
 	* 2 segments intersection
 		* 2 segments intersects if
 			1. Each segment straddles the line containing the other, or
