@@ -1,4 +1,4 @@
-package tree;
+package tree.range;
 
 /**
  * An index data structure, which update and sum-in-range query for an array can

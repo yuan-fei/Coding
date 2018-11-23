@@ -1,13 +1,14 @@
-package tree;
+package tree.range;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class RangeSumQueryTree implements ISegmentTree<Long> {
+/** Process RMQ */
+public class RangeMinimumQueryTree implements ISegmentTree<Integer> {
 	class SegmentTreeNode {
 		public int start, end;
 		public SegmentTreeNode left, right;
-		public long value;
+		public int value;
 
 		public SegmentTreeNode(int start, int end) {
 			this.start = start;
@@ -23,7 +24,7 @@ public class RangeSumQueryTree implements ISegmentTree<Long> {
 
 	SegmentTreeNode root;
 
-	public RangeSumQueryTree(int[] nums) {
+	public RangeMinimumQueryTree(int[] nums) {
 		build(nums);
 	}
 
@@ -33,7 +34,7 @@ public class RangeSumQueryTree implements ISegmentTree<Long> {
 		}
 	}
 
-	public Long query(int start, int end) {
+	public Integer query(int start, int end) {
 		return query(root, start, end);
 	}
 
@@ -48,22 +49,22 @@ public class RangeSumQueryTree implements ISegmentTree<Long> {
 		} else {
 			r.left = build(start, start + (end - start) / 2, nums);
 			r.right = build(start + (end - start) / 2 + 1, end, nums);
-			r.value = r.left.value + r.right.value;
+			r.value = Math.min(r.left.value, r.right.value);
 		}
 		return r;
 	}
 
-	private long query(SegmentTreeNode r, int start, int end) {
+	private int query(SegmentTreeNode r, int start, int end) {
 		if (r == null) {
-			return 0;
+			return Integer.MAX_VALUE;
 		} else if (start > r.end || end < r.start) {
-			return 0;
+			return Integer.MAX_VALUE;
 		} else if (start <= r.start && end >= r.end) {
 			return r.value;
 		} else {
-			long leftSum = query(r.left, start, end);
-			long rightSum = query(r.right, start, end);
-			return leftSum + rightSum;
+			int leftSum = query(r.left, start, end);
+			int rightSum = query(r.right, start, end);
+			return Math.min(leftSum, rightSum);
 		}
 	}
 
@@ -78,19 +79,19 @@ public class RangeSumQueryTree implements ISegmentTree<Long> {
 				if (r.right != null) {
 					update(r.right, index, value);
 				}
-				r.value = r.left.value + r.right.value;
+				r.value = Math.min(r.left.value, r.right.value);
 			}
 		}
 	}
 
 	public static void main(String[] args) {
-		RangeSumQueryTree s = new RangeSumQueryTree(new int[] { -1, 0, 1, 2, 3, 4, 5 });
+		RangeMinimumQueryTree s = new RangeMinimumQueryTree(new int[] { 5, 0, 1, 3, 2, 4, -1 });
 		s.print();
 		System.out.println(s.query(0, 6));
 		System.out.println(s.query(0, 2));
 		System.out.println(s.query(2, 6));
-		System.out.println(s.query(4, 6));
-		s.update(0, 1);
+		System.out.println(s.query(3, 5));
+		s.update(0, -2);
 		s.print();
 		System.out.println(s.query(0, 3));
 

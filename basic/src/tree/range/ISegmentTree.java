@@ -1,4 +1,4 @@
-package tree;
+package tree.range;
 
 /**
  * Tree used for range query. Update and range query can be done in O(logn)
