@@ -174,35 +174,6 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 * Related problems
 	* [plane maximum rectangle](https://www.lintcode.com/problem/plane-maximum-rectangle/description): fix diagonal and find the other 2 points
 
-## KMP: String matching with O(m+n)
-* Jump table generation: 
-		
-	0|1|2|3|4|5|6|7|8|9
-	---|---|---|---|---|---|---|---|---|---|
-	a|b|a|b|c|a|b|a|b|a
-	-1|-1|0|1|-1|0|1|2|3|2
-	
-	* The longest common prefix: **T[0..k] == T[m-k..m] => next[m] = k**
-	* idea
-	
-		```
-		// element 6,7,8 illustrated above
-		case T[m] == T[next[m-1] + 1] => next[m] = next[m-1] + 1
-		// element 9
-		case T[m] != T[next[m-1] + 1] => check
-						T[m] == T[next[next[m-1]] + 1], 
-						T[m] == T[next[next[next[m-1]]] + 1]
-						... 
-						until find it or reach the end
-		```
-	* Time complexity: Why O(m)
-		* Nested loops
-			* outer loop: all elements from 1 to m
-			* inner loop: +1, or iteratively apply next, next(next), ... next^n
-			* **through all the loop, 'next' can be applied at most m times in total! (no repeated element access before next jump to -1)**
-			* So 2m cost at most => O(m)
-* Match with help of jump table
-
 ## DFS and BFS
 * Related Problems
 	* [word-ladder](https://leetcode.com/problems/word-ladder)

@@ -19,6 +19,9 @@ public class BitManipulation {
 		System.out.println(Integer.toBinaryString(setBit(1001, 2)));
 		System.out.println(Integer.toBinaryString(clearBit(1001, 0)));
 		System.out.println(Integer.toBinaryString(toggleBit(1001, 0)));
+		System.out.println(Integer.toBinaryString(clearLowestOne(6)));
+		System.out.println(Integer.toBinaryString(getLowestOneMask(6)));
+		System.out.println(countOnes(6));
 	}
 
 	public static int getBitMask(int b) {
@@ -54,5 +57,22 @@ public class BitManipulation {
 
 	public static int toggleBit(int n, int b) {
 		return n ^ getBitMask(b);
+	}
+
+	public static int clearLowestOne(int n) {
+		return n & (n - 1);
+	}
+
+	public static int getLowestOneMask(int n) {
+		return n & (-n);
+	}
+
+	public static int countOnes(int n) {
+		int count = 0;
+		while (n != 0) {
+			count++;
+			n = n & (n - 1);
+		}
+		return count;
 	}
 }
