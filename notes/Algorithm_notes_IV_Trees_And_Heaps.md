@@ -164,6 +164,25 @@ vEB tree with elements [2, 3, 4, 5, 7, 14, 15]
 
 ![SegmentTree](../pics/SegmentTree.jpg)
 
+## Persistent Segment Tree
+* Segment tree with version info
+	* Online range query each in O(logn)
+	* Each update generates a version: a new root and logn new nodes
+* Application
+	* kth largest element in a range [a, b]: [Online kth number](https://www.spoj.com/problems/MKTHNUM/) 
+		* use rank as segment tree index, the prefix sum of segment tree at version a `ps[a][i]` means how many elements in rank [0, i] and range[0, a]
+		* compare between 2 versions and find the rank i which (ps[b][i] - ps[a][i]) == k
+	* The # of different prefixes of an array of strings in a range [a, b]: [hdu5790](https://blog.csdn.net/CZWin32768/article/details/52121892)
+		* Each segment tree at version b stores following info for each strings i before b - how many different prefixes are there between string b and string i
+		* the answer for each online query of range [a, b]: ps[b][a]
+	* [Sets of intervals](https://codeforces.com/contest/1080/problem/F)
+	* [Count on a Tree](https://www.spoj.com/problems/COT/)
+
+* Reference: 
+	* [CodeForces1](https://codeforces.com/blog/entry/15729)
+	* [CodeForces2](https://codeforces.com/blog/entry/15890)
+
+
 ## <a name='Mergeable_Heap'></a>Mergeable Heap
 * Mergeable heap:
 	* support oprtations: insert, minimum, extractMin, union, deceaseKey, delete
