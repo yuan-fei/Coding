@@ -3,7 +3,7 @@ package tree.range;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class RangeSumQueryTree implements ISegmentTree<Long> {
+public class RangeSumQueryTree {
 	class SegmentTreeNode {
 		public int start, end;
 		public SegmentTreeNode left, right;
@@ -12,7 +12,6 @@ public class RangeSumQueryTree implements ISegmentTree<Long> {
 		public SegmentTreeNode(int start, int end) {
 			this.start = start;
 			this.end = end;
-			this.left = this.right = null;
 		}
 
 		@Override
@@ -22,32 +21,30 @@ public class RangeSumQueryTree implements ISegmentTree<Long> {
 	}
 
 	SegmentTreeNode root;
+	int n;
 
-	public RangeSumQueryTree(int[] nums) {
-		build(nums);
+	public RangeSumQueryTree(int n) {
+		build(n);
 	}
 
-	public void build(int[] nums) {
-		if (nums.length > 0) {
-			root = build(0, nums.length - 1, nums);
-		}
+	public void build(int n) {
+		this.n = n;
+		root = build(0, n - 1);
 	}
 
 	public Long query(int start, int end) {
 		return query(root, start, end);
 	}
 
-	public void update(int index, int value) {
-		update(root, index, value);
+	public void increase(int index, int value) {
+		increase(root, index, value);
 	}
 
-	private SegmentTreeNode build(int start, int end, int[] nums) {
+	private SegmentTreeNode build(int start, int end) {
 		SegmentTreeNode r = new SegmentTreeNode(start, end);
-		if (start == end) {
-			r.value = nums[start];
-		} else {
-			r.left = build(start, start + (end - start) / 2, nums);
-			r.right = build(start + (end - start) / 2 + 1, end, nums);
+		if (start < end) {
+			r.left = build(start, start + (end - start) / 2);
+			r.right = build(start + (end - start) / 2 + 1, end);
 			r.value = r.left.value + r.right.value;
 		}
 		return r;
@@ -67,16 +64,16 @@ public class RangeSumQueryTree implements ISegmentTree<Long> {
 		}
 	}
 
-	private void update(SegmentTreeNode r, int index, int value) {
+	private void increase(SegmentTreeNode r, int index, int value) {
 		if (r != null && index >= r.start && index <= r.end) {
 			if (r.start == index && r.end == index) {
-				r.value = value;
+				r.value += value;
 			} else {
 				if (r.left != null) {
-					update(r.left, index, value);
+					increase(r.left, index, value);
 				}
 				if (r.right != null) {
-					update(r.right, index, value);
+					increase(r.right, index, value);
 				}
 				r.value = r.left.value + r.right.value;
 			}
@@ -84,15 +81,19 @@ public class RangeSumQueryTree implements ISegmentTree<Long> {
 	}
 
 	public static void main(String[] args) {
-		RangeSumQueryTree s = new RangeSumQueryTree(new int[] { -1, 0, 1, 2, 3, 4, 5 });
+		int[] a = new int[] { -1, 0, 1, 2, 3, 4, 5 };
+		RangeSumQueryTree s = new RangeSumQueryTree(a.length);
+		for (int i = 0; i < a.length; i++) {
+			s.increase(i, a[i]);
+		}
 		s.print();
 		System.out.println(s.query(0, 6));
 		System.out.println(s.query(0, 2));
 		System.out.println(s.query(2, 6));
 		System.out.println(s.query(4, 6));
-		s.update(0, 1);
+		s.increase(0, 1);
 		s.print();
-		System.out.println(s.query(0, 3));
+		System.out.println(s.query(0, 7));
 
 	}
 

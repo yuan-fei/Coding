@@ -39,8 +39,8 @@ public class Manacher {
 				centerWithMaxL = i;
 			}
 		}
-		return s.substring((centerWithMaxL + 1 - L[centerWithMaxL]) / 2,
-				(centerWithMaxL + 1 - L[centerWithMaxL]) / 2 + L[centerWithMaxL] - 1);
+		int maxL = L[centerWithMaxL] - 1;
+		return s.substring((centerWithMaxL - maxL) / 2, (centerWithMaxL + maxL) / 2);
 	}
 
 	public static int getAllPalindromeCount(String s) {

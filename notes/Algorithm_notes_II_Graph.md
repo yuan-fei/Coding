@@ -119,6 +119,12 @@
 				* [Good explanation, O(n^4)](http://www.cnblogs.com/wenruo/p/5264235.html)
 				* [Cache slack, O(n^3)](https://www.tianmaying.com/snippet/1325)
 
+## Graph Theory
+* Minimum Vertex Cover (MVC) problem:
+ 	* The MVC problem in a general graph is NP hard, there is polynomial approximation algorithm which guarantees to be no more than twice the size of an optimal vertex cover (CLRS: Approximation algorithms)
+	* In **bipartite**, #(minimum vertex cover) = #(max bipartite matching): [Kőnig's theorem](https://en.wikipedia.org/wiki/Kőnig%27s_theorem_(graph_theory))
+
+
 ## Reference
 * [CLRS solutions I](https://walkccc.github.io/CLRS)
 * [CLRS solutions II](http://sites.math.rutgers.edu/~ajl213/CLRS)

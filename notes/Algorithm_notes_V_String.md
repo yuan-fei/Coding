@@ -41,3 +41,9 @@
 * Reference: 
 	* [jianshu](https://www.jianshu.com/p/799bc53d4e3d)
 	* [leetcode](https://articles.leetcode.com/longest-palindromic-substring-part-ii/)
+
+## Aho-Corasick: Multi-pattern String Matching in O(n+m)	
+* Idea: Trie based automaton with suffix link (which prefix to go to when mismatched)
+* Reference:
+ 	* [wikipedia](https://en.wikipedia.org/wiki/Aho–Corasick_algorithm)
+	* [Aho-Corasick自动机浅析](https://segmentfault.com/a/1190000000484127)
