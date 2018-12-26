@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /** Support range update and query in O(logn) */
-public class RangeUpdateSumQueryTree {
+public class LazyPropSegmentTree {
 
 	class SegmentTreeNode {
 		public int start, end;
@@ -26,11 +26,15 @@ public class RangeUpdateSumQueryTree {
 
 	SegmentTreeNode root;
 
-	public RangeUpdateSumQueryTree(int[] nums) {
+	public LazyPropSegmentTree(int[] nums) {
 		build(nums);
 	}
 
-	public void build(int[] nums) {
+	public LazyPropSegmentTree(int n) {
+		build(new int[n]);
+	}
+
+	private void build(int[] nums) {
 		if (nums.length > 0) {
 			root = build(0, nums.length - 1, nums);
 		}
@@ -83,7 +87,7 @@ public class RangeUpdateSumQueryTree {
 	}
 
 	public static void main(String[] args) {
-		RangeUpdateSumQueryTree s = new RangeUpdateSumQueryTree(new int[] { -1, 0, 1, 2, 3, 4, 5 });
+		LazyPropSegmentTree s = new LazyPropSegmentTree(new int[] { -1, 0, 1, 2, 3, 4, 5 });
 		s.print();
 		System.out.println(s.query(0, 6));
 		System.out.println(s.query(0, 2));

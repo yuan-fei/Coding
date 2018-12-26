@@ -163,6 +163,15 @@ vEB tree with elements [2, 3, 4, 5, 7, 14, 15]
 		* [Count of Smaller Numbers After Self](https://www.lintcode.com/problem/count-of-smaller-numbers-after-self)
 
 ![SegmentTree](../pics/SegmentTree.jpg)
+## Other Segment Trees
+* Range update + point query
+* Lazy-propagation: Range update + range query
+	* add 'increment' field in tree node def, accumulate updates to increment only when possible
+* Dynamic Segment Tree: it can represent any value range as the nodes created dynamically
+* Merge-Sort Tree: each node stores all elements of the segment.  
+	* It can be used to solve problems like 'given (l, r, k), find the smallest element >= k in range (l, r)'.
+	* build in O(nlogn) in time and space, query in O(log<sup>2</sup>n)
+* Reference: [1](https://cp-algorithms.com/data_structures/segment_tree.html#toc-tgt-3)
 
 ## Persistent Segment Tree
 * Segment tree with version info
@@ -182,6 +191,17 @@ vEB tree with elements [2, 3, 4, 5, 7, 14, 15]
 	* [CodeForces1](https://codeforces.com/blog/entry/15729)
 	* [CodeForces2](https://codeforces.com/blog/entry/15890)
 
+## Heavy-Light Decompose
+* Decompose a tree into a set of vertex-disjoint chains so that we can apply segment tree on chains. 
+	* With the help of segment tree on the chains, We can do range update(u, v, c) in O(logn) and query(u, v) in O(log<sup>2</sup>n)
+	* Heavy edge: if among all children of u, v has the largest subtree size, then edge uv is heavy edge
+	* Each chain is connected with a light edge, and there is at most O(logn) chains from root to any leaf
+	* Vertices of each chain is mapped to a consecutive section of indices in segment tree
+	* Each range update or range query is decomposed into 2 sub steps, i.e. `sum(u, v) = sum(u, LCA(u,v)) + sum(v, LCA(u, v))`
+![SegmentTree](../pics/hld.png)
+* Reference:
+	* [geeksforgeeks](https://www.geeksforgeeks.org/heavy-light-decomposition-set-1-introduction/)
+	* [blog](https://blog.anudeep2011.com/heavy-light-decomposition/)
 
 ## <a name='Mergeable_Heap'></a>Mergeable Heap
 * Mergeable heap:

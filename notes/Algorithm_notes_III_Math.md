@@ -209,7 +209,7 @@
 		* The density of prime numbers
 			* 􏰄prime number theory: lim<sub>n->∞</sub>(􏰄π(n)/nlnn) = 1, where 􏰄π(n) is number of primes less or equal to n
 			* Pick 1 number n and the probability of prime is 1/lnn 
-		* Fermet theorem for pseudo-prime testing: 
+		* Fermat theorem for pseudo-prime testing: 
 			* if a<sup>n-1</sup> ≡ 1 (mod n), n could be 
 				* a prime
 				* or a base-a pseudo-prime (composite)
@@ -219,7 +219,7 @@
 					* if false, composite
 					* if true, possibly prime, change another base for test
 			* Why this doesn't work
-				* Carmichael numbers: there exists composites that satisfy the fermet equation under all base a, such as 561, 1105, and 1729
+				* Carmichael numbers: there exists composites that satisfy the fermat equation under all base a, such as 561, 1105, and 1729
 		* Miller-Rabin randomized primality test: 
 			* improvement based on pseudo-prime testing
 				* It tries several randomly chosen base values a instead of just one base value.
@@ -253,7 +253,7 @@
 				* Find 2 number meet in the cycle: x<sub>i</sub> ≡ x<sub>j</sub> mod p, where p is a factor of n, so that gcd(x<sub>i</sub> - x<sub>j</sub>, n) = p
 
 ## <a name='Computational_Geometry'></a>Computational Geometry
-* segment
+* Segment
 	* Vector's product: p<sub>1</sub>(x<sub>1</sub>,y<sub>1</sub>), p<sub>2</sub>(x<sub>2</sub>,y<sub>2</sub>)
 		* dot product: p<sub>1</sub> . p<sub>2</sub> = x<sub>1</sub>x<sub>2</sub> - y<sub>1</sub>y<sub>2</sub>
 			* vector cosine similarity
@@ -272,6 +272,10 @@
 			* Sweep from left to right while keeping a total order of active segements, only the adjacent segments could have chance to intersect
 				* sweep line status: ordering of active segments that the sweep line intersects
 				* event point schedule: where sweep line stops to add new segment or to remove inactive segment
+* Rectangle
+	* representation: [left, bottom, right, top]
+	* intersection(a, b): [Math.max(a.left, b.left), Math.max(a.bottom, b.bottom), Math.min(a.right, b.right), Math.min(a.top, b.top)]
+	* union area: inclusion-exclusion principle with bitmask
 * Convex Hull: CH(Q)
 	* Graham's scan algorithm: O(nlogn)
 		1. Choose initial point p<sub>0</sub> who has the lowest y, it must be the point of CH
@@ -294,8 +298,9 @@
 	*  Lattice point (x, y are both integer) on a line (from (a, b) to (c, d))
 		*  gcd(c-a, d-b) + 1
 		*  [Reference explaination](https://math.stackexchange.com/questions/628117/how-to-count-lattice-points-on-a-line): consider the representation of y in term of x
-	*  Quick Modular multiplicative inverse with a large prime modulo ([ref1](https://www.quora.com/How-do-I-find-the-value-of-nCr-1000000007-for-the-large-number-n-n-10-6-in-C), [ref2](https://www.geeksforgeeks.org/modular-multiplicative-inverse-1-n)): DP in O(n)
-		*  inverse(x) = (inverse(p%x)(x-p/x))%x
+	*  Quick Modular multiplicative inverse with a large prime modulo 
+		*  Fermat's theory, Fast modular exponentiation: inverse(x) = x<sup>(p-2)</sup> mod p
+		*  DP in O(n) ([ref1](https://www.quora.com/How-do-I-find-the-value-of-nCr-1000000007-for-the-large-number-n-n-10-6-in-C), [ref2](https://www.geeksforgeeks.org/modular-multiplicative-inverse-1-n)): inverse(x) = (inverse(p%x)(x-p/x))%x
 	*  Quick nCr % p with large p ([ref](https://www.geeksforgeeks.org/queries-of-ncrp-in-o1-time-complexity/)): 
 		*  nCr % p = (Fact(n) * inverseFact(n-r) * inverseFact(r))%p
 * Combinatonics and probability

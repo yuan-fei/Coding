@@ -26,7 +26,7 @@ public class FordFulkersonMaxFlow {
 	Map<Integer, List<Edge>> edges = new HashMap<>();
 	boolean[] visited;
 
-	public void addEdges(int from, int to, int capacity) {
+	public void addEdges(int from, int to, double capacity) {
 		Edge e1 = new Edge(to, capacity);
 		Edge e2 = new Edge(from, 0);
 		e1.reverse = e2;
@@ -41,7 +41,7 @@ public class FordFulkersonMaxFlow {
 		edges.get(to).add(e2);
 	}
 
-	private int dfs(int v, int t, int minCap) {
+	private double dfs(int v, int t, double minCap) {
 		if (v == t) {
 			return minCap;
 		}
@@ -49,7 +49,7 @@ public class FordFulkersonMaxFlow {
 
 		for (Edge e : edges.get(v)) {
 			if (!visited[e.to] && e.capacity > 0) {
-				int d = dfs(e.to, t, Math.min(minCap, e.capacity));
+				double d = dfs(e.to, t, Math.min(minCap, e.capacity));
 				if (d > 0) {
 					e.capacity -= d;
 					e.reverse.capacity += d;
@@ -60,11 +60,11 @@ public class FordFulkersonMaxFlow {
 		return 0;
 	}
 
-	public int getMaxFlow(int s, int t) {
-		int flow = 0;
+	public double getMaxFlow(int s, int t) {
+		double flow = 0;
 		while (true) {
 			visited = new boolean[edges.size()];
-			int f = dfs(s, t, Integer.MAX_VALUE);
+			double f = dfs(s, t, Integer.MAX_VALUE);
 			if (f == 0) {
 				return flow;
 			}
@@ -74,10 +74,10 @@ public class FordFulkersonMaxFlow {
 
 	class Edge {
 		int to;
-		int capacity;
+		double capacity;
 		Edge reverse;
 
-		public Edge(int to, int capacity) {
+		public Edge(int to, double capacity) {
 			this.to = to;
 			this.capacity = capacity;
 		}

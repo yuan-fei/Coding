@@ -79,18 +79,27 @@
 * Flow network: DAG with capacity on edge >= 0
 	* flow conservation: total flow-in of a vertex = total flow-out of a vertex
 	* maximum flow = minimum cut
-* Ford-Fulkerson method: `O(E * max-flow)`
-	* Find augment path in a residual network, consume it
-* Edmonds-Karp algorithm: `O(VE^2)`
-	* Ford-Fulkerson method implementation with BFS for augment path searching
-* Push-Relabel algorithm: `O(EV^2)`
-	* Only flow from 'high' to 'low'
-		* preflow(v): flow-in of v
-		* push: flow from one overflow (preflow(v)>0) vertex to another vertex
-		* relabel: adjust height of overflow vertex in order to flow out
-* Relabel to front algorithm:`O(V^3)`
-	* Admissible network: `h(u) = h(v) + 1`
-	* Keep topological order
+* Max flow - Min cut
+	* Ford-Fulkerson method: `O(E * max-flow)`
+		* Find augment path in a residual network, consume it
+	* Edmonds-Karp algorithm: `O(VE^2)`
+		* Ford-Fulkerson method implementation with BFS for augment path searching
+	* Push-Relabel algorithm: `O(EV^2)`
+		* Only flow from 'high' to 'low'
+			* preflow(v): flow-in of v
+			* push: flow from one overflow (preflow(v)>0) vertex to another vertex
+			* relabel: adjust height of overflow vertex in order to flow out
+	* Relabel to front algorithm:`O(V^3)`
+		* Admissible network: `h(u) = h(v) + 1`
+		* Keep topological order
+	* Related Problems: 
+		* poj-3281
+		
+* Min cost flow: given unit cost and max capacity of each edge, find the minimum total cost that a given flow can be consumed.
+	* O（max-flow * V * E）: Ford-Fulkerson + augment path with Bellman-Ford (挑战程序设计竞赛)
+	* Related Problems:
+		* poj-2135: each edge has unit capacity, the total cost of a edge becomes the unit cost, min-cost flow can be used for solution
+		* poj-3686
 * Bipartite max matching
 	* Max-size matching
 		* Hungarian: `O(VE)`
@@ -118,6 +127,19 @@
 			* DFS implementation 
 				* [Good explanation, O(n^4)](http://www.cnblogs.com/wenruo/p/5264235.html)
 				* [Cache slack, O(n^3)](https://www.tianmaying.com/snippet/1325)
+* How to convert problems to flow problems
+	* Capacity on vertices: for each vertex A, add a new vertex A' and an edge between them, specify the max capacity of the edge is the A's vertex capacity.
+	* Order matters: N tasks can be scheduled on M processors, for each processor it costs differently for different task scheduling order. The cost of a task differs among processors, but on the same processor, it increases when it  is scheduled later.
+		* Model the flow graph as 
+			* 1 source vertex S, 1 target vertex E
+			* N task vertices: T<sub>i</sub> where i in [1 ~ N]
+			* N * M processor vertices: P<sub>j, k</sub> where j in [1 ~ N], k in [1 ~ M] means the order j of processor k.
+			* N edges from source to task vertices: e(S, T<sub>i</sub>, 1, 0) S to   T<sub>i</sub> with unit capacity and cost 0
+			* N\*M Edges from processor vertices to target vertex: e(P<sub>j, k</sub>, E, 1, 0) S to   T<sub>i</sub> with unit capacity and cost 0
+			* N\*N\*M Edges between N task vertices and N*M processor vertices each with capacity 1 and different costs: e(T<sub>i</sub>, P<sub>j, k</sub>, 1, c<sub>j</sub>) represents task i scheduled at order j of processor k with cost c<sub>j</sub>
+		* Solve the min-cost flow problem min-cost(S, E, N)
+		* poj-3686
+	* Min cut problem: vertices must be splitted into 2 disjoint sets, and we only care about the total minimum capacity of edges between 2 sets (poj-3469)
 
 ## Graph Theory
 * Minimum Vertex Cover (MVC) problem:
