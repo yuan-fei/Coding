@@ -3,6 +3,7 @@
 ## Sorting
 * Comparison based: O(nlogn) ~ O(n^2)
 	* Quick Sort, Merge Sort, Heap Sort, Bubble sort...
+	* Comparison:[wiki](https://en.wikipedia.org/wiki/Sorting_algorithm)
 * Counting based: O(k+n)
 	* Counting sort: O(k+n)
 		* all elements in array are in range [0, k)

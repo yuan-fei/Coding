@@ -29,11 +29,11 @@ public class RSA {
 	}
 
 	public int encrypt(int m) {
-		return (int) Power.modularExp(m, keyPair.publicKey.key, keyPair.publicKey.modulo);
+		return (int) FastPower.modularExp(m, keyPair.publicKey.key, keyPair.publicKey.modulo);
 	}
 
 	public int decrypt(int m) {
-		return (int) Power.modularExp(m, keyPair.privateKey.key, keyPair.privateKey.modulo);
+		return (int) FastPower.modularExp(m, keyPair.privateKey.key, keyPair.privateKey.modulo);
 	}
 
 	private static int getRandomPrime() {

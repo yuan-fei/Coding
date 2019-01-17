@@ -1,6 +1,7 @@
 package graph.flow;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,19 @@ public class FordFulkersonMaxFlow {
 		ffmf.addEdges(4, 5, 4);
 		ffmf.addEdges(3, 5, 20);
 		System.out.println(ffmf.getMaxFlow(0, 5));
+		System.out.println(ffmf.minCut(0, 5));
+		ffmf = new FordFulkersonMaxFlow();
+		ffmf.addEdges(0, 1, 5);
+		ffmf.addEdges(0, 3, 7);
+		ffmf.addEdges(2, 6, 6);
+		ffmf.addEdges(5, 6, 3);
+		ffmf.addEdges(1, 2, 100);
+		ffmf.addEdges(1, 4, 100);
+		ffmf.addEdges(3, 4, 100);
+		ffmf.addEdges(2, 5, 100);
+		ffmf.addEdges(4, 5, 100);
+		System.out.println(ffmf.getMaxFlow(0, 6));
+		System.out.println(ffmf.minCut(0, 6));
 	}
 
 	Map<Integer, List<Edge>> edges = new HashMap<>();
@@ -60,6 +74,16 @@ public class FordFulkersonMaxFlow {
 		return 0;
 	}
 
+	private void getMinCut(int v, List<Integer> res) {
+		visited[v] = true;
+		res.add(v);
+		for (Edge e : edges.get(v)) {
+			if (!visited[e.to] && e.capacity > 0) {
+				getMinCut(e.to, res);
+			}
+		}
+	}
+
 	public double getMaxFlow(int s, int t) {
 		double flow = 0;
 		while (true) {
@@ -70,6 +94,13 @@ public class FordFulkersonMaxFlow {
 			}
 			flow += f;
 		}
+	}
+
+	public List<Integer> minCut(int s, int t) {
+		Arrays.fill(visited, false);
+		List<Integer> res = new ArrayList<Integer>();
+		getMinCut(s, res);
+		return res;
 	}
 
 	class Edge {

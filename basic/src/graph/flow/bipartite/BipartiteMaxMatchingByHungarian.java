@@ -9,13 +9,16 @@ public class BipartiteMaxMatchingByHungarian {
 		boolean[][] connection = new boolean[][] { new boolean[] { true, true, false, false, false },
 				new boolean[] { true, false, false, false, true }, new boolean[] { false, false, true, true, false },
 				new boolean[] { true, false, false, false, true }, new boolean[] { false, true, false, true, false } };
-		System.out.println(match(connection));
+		System.out.println(new BipartiteMaxMatchingByHungarian().match(connection));
 	}
 
-	public static int match(boolean[][] connection) {
+	int[] matchx;
+	int[] matchy;
+
+	public int match(boolean[][] connection) {
 		int matchCount = 0;
-		int[] matchx = new int[connection.length];
-		int[] matchy = new int[connection[0].length];
+		matchx = new int[connection.length];
+		matchy = new int[connection[0].length];
 		Arrays.fill(matchx, -1);
 		Arrays.fill(matchy, -1);
 
@@ -30,7 +33,7 @@ public class BipartiteMaxMatchingByHungarian {
 	}
 
 	/* For x, find if others can adjust so that it can find a mate */
-	private static boolean findMatch(int x, boolean[][] connection, int[] matchx, int[] matchy, boolean[] seen) {
+	private boolean findMatch(int x, boolean[][] connection, int[] matchx, int[] matchy, boolean[] seen) {
 		for (int y = 0; y < connection[x].length; y++) {
 			if (!seen[y] && connection[x][y]) {
 				seen[y] = true;

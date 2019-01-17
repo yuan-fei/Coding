@@ -43,7 +43,7 @@ public class ModularCombination {
 
 	/** Note x and n must be coprime. 1/n = n^(p-2) mod p */
 	private static long getModularMultiplicativeInverse(int n, long p) {
-		long r = Power.modularExp(n, p - 2, p);
+		long r = FastPower.modularExp(n, p - 2, p);
 		return r;
 	}
 

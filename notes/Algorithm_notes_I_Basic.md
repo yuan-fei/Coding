@@ -339,8 +339,10 @@ thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 		* [word-search-ii](https://leetcode.com/problems/word-search-ii)
 
 ## Miscellaneous
-* [Next Permutation](https://leetcode.com/problems/next-permutation)
-	* TC = O(n). observation the pattern and combine the reversing array and binary search
+* [Next Permutation](https://leetcode.com/problems/next-permutation): O(n). 
+	1. Find the longest suffix that is in decreasing order. 
+	2. Swap the preceding element x with the smallest one from the decreasing sequence larger than x, let's say y
+	3. Sort the suffix after y in increasing order by reverse it
 * [Median of 2 sorted arrays](https://leetcode.com/problems/median-of-two-sorted-arrays)
 	* TC = O(log(min(m, n))). Keep the count of numbers in left set and right set equal with order constraints. Binary search.
 * Single number: 

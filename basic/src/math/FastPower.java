@@ -1,6 +1,8 @@
 package math;
 
-public class Power {
+import java.util.Arrays;
+
+public class FastPower {
 
 	public static void main(String[] args) {
 		System.out.println(fastExpRecursive(3, 4));
@@ -11,6 +13,9 @@ public class Power {
 		System.out.println(modularExp(3, 5, 5));
 		// 2052166149
 		System.out.println(modularExp(413606424, 582988447, 837153029));
+		long[][] a = new long[][] { new long[] { 1, 1 }, new long[] { 1, 0 } };
+		System.out.println(Arrays.deepToString(fastMatrixExp(a, 3)));
+
 	}
 
 	public static long fastExpRecursive(int base, int exp) {
@@ -51,5 +56,33 @@ public class Power {
 			long t = modularExpRecursive(base, exp / 2, n);
 			return (t * t) % n;
 		}
+	}
+
+	/** a^n in O(m^3 * logn) */
+	public static long[][] fastMatrixExp(long[][] a, int exp) {
+		if (exp == 0) {
+			long[][] b = new long[a.length][a.length];
+			for (int i = 0; i < a.length; i++) {
+				b[i][i] = 1;
+			}
+			return b;
+		} else if (exp % 2 == 1) {
+			return multiplyMatrice(a, fastMatrixExp(a, exp - 1));
+		} else {
+			long[][] half = fastMatrixExp(a, exp / 2);
+			return multiplyMatrice(half, half);
+		}
+	}
+
+	private static long[][] multiplyMatrice(long[][] a, long[][] b) {
+		long[][] mul = new long[a.length][b[0].length];
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j < b[0].length; j++) {
+				for (int k = 0; k < a[i].length; k++) {
+					mul[i][j] += a[i][k] * b[k][j];
+				}
+			}
+		}
+		return mul;
 	}
 }

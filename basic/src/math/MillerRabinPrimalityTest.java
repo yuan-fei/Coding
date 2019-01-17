@@ -36,10 +36,10 @@ public class MillerRabinPrimalityTest {
 	/** return true if it's possibly a prime, or false if it's composite */
 	private static boolean witness(int n, int base) {
 		int[] decomposion = decompose(n - 1);
-		int x_pre = (int) Power.modularExp(base, decomposion[0], n);
+		int x_pre = (int) FastPower.modularExp(base, decomposion[0], n);
 		int x = x_pre;
 		for (int e = 0; e < decomposion[1]; e++) {
-			x = (int) Power.modularExp(x_pre, 2, n);
+			x = (int) FastPower.modularExp(x_pre, 2, n);
 			if (x == 1 && x_pre != 1 && x_pre != n - 1) {// non-trival square root of 1, modulo n
 				return false;
 			}
