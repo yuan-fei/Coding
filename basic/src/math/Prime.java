@@ -7,9 +7,10 @@ public class Prime {
 	public static void main(String[] args) {
 		System.out.println(sieve(100));
 		System.out.println(linearSieve(100));
+		System.out.println(segmentSieve(1, 100));
 	}
 
-	/** O(nlogn) */
+	/** O(nloglogn) */
 	public static List<Integer> sieve(int n) {
 		List<Integer> primes = new ArrayList<>();
 		boolean[] isComposite = new boolean[n + 1];
@@ -38,6 +39,32 @@ public class Prime {
 				if (i % primes.get(j) == 0) {
 					break;
 				}
+			}
+		}
+		return primes;
+	}
+
+	public static List<Integer> segmentSieve(int start, int end) {
+		List<Integer> primes = new ArrayList<>();
+		int smallPrimesEnd = (int) Math.sqrt(end);
+		boolean[] isSmallComposite = new boolean[smallPrimesEnd + 1];
+		boolean[] isLargeComposite = new boolean[end - start + 1];
+		for (int i = 0; start + i < 2; i++) {
+			isLargeComposite[i] = true;
+		}
+		for (int i = 2; i <= smallPrimesEnd; i++) {
+			if (!isSmallComposite[i]) {
+				for (int j = i * i; j < smallPrimesEnd; j += i) {
+					isSmallComposite[j] = true;
+				}
+			}
+			for (int j = Math.max(i, (start + i - 1) / i) * i; j <= end; j += i) {
+				isLargeComposite[j - start] = true;
+			}
+		}
+		for (int i = 0; i < isLargeComposite.length; i++) {
+			if (isLargeComposite[i] == false) {
+				primes.add(i + start);
 			}
 		}
 		return primes;

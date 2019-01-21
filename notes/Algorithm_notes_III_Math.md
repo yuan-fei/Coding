@@ -210,6 +210,13 @@
 		* Modular exponentiation by repeated squaring
 			* a<sup>b</sup> mod n = (a<sup>b/2</sup> mod n)<sup>2</sup> mod n when n%2=0; a*(a<sup>b-1</sup> mod n) mod n when n%2=1
 	* Primality testing
+		* Simple prime test for n: O(sqrt(n))
+			* n is composite if n can devide 2 ~ sqrt(n)
+		* Sieve of Eratosthenes: O(nloglogn)
+			* for all primes less than n: for primes i in range [2, sqrt(n)], all multiples of i are composite.
+			* for all primes between [a, b]:
+				1. simple sieve for small primes less than sqrt(b)
+				2. sieve for all primes in [a, b] with small primes
 		* The density of prime numbers
 			* 􏰄prime number theory: lim<sub>n->∞</sub>(􏰄π(n)/nlnn) = 1, where 􏰄π(n) is number of primes less or equal to n
 			* Pick 1 number n and the probability of prime is 1/lnn 

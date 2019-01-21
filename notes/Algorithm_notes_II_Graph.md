@@ -166,6 +166,14 @@
 	* Max weight closure of a directed graph (最大闭合权图): given weights on vertices, find a closure with max total weight
 		* [《最小割模型在信息学竞赛中的应用》](https://files-cdn.cnblogs.com/files/gjc1124646822/《最小割模型在信息学竞赛中的应用》.pdf)
 		* GCJ 2009 world final D wifi tower(挑战280)
+	* Min weight vertex covering set in bipartite (MinWVCS)
+		* solution
+			1. add edges s->X and Y->t with vertex weight as edge capacity
+			2. add edges X->Y with infinite edge capacity
+			3. MinWVCS is the min cut on the graph
+		* [《最小割模型在信息学竞赛中的应用》](https://files-cdn.cnblogs.com/files/gjc1124646822/《最小割模型在信息学竞赛中的应用》.pdf)
+	* Max weight vertex independent set in bipartite (MaxWVIS)
+		* MaxWVIS = The complement vertices of MinWVCS
 * Problems can be converted to bipartite problems
 	*  Find Minimum Clique Cover for DAG
 		* MCC for general undirected graph is NP-hard
