@@ -164,6 +164,7 @@
 		* Dual core CPU (poj-3469)
 		* wifi tower (gcj 2009 final D)
 	* Max weight closure of a directed graph (最大闭合权图): given weights on vertices, find a closure with max total weight
+		* Assume we include all positive weight vertices in the closure first, and next, we want to **exclude as few positive weight vertices and include as few negative weight vertices as possible by the definition of closure**.
 		* [《最小割模型在信息学竞赛中的应用》](https://files-cdn.cnblogs.com/files/gjc1124646822/《最小割模型在信息学竞赛中的应用》.pdf)
 		* GCJ 2009 world final D wifi tower(挑战280)
 	* Min weight vertex covering set in bipartite (MinWVCS)
