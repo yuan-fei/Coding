@@ -4,7 +4,7 @@ public class LongestIncreasingSubsequence {
 
 	public static void main(String[] args) {
 		System.out.println(solve(new int[] { 4, 2, 3, 1, 5 })); // 3
-		System.out.println(solveWithBinarySearch(new int[] { 4, 2, 3, 3, 1, 5 })); // 3
+		System.out.println(solveWithBinarySearch(new int[] { 4, 2, 3, 3, 1, 5, 6 })); // 6
 	}
 
 	/** O(n^2) */

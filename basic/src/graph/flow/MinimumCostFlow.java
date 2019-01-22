@@ -68,6 +68,7 @@ public class MinimumCostFlow {
 			boolean updated = true;
 			while (updated) {
 				updated = false;
+				// Bellman-Ford to find min cost path s->..->t
 				for (int u : edges.keySet()) {
 					if (cost.containsKey(u)) {
 						double costU = cost.get(u);
