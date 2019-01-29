@@ -317,8 +317,8 @@
 * Combinatonics and probability
 	* Useful combinatonics formula
 		* C(n, 1) + C(n, 3) + ... = C(n, 0) + C(n, 2) + ... = 2<sup>n-1<sup>
-		* Vandermonde's Identity: C(m + n, r) = Sum(C(n, k)*C(m, r - k)) for k = 0 ~ r
-			* C(m + n, m) = Sum(C(n, k)*C(m, k)) for k = 0 ~ m
+		* Vandermonde's Identity: C(m + n, r) = Sum(C(n, k) * C(m, r - k)) for k = 0 ~ r
+			* C(m + n, m) = Sum(C(n, k) * C(m, k)) for k = 0 ~ m
 	* Counting: ways of k numbers sum to n
 		1. k positive numbers sum to n: C(n - 1, k - 1)
 			* n - 1 positions for k - 1 dividers
@@ -344,7 +344,7 @@
 				* Prob(n, k) = (1/n) * sum(Prob(i-1, k-1)) where k <= i <= n
 					* consider the candidate with rank 1 at position k, k+1, ..., n
 	* [Catalan number](https://en.wikipedia.org/wiki/Catalan_number)
-		* Catalan(n) = sum(Catalan(i)*Catalan(n-i)) where 0 <= i <= n
+		* Catalan(n) = sum(Catalan(i) * Catalan(n-i)) where 0 <= i <= n
 		* Catalan(n) = C(2n, n) - C(2n, n+1) = C(2n, n)/(n+1)
 		* Counting: 
 			* full binray tree
@@ -360,3 +360,16 @@
 	* sampling and shuffle
 		* shuffle: Programming pearls
 		* [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling)
+	* Expected Value:
+		* E(X) = sum(x<sub>i</sub> * p<sub>i</sub>) for all possible value x<sub>i</sub>
+		* Linearity of EV: E(X + Y) = E(X) + E(Y) and X, Y need not to be independent
+		* Recusive form
+			* Solve the equation of recursive form: 
+				* Find EV of the number of coin tosses until you get heads two times in a row. 
+					* **E(HH)** = p<sub>T</sub> * (1 + E(HH)) + p<sub>H</sub> * (1 + E(HH | H)), **E(HH | H)** = p<sub>T</sub> * (1 + E(HH)) + p<sub>H</sub> * 1
+			* DP with state transfer equation
+				* [Sushi](https://atcoder.jp/contests/dp/tasks/dp_j): ![formula](../pics/sushi.png)
+			* Gaussian elmination for state transfer linear equations
+				* Random Walk (《挑战程序设计竞赛》p288): given a matrix of M * N with some obstacle grids, random walk with equal prob to 4 adjacent grids (up, down, left, right), find the EV of walks from top-left to bottom-right
+					* E(x, y) = 0.25 * E(x-1, y) + 0.25 * E(x+1, y) + 0.25 * E(x, y-1) + 0.25 * E(x, y+1) + 1
+		* Reference: [Sums and Expected Value — part 1](https://codeforces.com/blog/entry/62690)
