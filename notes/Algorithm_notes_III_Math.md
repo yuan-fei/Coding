@@ -372,4 +372,7 @@
 			* Gaussian elmination for state transfer linear equations
 				* Random Walk (《挑战程序设计竞赛》p288): given a matrix of M * N with some obstacle grids, random walk with equal prob to 4 adjacent grids (up, down, left, right), find the EV of walks from top-left to bottom-right
 					* E(x, y) = 0.25 * E(x-1, y) + 0.25 * E(x+1, y) + 0.25 * E(x, y-1) + 0.25 * E(x, y+1) + 1
-		* Reference: [Sums and Expected Value — part 1](https://codeforces.com/blog/entry/62690)
+		* The EV of size of a set E(S<sup>2</sup>) = sum(X<sub>i</sub> * X<sub>j</sub>) for all ordered pairs i, j (i=j is allowed)
+		* Reference: 
+			* [Sums and Expected Value — part 1](https://codeforces.com/blog/entry/62690)
+			* [Sums and Expected Value — part 2](https://codeforces.com/blog/entry/62792)
