@@ -155,8 +155,8 @@
 			* Multiplicative group modulo n as (ℤ<sup>\*</sup><sub>n</sub>, •<sub>n</sub>), in which ℤ<sup>*</sup><sub>n</sub> = {a: a ∈ ℤ<sub>n</sub>, a is relative prime to n}, is finite abelian group with identity 1
 				* **'Relative prime' guaratees the existense of inverse**: i.e. ℤ<sup>\*</sup><sub>15</sub>={1,2,4,7,8,11,13,14}
 				* |ℤ<sup>*</sup><sub>n</sub>| = φ(n): i.e. |ℤ<sup>\*</sup><sub>15</sub>| = 15(1-1/3)(1-1/5) = 8
-	* Euler's phi function: how many integers are there in ℤ<sub>n</sub> that are relatively prime to n
-		* if n = p<sub>1</sub><sup>r<sub>1</sub></sup>.p<sub>2</sub><sup>r<sub>2</sub></sup>...p<sub>m</sub><sup>r<sub>m</sub></sup>, in which p are primes, then the Euler's phi function is φ(n) = n(1-1/p<sub>1</sub>)(1-1/p<sub>2</sub>)...(1-1/p<sub>m</sub>)
+	* Euler's totient (phi) function: how many integers are there in ℤ<sub>n</sub> that are relatively prime to n
+		* if n = p<sub>1</sub><sup>r<sub>1</sub></sup>.p<sub>2</sub><sup>r<sub>2</sub></sup>...p<sub>m</sub><sup>r<sub>m</sub></sup>, in which p are primes, then the Euler's totient function is φ(n) = n(1-1/p<sub>1</sub>)(1-1/p<sub>2</sub>)...(1-1/p<sub>m</sub>)
 			* if n = p<sub></sub><sup>r<sub></sub></sup> which p is prime, then φ(n) = p<sub></sub><sup>r<sub></sub></sup>-p<sub></sub><sup>r-1<sub></sub></sup>
 			* φ(n)= φ(p<sub>1</sub><sup>r<sub>1</sub></sup>).φ(p<sub>2</sub><sup>r<sub>2</sub></sup>)...φ(p<sub>m</sub><sup>r<sub>m</sub></sup>)
 		* The size of multiplicative group modulo n: |ℤ<sup>*</sup><sub>n</sub>| = φ(n)
@@ -247,7 +247,7 @@
 			* Key generation
 				1. find 2 large primes p and q (i.e., 1024 bit each)
 				2. n = p * q
-				3. find small odd number e relatively prime to φ(n) (Euler's phi function)
+				3. find small odd number e relatively prime to φ(n) (Euler's totient function)
 				4. Compute d as the multiplicative inverse of e, modulo 􏰅φ(n)
 				5. publish public key (e, n)
 				6. keep secret key (d, n)

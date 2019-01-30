@@ -1,43 +1,48 @@
 package math;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Factorization {
 
 	public static void main(String[] args) {
-		System.out.println(primeFactorize(36));
-		System.out.println(primeFactorize(1));
-		System.out.println(primeFactorize(11));
+		System.out.println(getAllPrimeFactors(36));
+		System.out.println(getAllPrimeFactors(1));
+		System.out.println(getAllPrimeFactors(11));
 		System.out.println(getAllFactors(36));
 		System.out.println(getAllFactors(1));
 		System.out.println(getAllFactors(11));
 	}
 
 	/** O(n^0.5) */
-	public static List<Integer> primeFactorize(int n) {
-		List<Integer> res = new ArrayList<>();
+	public static Map<Long, Integer> getAllPrimeFactors(long n) {
+		Map<Long, Integer> pFactors = new HashMap<>();
 
+		int cnt = 0;
 		while (n % 2 == 0) {
-			res.add(2);
+			pFactors.put(2L, ++cnt);
 			n /= 2;
 		}
-		int factor = 3;
+		long factor = 3;
+		cnt = 0;
 		while (factor * factor <= n) {
 			if (n % factor == 0) {
-				res.add(factor);
+				pFactors.put(factor, ++cnt);
 				n /= factor;
 			} else {
 				factor += 2;
+				cnt = 0;
 			}
 		}
 
-		// This condition is to handle the case whien
+		// This condition is to handle the case when
 		// n is a prime number greater than 2
 		if (n > 2) {
-			res.add(n);
+			pFactors.put(n, ++cnt);
 		}
-		return res;
+		return pFactors;
 	}
 
 	/** O(n^0.5) */
