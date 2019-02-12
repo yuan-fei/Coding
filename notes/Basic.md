@@ -190,89 +190,6 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 	 	* [n-queens](https://leetcode.com/problems/n-queens)
 		* [sudoku-solver](https://leetcode.com/problems/sudoku-solver)
 
-## Dynamic programing
-* When to use DP
-	* Maximum/Minimum
-	* Yes/No 
-	* Solution count
-	* Input can not be sorted/swapped (like sequence, string, but not set)
-* When not to use DP
-	* Find all solutions 
-* DP category
-	* Matrix DP: Triangle, Unique paths
-	* Sequence: Climb stairs, Word break
-	* 2 sequence: Longest common subsequence/substring, Edit distance
-	* Backpack: K-sum
-* DP implementation
-	* Memorize search: cache solution of subproblems
-	* Iteration: build up
-		* State
-			* Single state
-				* Longest Common Subsequence: `f[i][j]`: length of the longest common subsequence till s1[i], s2[j]
-				* Longest Common Substring: `f[i][j]`: length of the common substring ended with s1[i]=s2[j]
-				* Backpack I: `f[i][j]`: the feasibility of any goods in first i goods whose volume can be added up to j.
-				* Backpack II: `f[i][j]`: the max price of any goods in first i goods whose volume can be added up to j.
-				* K-sum: `f[i][j][sum]`: the feasibility/solution # of j numbers in first i numbers that can be added up to 'sum'.
-			* State Machine
-				* best-time-to-buy-and-sell-stock-with-cooldown ([analysis](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/discuss/75928/Share-my-DP-solution-(By-State-Machine-Thinking))) 
-					* state:
-					
-					```
-					state machine: 
-					* bought[i]: hold->bought[i+1]; sell->sold[i+1]. 
-					* sold[i]: hold->cooldown[i+1]. 
-					* cooldown[i]: hold->cooldown[i+1]; buy->bought[i+1]
-					```
-					
-					* function
-				
-					```
-bought[i] = max(bought[i - 1], cooldown[i - 1] - prices[i - 1]);
-sold[i] = bought[i - 1] + prices[i - 1];
-cooldown[i] = max(cooldown[i - 1], sold[i - 1]);
-					```
-				* best-time-to-buy-and-sell-stock-iv ([analysis](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/discuss/54150/State-machine-is-the-easiest-way-to-understand-stock-problem-could-solve-all-the-stock-problem-in-leetcode))
-					* State: `Bought[i][j]`: max profit till day i - 1 with j - 1 transaction, and the last state is in 'Bought'; `Sold[i][j]`: max profit till day i - 1 with j - 1 transaction, and the last state is in 'Sold'
-					
-					```
-					Bought[i][j] = max(Bought[i - 1][j], Sold[i - 1][j - 1] - price[i - 1])
-					Sold[i][j] = max(Sold[i - 1][j], Bought[i - 1][j] + price[i - 1])
-					```
-
-		* Function
-		* Initialization
-			* Starting point and Boundary: state[0][0], state[0][x], state[x][0]...
-			* **Sometimes**, initialize state array with `length = problem scope + 1` to avoid boudary processing with `if-else`
-		
-			```java
-			public boolean wordBreak(String s, List<String> wordDict) {
-			    boolean[] isBreakable = new boolean[s.length() + 1];
-			    //sentinel value for initial state
-			    isBreakable[0] = true;
-			    for(int i = 1; i <= s.length(); i++){
-			    	...
-			    }
-			    ...
-			    return isBreakable[s.length()];
-			}
-			```
-		* Answer
-* Related Problems
-	* [longest-palindromic-substring](https://leetcode.com/problems/longest-palindromic-substring): 
-		* O(n^2) with DP: DP on all lengths substring 
-		* O(n) with [Manacher's algo](https://www.felix021.com/blog/read.php?2040): max LPS length symetry around center
-	* [word-break](https://leetcode.com/problems/word-break)
-	* [unique-paths-ii](https://leetcode.com/problems/unique-paths-ii)
-	* [climbing-stairs](https://leetcode.com/problems/climbing-stairs)
-	* [palindrome-partitioning-ii](https://leetcode.com/problems/palindrome-partitioning-ii)
-	* [longest-increasing-subsequence](https://leetcode.com/problems/longest-increasing-subsequence)
-	* [best-time-to-buy-and-sell-stock-with-cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown)
-	* [best-time-to-buy-and-sell-stock-iv](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv)
-	* [best-time-to-buy-and-sell-stock-with-transaction-fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee)
-	* [maximum-product-subarray](https://leetcode.com/problems/maximum-product-subarray)
-	* [regular-expression-matching](https://leetcode.com/problems/regular-expression-matching)
-	* [wildcard-matching](https://leetcode.com/problems/wildcard-matching/)
-
 ## Greedy
 * Activity Selection
 	* Given tasks each with start and end, find the max # of tasks that can be scheduled sequentially
@@ -313,6 +230,7 @@ thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 	* Get bitmask: n's lowest 1: `n & (-n)`
 		* Clear lowest 1: `n - (n & (-n))`
 		* Check if n is power-of-2: only 1 bit is set `n == (n & (n-1))`
+	* Iterate all subsets: `int x = mask; while(x!=0){x=(x-1)&mask;}`
 * Factorial factors: 
 	* how many p in n! (the largest k which makes p^k devides n!)
 		*  f(n, p) = ⌊n/p⌋ + ⌊n/(p^2)⌋ +...

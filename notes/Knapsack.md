@@ -1,6 +1,6 @@
 # Notes
 
-## Backpack
+## Knapsack/Backpack
 * Backpack: Given total volume of a backpack, and value of each item, 
 	* Categorory
 		* item occurence:

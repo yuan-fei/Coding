@@ -325,6 +325,14 @@
 		2. k non-negative numbers sum to n: C(n + k - 1, k - 1)
 			* For each division, add 1 to k group each, and problem is converted to problem 1 'k positive numbers'
 			* n + k + 1 positions for k - 1  dividers, consecutive dividers are allowed to represent a element 0
+	* [Lattice Path](https://en.wikipedia.org/wiki/Lattice_path):
+		* North-East path: L((r<sub>1</sub>, c<sub>1</sub>), (r<sub>2</sub>, c<sub>2</sub>)) = C(r<sub>2</sub> - r<sub>1</sub> + r<sub>2</sub> - c<sub>2</sub>, r<sub>2</sub> - r<sub>1</sub>)
+		* Avoid 'bad' blocks: paths from (1, 1) to (n, m) without touching any of the k bad blocks (r<sub>1</sub>, c<sub>1</sub>), (r<sub>2</sub>, c<sub>2</sub>)...(r<sub>k</sub>, c<sub>k</sub>), and **the bad blocks are ordered by r, c**
+			* DP
+				1. dp(r<sub>1</sub>, c<sub>1</sub>) = L((1, 1), (r<sub>1</sub>, c<sub>1</sub>))
+				2. dp(r<sub>i</sub>, c<sub>i</sub>) = L((1, 1), (r<sub>i</sub>, c<sub>i</sub>)) - sum(dp(r<sub>j</sub>, c<sub>j</sub>) * L((r<sub>j</sub>, c<sub>j</sub>), (r<sub>i</sub>, c<sub>i</sub>))) where j in [1, i-1] and block (r<sub>j</sub>, c<sub>j</sub>) is within the range of [(1, 1), (r<sub>i</sub>, c<sub>i</sub>)]
+					* dp(r<sub>j</sub>, c<sub>j</sub>) * L((r<sub>j</sub>, c<sub>j</sub>), (r<sub>i</sub>, c<sub>i</sub>)): bad paths from (1,1) to (r<sub>i</sub>, c<sub>i</sub>) with the first bad block (r<sub>j</sub>, c<sub>j</sub>)
+			* reference: [Change the object to dp](https://codeforces.com/blog/entry/47764)
 	* [Birthday paradox](https://en.wikipedia.org/wiki/Birthday_problem): Probs of born on same day
 		* The prob. of at least 1 pair out of k people have the same birthday is 100% when k=367, 99% when k=70, and **50% when k=23**
 		* The expected # of pair of people who have same birthday among k people is k(k-1)/2n (n is # of days in a year)
