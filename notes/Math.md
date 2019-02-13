@@ -261,8 +261,14 @@
 		* Pollard-rho heuristic: find a factor in O(n<sup>1/4</sup>)
 			* Based on Floyd's tortoise and hare algorithm: 
 				* Create a cycle: x<sub>i</sub> = x<sub>i-1</sub><sup>2</sup>-c mod n
-				* Find 2 number meet in the cycle: x<sub>i</sub> ≡ x<sub>j</sub> mod p, where p is a factor of n, so that gcd(x<sub>i</sub> - x<sub>j</sub>, n) = p
-
+				* Find 2 number meet in the cycle: x<sub>i</sub> ≡ x<sub>j</sub> mod p, where p is a factor of n, so that gcd(x<ub>i</sub> - x<sub>j</sub>, n) = p
+	* Inclusion-exclusion principle
+![inclusion-exclusion.png](../pics/inclusion-exclusion.png)
+		* Classic problems: \# of ways of n numbers sum to k with upperbound m: 
+			* a<sub>1</sub> + ... +a<sub>n</sub> = k, with 0<=a<sub>i</sub><= m
+		* Reference
+			* [[Tutorial] Inclusion-Exclusion Principle, Part 1.](https://codeforces.com/blog/entry/64625)
+	
 ## <a name='Computational_Geometry'></a>Computational Geometry
 * Segment
 	* Vector's product: p<sub>1</sub>(x<sub>1</sub>,y<sub>1</sub>), p<sub>2</sub>(x<sub>2</sub>,y<sub>2</sub>)
