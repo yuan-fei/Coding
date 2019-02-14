@@ -135,6 +135,12 @@ vEB tree with elements [2, 3, 4, 5, 7, 14, 15]
 			* BIT(n) = A[n - 2<sup>r</sup> + 1] +...+ A[n], where r is the # of trailing 0s of n
 			* Prefix_sum(n): constantly remove rightmost 1 of n's binary representation, and sum BIT(n)
 				* prefix_sum(1011) = BIT(1011) + BIT(1010) + BIT(1000)
+			* Increment(i, v): constantly add rightmost 1 of n's binary representation, and increment BIT(n)
+				* increment(101, v):
+					1. BIT(101)+ v
+					2. BIT(110)+ v 
+					3. BIT(1000)+ v 
+					4. BIT(10000)+ v 
 	* implementation:
 		* quick remove rightmost 1 of n's binary representation with O(1): n - (n & (-n))
 	* application: range sum query, count 1s in bitmap
