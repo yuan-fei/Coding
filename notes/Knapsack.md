@@ -15,7 +15,7 @@
 				* item permutation as solution
 				* item conbination as solution
 			4. How many different sizes can be populated by the items
-	* Problem convertion
+	* Problem conversion
 		* 2 implementation of Complete Backpack
 			1. state[i-1] based solution: inefficient
 			`state[i][j] = max(state[i - 1][j], state[i - 1][j - k * size[i]] + value[i]) while j >= k * size[i]`
@@ -74,8 +74,9 @@
 			* state initialize: `state[0] = 0;`
 			* state update: `state[j] = Math.max(state[j], state[j - sizes[i - 1]] + values[i - 1]);`			
 		* How many ways that the backpack can be fullfilled (aka. Give n numbers, choose numbers that sum to a A)
-			* item permutation as solution
-
+			* item permutation as solution: (1+2=3 and 2+1=3 are different solutions)
+				* state[j]: # of permutations of first i places that sum to j with whatever item sizes
+				
 				~~~
 				// swap the inner and outer loop
 				state[0] = 1;
@@ -87,9 +88,9 @@
 					}
 				}
 				~~~
-				* state[j]: # of permutations which the sizes of items sum to j
-			* item conbination as solution
-				* state[j]: # of combinations which the sizes of items sum to j
+
+			* item combination as solution: (1+2=3 and 2+1=3 are same solution)
+				* state[j]: # of combinations that sum to j with only the first i kinds of item sizes
 				* state initialize: `state[0] = 1;`
 				* state update: `state[j] = state[j] + state[j - sizes[i - 1]];`
 		* How many different sizes can be populated by the items

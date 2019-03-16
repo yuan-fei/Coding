@@ -20,6 +20,8 @@ import java.util.HashMap;
  * 
  * Regardless of how you drive, the car will always be tangent to or intersect
  * with obstacles, which is not allowed.
+ * 
+ * Union Find Set
  */
 public class DrivingProblem {
 	/**

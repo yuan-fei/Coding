@@ -213,6 +213,30 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 Let prefixSum[i] = sum(num[0], sum[1], ..., sum[i])
 thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 ```
+* Event based offset
+	* Given a interval of length n, and m increments in range: ([l<sub>i</sub>, r<sub>i</sub>], inc), how to calculate sum in any range [l, r]?
+	* brute-force: O(n+sum(r<sub>i</sub>-l<sub>i</sub>))
+		1. inc val for each point in interval
+		2. calculate prefix sum
+	* event based offset: O(n+m)
+		1. event based offset: (l<sub>i</sub>, +inc), (r<sub>i</sub>, -inc) ...
+		2. calculate each point value by prefix sum
+		3. calculate prefix sum
+	
+	~~~
+	Interval[] intervals;	//0-based: [0,1]
+	long[] val = new long[n+1];
+	for(int i = 0; i < intervals.length; i++){
+		val[intervals[i].left] = intervals[i].value;
+		val[intervals[i].right + 1] -= intervals[i].value;
+	}
+	long[] prefSum = new long[n+1];	
+	for(int i = 1; i < n; i++){
+		val[i] += val[i-1];
+		prefSum[i] = prefSum[i-1] + val[i];
+	}
+	~~~
+
 * Related Problems
 	* [maximum-subarray](https://leetcode.com/problems/maximum-subarray)
 	* [minimum-size-subarray-sum](https://leetcode.com/problems/minimum-size-subarray-sum)
@@ -230,7 +254,7 @@ thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 	* Get bitmask: n's lowest 1: `n & (-n)`
 		* Clear lowest 1: `n - (n & (-n))`
 		* Check if n is power-of-2: only 1 bit is set `n == (n & (n-1))`
-	* Iterate all subsets: `int x = mask; while(x!=0){x=(x-1)&mask;}`
+	* Bitmask all subsets enumeration: `int x = mask; while(x!=0){x=(x-1)&mask;}`
 * Factorial factors: 
 	* how many p in n! (the largest k which makes p^k devides n!)
 		*  f(n, p) = ⌊n/p⌋ + ⌊n/(p^2)⌋ +...

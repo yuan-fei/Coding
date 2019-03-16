@@ -272,7 +272,7 @@
 ## <a name='Computational_Geometry'></a>Computational Geometry
 * Segment
 	* Vector's product: p<sub>1</sub>(x<sub>1</sub>,y<sub>1</sub>), p<sub>2</sub>(x<sub>2</sub>,y<sub>2</sub>)
-		* dot product: p<sub>1</sub> . p<sub>2</sub> = x<sub>1</sub>x<sub>2</sub> - y<sub>1</sub>y<sub>2</sub>
+		* dot product: p<sub>1</sub> . p<sub>2</sub> = x<sub>1</sub>x<sub>2</sub> + y<sub>1</sub>y<sub>2</sub>
 			* vector cosine similarity
 			* p<sub>1</sub> . p<sub>2</sub> = |p<sub>1</sub>||p<sub>2</sub>|cos\<p<sub>1</sub>, p<sub>2</sub>>
 		* cross product: p<sub>1</sub> * p<sub>2</sub> = x<sub>1</sub>y<sub>2</sub> - x<sub>2</sub>y<sub>1</sub>
@@ -325,68 +325,98 @@
 		* C(n, 1) + C(n, 3) + ... = C(n, 0) + C(n, 2) + ... = 2<sup>n-1<sup>
 		* Vandermonde's Identity: C(m + n, r) = Sum(C(n, k) * C(m, r - k)) for k = 0 ~ r
 			* C(m + n, m) = Sum(C(n, k) * C(m, k)) for k = 0 ~ m
-	* Counting: ways of k numbers sum to n
-		1. k positive numbers sum to n: C(n - 1, k - 1)
-			* n - 1 positions for k - 1 dividers
-		2. k non-negative numbers sum to n: C(n + k - 1, k - 1)
-			* For each division, add 1 to k group each, and problem is converted to problem 1 'k positive numbers'
-			* n + k + 1 positions for k - 1  dividers, consecutive dividers are allowed to represent a element 0
-	* [Lattice Path](https://en.wikipedia.org/wiki/Lattice_path):
-		* North-East path: L((r<sub>1</sub>, c<sub>1</sub>), (r<sub>2</sub>, c<sub>2</sub>)) = C(r<sub>2</sub> - r<sub>1</sub> + r<sub>2</sub> - c<sub>2</sub>, r<sub>2</sub> - r<sub>1</sub>)
-		* Avoid 'bad' blocks: paths from (1, 1) to (n, m) without touching any of the k bad blocks (r<sub>1</sub>, c<sub>1</sub>), (r<sub>2</sub>, c<sub>2</sub>)...(r<sub>k</sub>, c<sub>k</sub>), and **the bad blocks are ordered by r, c**
-			* DP
-				1. dp(r<sub>1</sub>, c<sub>1</sub>) = L((1, 1), (r<sub>1</sub>, c<sub>1</sub>))
-				2. dp(r<sub>i</sub>, c<sub>i</sub>) = L((1, 1), (r<sub>i</sub>, c<sub>i</sub>)) - sum(dp(r<sub>j</sub>, c<sub>j</sub>) * L((r<sub>j</sub>, c<sub>j</sub>), (r<sub>i</sub>, c<sub>i</sub>))) where j in [1, i-1] and block (r<sub>j</sub>, c<sub>j</sub>) is within the range of [(1, 1), (r<sub>i</sub>, c<sub>i</sub>)]
-					* dp(r<sub>j</sub>, c<sub>j</sub>) * L((r<sub>j</sub>, c<sub>j</sub>), (r<sub>i</sub>, c<sub>i</sub>)): bad paths from (1,1) to (r<sub>i</sub>, c<sub>i</sub>) with the first bad block (r<sub>j</sub>, c<sub>j</sub>)
-			* reference: [Change the object to dp](https://codeforces.com/blog/entry/47764)
-	* [Birthday paradox](https://en.wikipedia.org/wiki/Birthday_problem): Probs of born on same day
-		* The prob. of at least 1 pair out of k people have the same birthday is 100% when k=367, 99% when k=70, and **50% when k=23**
-		* The expected # of pair of people who have same birthday among k people is k(k-1)/2n (n is # of days in a year)
-		* Collision problem: the expected number of N-bit hashes that can be generated before getting a collision is not 2<sup>N</sup>, but rather only 2<sup>N⁄2</sup>
-	* [Coupon collecter's problem](https://en.wikipedia.org/wiki/Coupon_collector%27s_problem): collect all coupons and win
-		* indicator variable X<sub>i</sub>: \# of a single coupon collection. E(X<sub>i</sub>)=1/p<sub>i</sub> for X<sub>i</sub> has geometric distribution
-		* E(X<sub>1</sub>+...+X<sub>n</sub>) = n(1+1/2+1/3+...+1/n) = nH<sub>n</sub>
-		* Expected # of collection for all coupons is O(nlnn)
-	* Hiring problem:
-		* interview n ranked candidates 1 by 1, and always hire the candidates with higher rank
-			* What is the expected # of total hiring?
-				* indicator variable X<sub>i</sub>: candidate i gets hired. E(X<sub>i</sub>) = 1/i when i is the one with the largest rank among the candidates interviewed before him.
-				* E(X<sub>1</sub>+...+X<sub>n</sub>) = 1+1/2+1/3+...1/n = H<sub>n</sub>
-			* What is the probs of hiring k candidates out of n in total?
-				* Prob(n, k) = (1/n) * Prob(n-1, k-1) + ((n-1)/n) * Prob(n-1,k)
-					* consider if candidate with rank 1 is the last interviewer
-				* Prob(n, k) = (1/n) * sum(Prob(i-1, k-1)) where k <= i <= n
-					* consider the candidate with rank 1 at position k, k+1, ..., n
-	* [Catalan number](https://en.wikipedia.org/wiki/Catalan_number)
-		* Catalan(n) = sum(Catalan(i) * Catalan(n-i)) where 0 <= i <= n
-		* Catalan(n) = C(2n, n) - C(2n, n+1) = C(2n, n)/(n+1)
-		* Counting: 
-			* full binray tree
-			* all parenthesis matching
-			* lattice path
-	* Stirling number (Concrete Math)
-		* Type I (n cycles k): devide a set of n distinct numbers to k non-empty circle
-			* StirlingI(n, k) = (n-1) * StirlingI(n-1, k) + StirlingI(n-1, k-1)
-		* Type II (n subsets k): devide a set of n distinct numbers to k non-empty set
-			* StirlingII(n, k) = k * StirlingII(n-1, k) + StirlingII(n-1, k-1)
-				* Consider the 2 scenarios of how to place the last element
-	* [Bertrand ballot problem](https://en.wikipedia.org/wiki/Bertrand%27s_ballot_theorem)
-	* sampling and shuffle
-		* shuffle: Programming pearls
+	* Counting: 
+		* \# of ways of k numbers sum to n
+			1. k positive numbers sum to n: C(n - 1, k - 1)
+				* n - 1 positions for k - 1 dividers
+			2. k non-negative numbers sum to n: C(n + k - 1, k - 1)
+				* For each division, add 1 to k group each, and problem is converted to problem 1 'k positive numbers'
+				* n + k + 1 positions for k - 1  dividers, consecutive dividers are allowed to represent a element 0
+		* \# of subset
+			* Given a set of n distinct numbers
+				1. \# of subsets: 2<sup>n</sup>
+				2. \# of subsets of subsets: 3<sup>n</sup>
+					* f(n): =3f(n-1) : (i) f(n-1) subsets of subsets without number n; (ii) f(n-1) subsets of subsets with number n; (ii) f(n-1) subsets with subset {n};
+		* [Lattice Path](https://en.wikipedia.org/wiki/Lattice_path):
+			* North-East path: L((r<sub>1</sub>, c<sub>1</sub>), (r<sub>2</sub>, c<sub>2</sub>)) = C(r<sub>2</sub> - r<sub>1</sub> + r<sub>2</sub> - c<sub>2</sub>, r<sub>2</sub> - r<sub>1</sub>)
+			* Avoid 'bad' blocks [(Grid 2)](https://atcoder.jp/contests/dp/tasks/dp_y): paths from (1, 1) to (n, m) without touching any of the k bad blocks (r<sub>1</sub>, c<sub>1</sub>), (r<sub>2</sub>, c<sub>2</sub>)...(r<sub>k</sub>, c<sub>k</sub>), and **the bad blocks are ordered by r, c**
+				* DP
+					1. dp(r<sub>1</sub>, c<sub>1</sub>) = L((1, 1), (r<sub>1</sub>, c<sub>1</sub>))
+					2. dp(r<sub>i</sub>, c<sub>i</sub>) = L((1, 1), (r<sub>i</sub>, c<sub>i</sub>)) - sum(dp(r<sub>j</sub>, c<sub>j</sub>) * L((r<sub>j</sub>, c<sub>j</sub>), (r<sub>i</sub>, c<sub>i</sub>))) where j in [1, i-1] and block (r<sub>j</sub>, c<sub>j</sub>) is within the range of [(1, 1), (r<sub>i</sub>, c<sub>i</sub>)]
+						* dp(r<sub>j</sub>, c<sub>j</sub>) * L((r<sub>j</sub>, c<sub>j</sub>), (r<sub>i</sub>, c<sub>i</sub>)): bad paths from (1,1) to (r<sub>i</sub>, c<sub>i</sub>) with the first bad block (r<sub>j</sub>, c<sub>j</sub>)
+				* reference: [Change the object to dp](https://codeforces.com/blog/entry/47764)
+		* [Catalan number](https://en.wikipedia.org/wiki/Catalan_number)
+			* Catalan(n) = sum(Catalan(i) * Catalan(n-i)) where 0 <= i <= n
+			* Catalan(n) = C(2n, n) - C(2n, n+1) = C(2n, n)/(n+1)
+			* Counting: 
+				* full binray tree
+				* all parenthesis matching
+				* lattice path
+		* Stirling number (Concrete Math)
+			* Type I (n cycles k): devide a set of n distinct numbers to k non-empty circle
+				* StirlingI(n, k) = (n-1) * StirlingI(n-1, k) + StirlingI(n-1, k-1)
+			* Type II (n subsets k): devide a set of n distinct numbers to k non-empty set
+				* StirlingII(n, k) = k * StirlingII(n-1, k) + StirlingII(n-1, k-1)
+					* Consider the 2 scenarios of how to place the last element
+		* [Bertrand ballot problem](https://en.wikipedia.org/wiki/Bertrand%27s_ballot_theorem)
+	* Probability models
+		* Bernoulli: coin toss with Prb. p of getting head
+		* Binomial: 
+			* The total # of heads in n tosses: `X ~ B(n, p)`
+			* The prob. of getting k heads in total in n tosses: <code>P(X = k) = C(n, k)p<sup>k</sup>(1 - p)<sup>n-k</sup></code>
+			* Expected # of heads in n tosses: `E(X) = np`
+		* Geometric distribution: 
+			* The # of tosses to get the 1st head: `X ~ G(p)`
+			* Prob. of getting the 1st head until the kth toss: <code>P(X = k) = (1-p)<sup>k</sup>p</code>
+			* Ecpected tosses to get the 1st head: `E(X) = 1/p` 
+			* Ecpected tail tosses before getting the 1st head: `E(Y) = 1/p - 1`
+		* [Birthday paradox](https://en.wikipedia.org/wiki/Birthday_problem): Probs of born on same day
+			* The prob. of at least 1 pair out of k people have the same birthday is 100% when k=367, 99% when k=70, and **50% when k=23**
+			* The expected # of pair of people who have same birthday among k people is k(k-1)/2n (n is # of days in a year)
+			* Collision problem: the expected number of N-bit hashes that can be generated before getting a collision is not 2<sup>N</sup>, but rather only 2<sup>N⁄2</sup>
+		* [Coupon collecter's problem](https://en.wikipedia.org/wiki/Coupon_collector%27s_problem): collect all coupons **with replacement** and win
+			* indicator variable X<sub>i</sub>: \# of a single coupon collection. E(X<sub>i</sub>)=1/p<sub>i</sub> for X<sub>i</sub> has geometric distribution
+			* E(X<sub>1</sub>+...+X<sub>n</sub>) = n(1+1/2+1/3+...+1/n) = nH<sub>n</sub>
+			* Expected # of collection for all coupons is O(nlnn)
+		* Hiring problem:
+			* interview n ranked candidates 1 by 1, and always hire the candidates with higher rank
+				* What is the expected # of total hiring?
+					* indicator variable X<sub>i</sub>: candidate i gets hired. E(X<sub>i</sub>) = 1/i when i is the one with the largest rank among the candidates interviewed before him.
+					* E(X<sub>1</sub>+...+X<sub>n</sub>) = 1+1/2+1/3+...1/n = H<sub>n</sub>
+				* What is the probs of hiring k candidates out of n in total?
+					* Prob(n, k) = (1/n) * Prob(n-1, k-1) + ((n-1)/n) * Prob(n-1,k)
+						* consider if candidate with rank 1 is the last interviewer
+					* Prob(n, k) = (1/n) * sum(Prob(i-1, k-1)) where k <= i <= n
+						* consider the candidate with rank 1 at position k, k+1, ..., n
+		* Expected Value:
+			* E(X) = sum(x<sub>i</sub> * p<sub>i</sub>) for all possible value x<sub>i</sub>
+			* Linearity of EV: E(X + Y) = E(X) + E(Y) and X, Y need not to be independent
+			* Recusive form
+				* Solve the equation of recursive form: 
+					* Find EV of the number of coin tosses until you get heads two times in a row. 
+						* **E(HH)** = p<sub>T</sub> * (1 + E(HH)) + p<sub>H</sub> * (1 + E(HH | H)), **E(HH | H)** = p<sub>T</sub> * (1 + E(HH)) + p<sub>H</sub> * 1
+				* DP with state transfer equation
+					* [Sushi](https://atcoder.jp/contests/dp/tasks/dp_j): ![formula](../pics/sushi.png)
+				* Gaussian elmination for state transfer linear equations
+					* Random Walk (《挑战程序设计竞赛》p288): given a matrix of M * N with some obstacle grids, random walk with equal prob to 4 adjacent grids (up, down, left, right), find the EV of walks from top-left to bottom-right
+						* E(x, y) = 0.25 * E(x-1, y) + 0.25 * E(x+1, y) + 0.25 * E(x, y-1) + 0.25 * E(x, y+1) + 1
+			* The EV of size of a set E(S<sup>2</sup>) = sum(X<sub>i</sub> * X<sub>j</sub>) for all ordered pairs i, j (i=j is allowed)
+			* Reference: 
+				* [Sums and Expected Value — part 1](https://codeforces.com/blog/entry/62690)
+				* [Sums and Expected Value — part 2](https://codeforces.com/blog/entry/62792)
+
+	* Sampling and shuffling
+		* shuffle: See SamplingAndShuffling, [Modern shuffling](https://en.wikipedia.org/wiki/Fisher–Yates_shuffle)
+
+		~~~
+		Random r = new Random();
+		int[] a = ...
+		for (int i = 0; i < a.length; i++) {
+			int j = r.nextInt(a.length - i) + i;
+			swap(a, i, j);
+		}
+		~~~
+		
 		* [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling)
-	* Expected Value:
-		* E(X) = sum(x<sub>i</sub> * p<sub>i</sub>) for all possible value x<sub>i</sub>
-		* Linearity of EV: E(X + Y) = E(X) + E(Y) and X, Y need not to be independent
-		* Recusive form
-			* Solve the equation of recursive form: 
-				* Find EV of the number of coin tosses until you get heads two times in a row. 
-					* **E(HH)** = p<sub>T</sub> * (1 + E(HH)) + p<sub>H</sub> * (1 + E(HH | H)), **E(HH | H)** = p<sub>T</sub> * (1 + E(HH)) + p<sub>H</sub> * 1
-			* DP with state transfer equation
-				* [Sushi](https://atcoder.jp/contests/dp/tasks/dp_j): ![formula](../pics/sushi.png)
-			* Gaussian elmination for state transfer linear equations
-				* Random Walk (《挑战程序设计竞赛》p288): given a matrix of M * N with some obstacle grids, random walk with equal prob to 4 adjacent grids (up, down, left, right), find the EV of walks from top-left to bottom-right
-					* E(x, y) = 0.25 * E(x-1, y) + 0.25 * E(x+1, y) + 0.25 * E(x, y-1) + 0.25 * E(x, y+1) + 1
-		* The EV of size of a set E(S<sup>2</sup>) = sum(X<sub>i</sub> * X<sub>j</sub>) for all ordered pairs i, j (i=j is allowed)
-		* Reference: 
-			* [Sums and Expected Value — part 1](https://codeforces.com/blog/entry/62690)
-			* [Sums and Expected Value — part 2](https://codeforces.com/blog/entry/62792)
+		* Reference: Programming pearls
+	
