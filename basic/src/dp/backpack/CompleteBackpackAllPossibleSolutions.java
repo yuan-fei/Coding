@@ -15,6 +15,7 @@ public class CompleteBackpackAllPossibleSolutions {
 		System.out.println(combinationWithSpaceEfficiency(12, new int[] { 2, 3, 5, 7 })); // 7
 		System.out.println(combinationWithSpaceEfficiency(6, new int[] { 2, 3, 5, 7 })); // 2
 		System.out.println(combinationWithSpaceEfficiency(7, new int[] { 2, 3, 6, 7 })); // 2
+		System.out.println(combinationWithSpaceEfficiency(3, new int[] { 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 })); // 174
 	}
 
 	/**

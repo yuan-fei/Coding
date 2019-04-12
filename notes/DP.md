@@ -156,10 +156,12 @@ for (int i = 2; i <= n; i++) {
 * template
 
 ```
+//iterative
+String s; //input
 dp[0][0][0] = 1;
-for(int i =0; i<n; i++){
+for(int d = 0; d < n; i++){
 	for(int isLess=0; isLess < 2; isLess++){
-		int max = (isLess == 1)? 9 : b[i];
+		int max = (isLess == 1)? 9 : s.charAt(i) - '0';
 		for(int k=0; k<=max; k++){
 			isLessNext = (!isLess && (k==max))? 0 : 1;
 			dp[d+1][isLessNext][state'] = dp[d][isLess][state] + ...;
@@ -167,6 +169,24 @@ for(int i =0; i<n; i++){
 	}
 }
 
+```
+
+```
+//recursive
+long solve(String s, int i, boolean isLess, state){
+	if(i == s.length()){
+		return ...;
+	}
+	
+	int max = isLess ? 9 : s.charAt(i) - '0';
+	long r = 0;
+	for(int k=0; k<=max; k++){
+		isLessNext = isLess || k < max;
+		newState = f(state, i, k);
+		r += solve(s, i+1, isLessNext, newState);
+	}
+	return dp[i][isLess][state] = r;
+}
 ```
 * Problems
 	* [Digit Sum](https://atcoder.jp/contests/dp/tasks/dp_s)
