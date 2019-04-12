@@ -3,7 +3,7 @@ package tree.range;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class RangeSumQueryTree {
+public class PointIncrementRangeSumQueryTree {
 	class SegmentTreeNode {
 		public int start, end;
 		public SegmentTreeNode left, right;
@@ -23,7 +23,7 @@ public class RangeSumQueryTree {
 	SegmentTreeNode root;
 	int n;
 
-	public RangeSumQueryTree(int n) {
+	public PointIncrementRangeSumQueryTree(int n) {
 		build(n);
 	}
 
@@ -82,7 +82,7 @@ public class RangeSumQueryTree {
 
 	public static void main(String[] args) {
 		int[] a = new int[] { -1, 0, 1, 2, 3, 4, 5 };
-		RangeSumQueryTree s = new RangeSumQueryTree(a.length);
+		PointIncrementRangeSumQueryTree s = new PointIncrementRangeSumQueryTree(a.length);
 		for (int i = 0; i < a.length; i++) {
 			s.increase(i, a[i]);
 		}
