@@ -1,6 +1,42 @@
 package dp;
 
 /**
+ * All permutations sum to k
+ * 
+ * Composition of 5
+ * 
+ * 5
+ * 
+ * 4 + 1
+ * 
+ * 3 + 2
+ * 
+ * 3 + 1 + 1
+ * 
+ * 2 + 3
+ * 
+ * 2 + 2 + 1
+ * 
+ * 2 + 1 + 2
+ * 
+ * 2 + 1 + 1 + 1
+ * 
+ * 1 + 4
+ * 
+ * 1 + 3 + 1
+ * 
+ * 1 + 2 + 2
+ * 
+ * 1 + 2 + 1 + 1
+ * 
+ * 1 + 1 + 3
+ * 
+ * 1 + 1 + 2 + 1
+ * 
+ * 1 + 1 + 1 + 2
+ * 
+ * 1 + 1 + 1 + 1 + 1.
+ * 
  * Dynamic Programming
  * 
  * see math.IntegerComposition for inclusion-exclusion principle solution

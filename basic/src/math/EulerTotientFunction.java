@@ -6,6 +6,8 @@ import java.util.Set;
 /**
  * Euler's totient function: count of numbers in {1, 2, 3, …, n} that are
  * relatively prime to n
+ * 
+ * O(n^0.5) for prime factorization
  */
 public class EulerTotientFunction {
 
