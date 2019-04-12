@@ -438,7 +438,43 @@ private int combination(int n, int m){
 	return (int)r;
 }
 ```
-    
+
+* N-Queen diagonal check with array
+
+<pre><code>
+public int totalNQueens(int n) {
+	<strong>
+	boolean[] c = new boolean[n]; // direction '/'
+	boolean[] d1 = new boolean[2*n]; // diagonal '/'
+	boolean[] d2 = new boolean[2*n]; // diagonal '\'
+	</strong>
+	return totalNQueensHelper(n, c, d1, d2, 0);
+}
+
+int totalNQueensHelper(int n, boolean[] c, boolean[] d1, boolean[] d2, int r){
+	if(r == n){
+		return 1;
+	}
+	else{
+		int total = 0;
+		for(int i = 0; i < n; i++){
+			<strong>
+			//map -n~n to 0~2n
+			int id1 = n+i-r;
+			</strong>
+			int id2 = i+r;
+			<strong>
+			if(!c[i] && !d1[id1] && !d2[id2])</strong>{
+				c[i] = d1[id1] = d2[id2] = true;
+				total += totalNQueensHelper(n, c, d1, d2, r+1);
+				c[i] = d1[id1] = d2[id2] = false;
+			}
+		}
+		return total;
+	}  	
+}
+</code></pre>
+
 ## References
 * [1]: [Leetcode solution](https://www.sigmainfy.com/blog/leetcode-handbook-all-problem-solution-index.html)
 
