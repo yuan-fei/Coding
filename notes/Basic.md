@@ -194,6 +194,14 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 * Activity Selection
 	* Given tasks each with start and end, find the max # of tasks that can be scheduled sequentially
 	* Given intervals each with start and end, find the min # of shoots that can eliminate all intervals (1 shoot at x can eliminate all intervals that intersect at x) ([Shooting baloons](https://mp.weixin.qq.com/s/iSHP4MJq-EkwjitMlPkT8g))
+* Task scheduling on 2 machines
+	* This task is about finding an optimal schedule for n jobs on two machines. Every item must first be processed on the first machine, and afterwards on the second one. The i-th job takes ai time on the first machine, and bi time on the second machine. Each machine can only process one job at a time.
+	* Johnson's rule
+		* sort: min(a<sub>i</sub>,b<sub>i</sub>) < min(a<sub>j</sub>,b<sub>j</sub>)
+		* schedule: for each task if a<sub>i</sub> < b<sub>i</sub> then put it front, otherwise put it end, until meet in the middle.
+	* Reference
+		* [Johnson's rule on cp-algorithms](https://cp-algorithms.com/schedules/schedule_two_machines.html)
+		* [paper](http://www.rspq.org/pubs/j2.pdf)
 * Longest increasing sequence (LIS)
 	* O(n^2) for DP, O(nlogn) for non-DP
 	* non-DP

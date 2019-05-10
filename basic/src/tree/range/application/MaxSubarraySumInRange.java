@@ -1,4 +1,4 @@
-package tree.range;
+package tree.range.application;
 
 import java.util.LinkedList;
 import java.util.Queue;

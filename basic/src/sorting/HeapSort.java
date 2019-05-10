@@ -1,4 +1,5 @@
 package sorting;
+
 import java.util.Arrays;
 
 public class HeapSort implements ISorting {
@@ -12,23 +13,28 @@ public class HeapSort implements ISorting {
 		System.out.println(Arrays.toString(keys));
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see sorting.ISorting#sort(int[])
 	 */
 	@Override
 	public void sort(int[] a) {
-		for (int heapSize = a.length; heapSize > 0; heapSize--) {
-			buildMaxHeap(a, heapSize);
-			swap(a, 0, heapSize - 1);
+		buildMaxHeap(a, a.length);
+		for (int heapSize = a.length - 1; heapSize >= 1; heapSize--) {
+			swap(a, 0, heapSize);
+			maxHeapify(a, 0, heapSize - 1);
 		}
 	}
 
+	/** O(n) */
 	void buildMaxHeap(int[] a, int heapSize) {
 		for (int i = heapSize / 2; i >= 0; i--) {
 			maxHeapify(a, i, heapSize);
 		}
 	}
 
+	/** O(logn) */
 	void maxHeapify(int[] a, int i, int heapSize) {
 		while (i < heapSize) {
 			int iLeftChild = leftChild(i);

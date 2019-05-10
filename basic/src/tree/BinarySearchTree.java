@@ -364,15 +364,15 @@ public class BinarySearchTree<K extends Comparable<K>> implements ISearchable<K>
 	public void postOrderTraverseIterative() {
 		Stack<BinaryTreeNode<K>> s = new Stack<BinaryTreeNode<K>>();
 		BinaryTreeNode<K> n = root;
-		BinaryTreeNode<K> lastVisited = null;
+		BinaryTreeNode<K> lastPopped = null;
 		while (n != null || !s.isEmpty()) {
 			if (n != null) {
 				s.push(n);
 				n = n.left;
 			} else {
-				if (lastVisited == s.peek().right || null == s.peek().right) {
-					lastVisited = s.pop();
-					visit(lastVisited);
+				if (lastPopped == s.peek().right || null == s.peek().right) {
+					lastPopped = s.pop();
+					visit(lastPopped);
 				} else {
 					n = s.peek().right;
 				}

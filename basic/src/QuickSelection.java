@@ -1,23 +1,25 @@
-
+/** O(n) */
 public class QuickSelection {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int e = findKthLargest(new int[] { 0, 1, 2, 3, 4 }, 0);
+		int e = findKthSmallest(new int[] { 0, 1, 2, 3, 4 }, 0);
 		System.out.println(e);
-		e = findKthLargest(new int[] { 0, 1, 2, 3, 4 }, 1);
+		e = findKthSmallest(new int[] { 0, 1, 2, 3, 4 }, 1);
 		System.out.println(e);
-		e = findKthLargest(new int[] { 0, 1, 2, 3, 4 }, 4);
+		e = findKthSmallest(new int[] { 0, 1, 2, 3, 4 }, 4);
 		System.out.println(e);
-		e = findKthLargest(new int[] { 0, 0, 2, 4, 3 }, 4);
+		e = findKthSmallest(new int[] { 0, 0, 2, 4, 3 }, 4);
 		System.out.println(e);
-		e = findKthLargest(new int[] { 0, 0, 2, 4, 3 }, 3);
+		e = findKthSmallest(new int[] { 0, 0, 2, 4, 3 }, 3);
 		System.out.println(e);
-		e = findKthLargest(new int[] { 0, 0, 0, 0, 0 }, 3);
+		e = findKthSmallest(new int[] { 0, 0, 0, 0, 0 }, 3);
+		System.out.println(e);
+		e = findKthSmallest(new int[] { 1, 2, 800005, -516268571, 1331571109 }, 2);
 		System.out.println(e);
 	}
 
-	public static int findKthLargest(int[] arr, int k) {
+	public static int findKthSmallest(int[] arr, int k) {
 		if (k < arr.length) {
 			return findKthLargestHelper(arr, 0, arr.length - 1, k);
 		}
@@ -29,7 +31,7 @@ public class QuickSelection {
 		if (index == start + k) {
 			return arr[index];
 		} else if (index < start + k) {
-			return findKthLargestHelper(arr, index + 1, end, k - index - 1);
+			return findKthLargestHelper(arr, index + 1, end, k - (index - start + 1));
 		} else {
 			return findKthLargestHelper(arr, start, index - 1, k);
 		}

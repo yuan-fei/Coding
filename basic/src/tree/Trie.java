@@ -18,10 +18,10 @@ public class Trie {
 	}
 
 	static class TrieNode{
-        TrieNode[] surfixes;
+        TrieNode[] surffixes;
         boolean isWord;
         TrieNode(){
-            surfixes = new TrieNode[26];
+            surffixes = new TrieNode[26];
         }
     }
 
@@ -35,10 +35,10 @@ public class Trie {
     public void insert(String word) {
         TrieNode tn = root;
         for (char c: word.toCharArray()) {
-            if(tn.surfixes[c - 'a'] == null){
-                tn.surfixes[c - 'a'] = new TrieNode();    
+            if(tn.surffixes[c - 'a'] == null){
+                tn.surffixes[c - 'a'] = new TrieNode();    
             }
-            tn = tn.surfixes[c - 'a'];
+            tn = tn.surffixes[c - 'a'];
         }
         tn.isWord = true;
     }
@@ -47,7 +47,7 @@ public class Trie {
     public boolean search(String word) {
         TrieNode tn = root;
         for (char c: word.toCharArray()) {
-            tn = tn.surfixes[c - 'a'];
+            tn = tn.surffixes[c - 'a'];
             if(tn == null){
                 return false;
             }
@@ -59,7 +59,7 @@ public class Trie {
     public boolean startsWith(String prefix) {
         TrieNode tn = root;
         for (char c: prefix.toCharArray()) {
-            tn = tn.surfixes[c - 'a'];
+            tn = tn.surffixes[c - 'a'];
             if(tn == null){
                 return false;
             }

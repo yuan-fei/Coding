@@ -73,12 +73,8 @@ public class RangeMinimumQueryTree implements ISegmentTree<Integer> {
 			if (r.start == index && r.end == index) {
 				r.value = value;
 			} else {
-				if (r.left != null) {
-					update(r.left, index, value);
-				}
-				if (r.right != null) {
-					update(r.right, index, value);
-				}
+				update(r.left, index, value);
+				update(r.right, index, value);
 				r.value = Math.min(r.left.value, r.right.value);
 			}
 		}

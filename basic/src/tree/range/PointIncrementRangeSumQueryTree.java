@@ -69,12 +69,8 @@ public class PointIncrementRangeSumQueryTree {
 			if (r.start == index && r.end == index) {
 				r.value += value;
 			} else {
-				if (r.left != null) {
-					increase(r.left, index, value);
-				}
-				if (r.right != null) {
-					increase(r.right, index, value);
-				}
+				increase(r.left, index, value);
+				increase(r.right, index, value);
 				r.value = r.left.value + r.right.value;
 			}
 		}

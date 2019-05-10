@@ -26,15 +26,24 @@ public class Prime {
 		return primes;
 	}
 
-	/** O(n) */
+	/**
+	 * O(n): each composite is accessed only once
+	 * 
+	 * Each composite n can be determined by:
+	 * 
+	 * n = smallest_prime_in_n * other_larger_primes
+	 * 
+	 * for a "other_larger_primes" x, iterate all primes p_i less then x's smallest
+	 * prime, and mark p_i * x to composite.
+	 */
 	public static List<Integer> linearSieve(int n) {
 		List<Integer> primes = new ArrayList<>();
 		boolean[] isComposite = new boolean[n + 1];
-		for (int i = 2; i < isComposite.length; i++) {
+		for (int i = 2; i <= n; i++) {
 			if (!isComposite[i]) {
 				primes.add(i);
 			}
-			for (int j = 0; j < primes.size() && i * primes.get(j) < isComposite.length; j++) {
+			for (int j = 0; j < primes.size() && i * primes.get(j) <= n; j++) {
 				isComposite[i * primes.get(j)] = true;
 				if (i % primes.get(j) == 0) {
 					break;

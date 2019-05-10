@@ -272,7 +272,7 @@ long solve(String s, int i, boolean isLess, state){
 
 
 ## Exchange Argument Trick
-* Set-> Sequence: given a set which has no order among elements, we want sort it into some order, so that we can sequence DP on it. (check each element from left to right, and the current solution for current element will not affect former solutions).
+* Unordered -> ordered: given a set which has no order among elements, we want sort it into some order, so that we can sequence DP on it. (check each element from left to right, and the current solution for current element will not affect former solutions).
 * Reference
 	* [Exchange Arguments](https://codeforces.com/blog/entry/63533)
 * Problems

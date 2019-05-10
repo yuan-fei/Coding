@@ -1,5 +1,6 @@
 package math;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,6 +16,9 @@ public class EulerTotientFunction {
 		System.out.println(phi(7));
 		System.out.println(phi(10));
 		System.out.println(phi(6));
+		System.out.println(countGCD(7));
+		System.out.println(countGCD(10));
+		System.out.println(countGCD(6));
 	}
 
 	/** phi(n)=n*((p1-1)/p1) * ((p2-1)/p2)... */
@@ -29,4 +33,17 @@ public class EulerTotientFunction {
 		return res;
 	}
 
+	public static Map<Integer, Long> countGCD(int n) {
+		Map<Integer, Long> map = new HashMap<>();
+		// getAllFactors
+		for (int i = 1; i * i <= n; i++) {
+			if (n % i == 0) {
+				map.put(i, phi(n / i));
+				if (i != n / i) {
+					map.put(n / i, phi(i));
+				}
+			}
+		}
+		return map;
+	}
 }

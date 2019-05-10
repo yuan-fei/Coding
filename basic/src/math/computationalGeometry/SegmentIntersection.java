@@ -2,7 +2,7 @@ package math.computationalGeometry;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class SegmentIntersection {
@@ -26,20 +26,20 @@ public class SegmentIntersection {
 	 */
 	public static boolean anySegmentsIntersect(Segment[] segments) {
 		List<CheckPoint> checkPoints = getCheckPoints(segments);
-		TreeMap<Segment, Integer> t = new TreeMap<Segment, Integer>();
+		TreeSet<Segment> t = new TreeSet<Segment>();
 		for (CheckPoint c : checkPoints) {
 			if (c.isLeftEnd) {
-				t.put(c.s, 0);
-				Segment above = t.higherKey(c.s);
-				Segment below = t.lowerKey(c.s);
+				t.add(c.s);
+				Segment above = t.higher(c.s);
+				Segment below = t.lower(c.s);
 				if ((above != null && segmentsIntersect(c.s, above))
 						|| (below != null && segmentsIntersect(c.s, below))) {
 					return true;
 				}
 			} else {
 				t.remove(c.s);
-				Segment above = t.higherKey(c.s);
-				Segment below = t.lowerKey(c.s);
+				Segment above = t.higher(c.s);
+				Segment below = t.lower(c.s);
 				if (above != null && below != null && segmentsIntersect(above, below)) {
 					return true;
 				}

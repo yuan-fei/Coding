@@ -17,28 +17,53 @@
 	* [example and code to show the application](https://codeforces.com/blog/entry/61306)
 	* [why it worked](https://grocid.net/2012/11/22/berlekamp-massey-algorithm-explained/)
 
-## Bitmask DP
-* DP on a set/graph: bitmap for a subset of elements present
-	* Characteristic: Reduce n! permutation to 2<sup>n</sup> bitmask
-	* Shortest Hamiltonian path with small n (# of vertices)
-		* brute force: check all permutations of vertices: O(n!)
-		* bitmap DP: time O(2<sup>n</sup>n<sup>2</sup>), space O(2<sup>n</sup>n) 
-			* bitmask for subset of vertices - 0~2<sup>n</sup>-1
-			* dp[mask][i]: shortest path through vertices in mask and ends at vertex i
-			* transition: dp[mask][i] = dp[mask&~(1<<j)][j] + cost(j, i) for each 1 bit j in mask, if there is an edge (j,i) in E
-	* [matching](https://atcoder.jp/contests/dp/tasks/dp_o): 
-		* brute force: fix girls 1~n, check all permutations of boys: O(n!)
-		* bitmap DP: time O(2<sup>n</sup>n), space O(2<sup>n</sup>)
-			* bitmask: which boys are matched
-			* dp[mask]: the # of ways when the first k girls are mathced with boys in bimask (k is the # of 1 bit in bitmask)
-			* transition: dp[mask] += dp[mask & (1<<j)] for each 1 bit j in mask
-	* [Little Pony and Harmony Chest](https://codeforces.com/contest/453/problem/B)
-		* bitmask for prime factors subset
-* DP on a matrix: bitmap for the latest grid of each column
-	* [Floorboard](https://community.topcoder.com/stat?c=problem_statement&pm=8397)
-		* bitmap for vertical board state
-		* DP by recursion and memoization can be used
+## Nim and Sprague-Grundy theorem
+* Nim: player pick stones alternatively from heaps
+	* Nimber of a single heap: 
+		1. Nim(0) = 0
+		2. Nim(k) = Mex({Nim(j) | all j can be reached by k})
+	* Examples
+		
+		||n|0|1|2|3|4|5|6|7
+		---|---|---|---|---|---|---|---|---|---
+		pick any positive # of stone|Nim(n)|0|1|2|3|4|5|6|7
+		pick any positive # of stone up to 3|Nim(n)|0|1|2|3|0|1|2|3
+	* Nimber of multiple heaps: H = (h<sub>1</sub>, h<sub>2</sub>, ..., h<sub>k</sub>)
+		* Nim(H) = XOR(Nim(h<sub>1</sub>), Nim(h<sub>2</sub>), ..., Nim(h<sub>k</sub>))
+	* Nim game: given heaps of stones H
+		* Nim(H)=0: second player win
+		* Nim(H)>0: first player win
+			* Winning strategy: first player always move to make Nim(H)=0
+* Sprague-Grundy theorem: Every impartial game under the normal play convention is equivalent to a nimber
+	* impartial game: each allowable moves are the same to both players
+	* normal play convention: last moving player wins
+	* nimber/graundy value: size of a single nim heap
+* Application
+	* Check if a first player win a game
+		* if nimber of a game/state is 0, then the first player loses; otherwise the first player wins
+* How to calculate the nimber of a state?
+	* Each state S of the game is mapped to a nimber Nim(S) by
+		1. 	if a state S can be moved to a set of other states {S<sub>1</sub>, S<sub>2</sub>, ..., S<sub>k</sub>}, then <code>Nim(S) = Mex({Nim(S<sub>1</sub>), ..., Nim(S<sub>k</sub>)})</code>
+		2. 	if a state S is a set of combined sub games/states S = comb(s<sub>a</sub>, s<sub>b</sub>, ..., s<sub>k</sub>), then <code>Nim(S) = XOR(Nim(s<sub>a</sub>), Nim(s<sub>b</sub>), ..., Nim(s<sub>k</sub>)) </code>
+	* Mex({n<sub>1</sub>, n<sub>2</sub>, ..., n<sub>k</sub>}) (Minimum exclusion): the minimum non-negative number (>=0) that is not present in {n<sub>1</sub>, n<sub>2</sub>, .. n<sub>k</sub>}
+	* Combining games/combining states
+		* a state S can be sharded to indenpendent sub states s = comb(s<sub>a</sub>, s<sub>b</sub>, .. s<sub>k</sub>)
+			* a game/state of 2 nim heap can be considered as a combined game of comb(h1, h2) since the 2 game/state are independent to each other
+			* a board game can be considered as combined game of comb(left, right) or comb(top, bottom) if a split is made
+	* psudo-implementation
+
+~~~
+let solve(state) be a function:
+  let s = Ø
+  for each legal state s from state:
+  	let sp = combined subproblems of s 
+    add XOR(solve(sp[0]), solve(sp[1]),...,solve(sp[k])) to s
+  return MEX(s)
+~~~
 * Reference
-	* [A little bit of classics: dynamic programming over subsets and paths in graphs](https://codeforces.com/blog/entry/337)
-	* [Algorithms live - Bitmask Dynamic Programming](http://algorithms-live.blogspot.com/2017/05/episode-20-bitmask-dynamic-programming.html) 
-	* [[Tutorial] Non-trivial DP Tricks and Techniques](https://codeforces.com/blog/entry/47764)
+	* [wiki](https://en.wikipedia.org/wiki/Sprague%E2%80%93Grundy_theorem)
+	* [geeksforgeeks: Nimbers](https://www.geeksforgeeks.org/combinatorial-game-theory-set-3-grundy-numbersnimbers-and-mex/)
+	* [geeksforgeeks: SG](https://www.geeksforgeeks.org/combinatorial-game-theory-set-4-sprague-grundy-theorem/)
+	* [cp-algorithm](https://cp-algorithms.com/game_theory/sprague-grundy-nim.html)
+	* GCJ 2019 1C p3
+	

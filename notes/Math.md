@@ -198,9 +198,14 @@
 				* (r<sub>0</sub>, r<sub>1</sub>, ..., r<sub>k</sub>) -> x: solution to linear equation group
 					* let **n<sub>-i</sub>** = n<sub>1</sub>n<sub>2</sub>...n<sub>i-1</sub>n<sub>i+1</sub>...n<sub>k</sub>, **c<sub>i</sub>** = n<sub>-i</sub>(n<sub>-i</sub><sup>-1</sup> mod n<sub>i</sub>), so that c<sub>i</sub> mod n<sub>i</sub> = 1 and c<sub>i</sub> mod n<sub>j</sub> = 0
 					* x ≡ (c<sub>1</sub>r<sub>1</sub> + c<sub>2</sub>r<sub>2</sub> + ... + c<sub>k</sub>r<sub>k</sub>) (mod n)
+			* Note
+				* Chinese reminder theorem doesn't require each n<sub>i</sub> to be prime, it just requires **pairwise relatively prime**, i.e. 3,4,5 are pairwise relatively prime although 4 is mot a prime.
+				* Chinese reminder theorem guarantees thre is a unique solution x in [0, n], and x+kn are all solutions.
 			* Corrolary
 				* if n=n<sub>1</sub>n<sub>2</sub>...n<sub>k</sub>, where n<sub>i</sub> are **pairwise relatively prime**, then x ≡ r (mod n<sub>i</sub>) <=> x ≡ r (mod n). This can be usedful when convert a non-pairwise relative prime problem to a pairwise relative prime problem
 					* For equation {x ≡ 2 mod 6, x ≡ 2 mod 15, x ≡ 5 mod 7}, it's equavalent to {x ≡ 2 mod 2, x ≡ 2 mod 3, x ≡ 2 mod 3, x ≡ 2 mod 5, x ≡ 5 mod 7},  so the reduced form is {x ≡ 0 mod 2, x ≡ 2 mod 3, x ≡ 2 mod 5, x ≡ 5 mod 7}
+			* Implementation
+				* In addition to the math solution for the problem, 'sieving' can be used for finding solution
 	* Power
 		* Theorem with property of generator's order: a<sup>(|S|)</sup> = e
 			* Euler's theorem: a<sup>φ(n)</sup> ≡ 1 (mod n) for all a ∈ ℤ<sub>n</sub><sup>*</sup>
