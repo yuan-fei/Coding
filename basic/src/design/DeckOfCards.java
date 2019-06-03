@@ -38,6 +38,25 @@ class Deck {
 	}
 }
 
+class CardBox {
+	List<Card> cards;
+
+	void shuffle() {
+
+	}
+
+	int getRemainingCardCount() {
+		return cards.size();
+	}
+
+	Card dealCard() {
+		if (!cards.isEmpty()) {
+			return cards.remove(0);
+		}
+		return null;
+	}
+}
+
 class BlackJackCard extends Card {
 	@Override
 	int getValue() {

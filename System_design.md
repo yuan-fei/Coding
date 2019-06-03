@@ -63,16 +63,23 @@
 * Pastebin/bitly
 	* Services: shortening + redirect
 	* read:write = 10:1
-	* base62: [a-zA-Z0-9]
+	* shortening
+		* short_url = base62(increment counter++)
+		* base62: [a-zA-Z0-9]
 * Twitter timeline implementation
 	* Timeline
 		* User timeline: self tweets
 		* Home timeline: aggregated following tweets
-	* Fanout with redis: compute and store home timeline for each new tweet
-		* hot users (lots of followers): pull + merge with precomputed home timeline
+	* Push
+		* Fanout with redis: compute and store home timeline for each new tweet
+	* Pull
+		* Compute based on tweet list
+	* Mixed
+		* hot users (lots of followers): pull + merge with precomputed home 
 	* Reference
 		* [system-design-primer](https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/twitter/README.md)
 		* [highscalability.com](http://highscalability.com/blog/2013/7/8/the-architecture-twitter-uses-to-deal-with-150m-active-users.html)
+		* ninechapter 6
 * KV store with external storage/ Facebook photo storage
 	* index (in mem + file) + data file
 		* index: key -> data offset in data file
@@ -83,6 +90,83 @@
 		* D(K): delete K in index
 	* Compact/GC
 		* copy all indexed value to new file: O(n)
+* User system
+	* User State management: 
+		* User (uid, name, hashed_pw, state)
+			* register, approve, disapprove, deactivate, ban
+	* User session management: 
+		* Session (uid, session_id, state)
+			* login, logout
+	* Indexing for uid for lookup
+		* Hash: for point
+		* BTree for range: log<sub>b</sub>n
+	* Membership management
+		* membership (uid, balance, end_time)
+			* charge, extend_end_time
+		* transaction for consistency
+	* Availability
+		* translog for failure recover
+		* Redundency against data loss
+* Crawler system
+	* crawl list and page
+	* Master-slave
+		* scheduler: control each crawler machine 
+		* slave: worker
+	* pull: 
+		* slaves monitor task queue/database
+		* take a task and crawl
+		* update task status
+		* concurrency: producer-consumer pattern
+	* push
+		* master pushes task to slave
+		* slave sends crawled page to master
+* Distributed file system
+	* Large file: metadata + chunks
+		* metadata: index (chuck_id -> offset)
+		* chucks: 64M per chunk
+		* +: reduce metadata size, reduce traffic
+		* -: waste space for small files
+	* Extra large file: chunk server
+		* master metadata: index (chunck_id -> chunck server id)
+		* chunck server: 
+			* metadata: index (chunck_id -> offset)
+			* chuncks
+	* Chunck robustness:
+		* checksum: check chuck is broken
+		* replica: chunck copies on multiple server
+	* Chunck server aliveness
+		* keepalive with master
+* Big table
+	* mem+file
+		* memory: 
+			* index(sstable -> offset)
+			* sstable(sorted by key)
+			* Addtional for performance
+				* sstable index(key->offset): quick search
+				* bloom filter: filter sstables with the search key
+		* file: sstables
+	* how to read: find in all sstables and merge the result
+	* how to write: 
+		* write to sstable in memory 
+		* write operation transaction log to disk
+		* dump the sstable to file system when full
+* Map-reduce
+	* process
+		* input-split-map-shuffle-reduce-finalize
+* Rate limiter
+	* limit qps to k
+		* sliding window
+			* record enqueue time of each request
+			* for each request q<sub>n</sub>, it can be added to queue only when
+				* queue has less than k items, or
+				* now - t<sub>n-k</sub> > 1s
+* Typeahead
+	* return all suggestions(articles, friends, ...) according to the typed words
+	* aggregation of inverted index
+	* trie-tree
+* Bloomfilter vs. hashset: 
+	* +: space saving
+	* -: hard handle element delete (we can leave it and false positive rate will increase)
 * QA
 	* SQL or Nosql ([sql or nosql](https://github.com/donnemartin/system-design-primer#sql-or-nosql))
 		* Difference? 
