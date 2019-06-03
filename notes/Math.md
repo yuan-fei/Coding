@@ -208,8 +208,8 @@
 				* In addition to the math solution for the problem, 'sieving' can be used for finding solution
 	* Power
 		* Theorem with property of generator's order: a<sup>(|S|)</sup> = e
-			* Euler's theorem: a<sup>φ(n)</sup> ≡ 1 (mod n) for all a ∈ ℤ<sub>n</sub><sup>*</sup>
-			* Fermat's theorem: if p is prime, a<sup>p-1</sup> ≡ 1 (mod p) for all a ∈ ℤ<sub>p</sub><sup>*</sup>
+			* <a name='Euler'></a>Euler's theorem: a<sup>φ(n)</sup> ≡ 1 (mod n) for all a ∈ ℤ<sub>n</sub><sup>*</sup>
+			* <a name='Fermat'></a>Fermat's theorem: if p is prime, a<sup>p-1</sup> ≡ 1 (mod p) for all a ∈ ℤ<sub>p</sub><sup>*</sup>
 		* Compositivity: if there exists a **nontrivial square root of 1, modulo n**, then n is composite.
 			* Nontrivial square root of 1, modulo n: if the equation x<sup>2</sup> 􏰌≡ 1 mod n has solution other than the two “trivial” square roots: 1 or 􏰐-1, modulo n
 		* Modular exponentiation by repeated squaring
@@ -267,13 +267,7 @@
 			* Based on Floyd's tortoise and hare algorithm: 
 				* Create a cycle: x<sub>i</sub> = x<sub>i-1</sub><sup>2</sup>-c mod n
 				* Find 2 number meet in the cycle: x<sub>i</sub> ≡ x<sub>j</sub> mod p, where p is a factor of n, so that gcd(x<ub>i</sub> - x<sub>j</sub>, n) = p
-	* Inclusion-exclusion principle
-![inclusion-exclusion.png](../pics/inclusion-exclusion.png)
-		* Classic problems: \# of ways of n numbers sum to k with upperbound m: 
-			* a<sub>1</sub> + ... +a<sub>n</sub> = k, with 0<=a<sub>i</sub><= m
-		* Reference
-			* [[Tutorial] Inclusion-Exclusion Principle, Part 1.](https://codeforces.com/blog/entry/64625)
-	
+		
 ## <a name='Computational_Geometry'></a>Computational Geometry
 * Segment
 	* Vector's product: p<sub>1</sub>(x<sub>1</sub>,y<sub>1</sub>), p<sub>2</sub>(x<sub>2</sub>,y<sub>2</sub>)
@@ -313,115 +307,167 @@
 		1. Split the points set into 2 by splitter x=a, recursively get minimum distance from each part, and d = min(d<sub>l</sub>, d<sub>r</sub>).
 		2. Check if points between 2 parts has shorter distance. for each point in region (a-d, a+d) with y sorted, only check the points not d higher above it. It can be proven that at most 7 points have to be checked. 
 
-## <a name='Math_problem'></a>Math Problem
-* Number theory
-	* The # of factor p in n! (the largest k which makes p^k devides n!)
-		*  f(n, p) = ⌊n/p⌋ + ⌊n/(p^2)⌋ +...
-	*  Lattice point (x, y are both integer) on a line (from (a, b) to (c, d))
-		*  gcd(c-a, d-b) + 1
-		*  [Reference explaination](https://math.stackexchange.com/questions/628117/how-to-count-lattice-points-on-a-line): consider the representation of y in term of x
-	*  Quick Modular multiplicative inverse with a large prime modulo 
-		*  Fermat's theory, Fast modular exponentiation: inverse(x) = x<sup>(p-2)</sup> mod p
-		*  DP in O(n) ([ref1](https://www.quora.com/How-do-I-find-the-value-of-nCr-1000000007-for-the-large-number-n-n-10-6-in-C), [ref2](https://www.geeksforgeeks.org/modular-multiplicative-inverse-1-n)): inverse(x) = (inverse(p%x)(x-p/x))%x
-	*  Quick nCr % p with large p ([ref](https://www.geeksforgeeks.org/queries-of-ncrp-in-o1-time-complexity/)): 
-		*  nCr % p = (Fact(n) * inverseFact(n-r) * inverseFact(r))%p
-* Combinatonics and probability
-	* Useful combinatonics formula
-		* C(n, 1) + C(n, 3) + ... = C(n, 0) + C(n, 2) + ... = 2<sup>n-1<sup>
-		* Vandermonde's Identity: C(m + n, r) = Sum(C(n, k) * C(m, r - k)) for k = 0 ~ r
-			* C(m + n, m) = Sum(C(n, k) * C(m, k)) for k = 0 ~ m
-	* Counting: 
-		* \# of ways of k numbers sum to n
-			1. k positive numbers sum to n: C(n - 1, k - 1)
-				* n - 1 positions for k - 1 dividers
-			2. k non-negative numbers sum to n: C(n + k - 1, k - 1)
-				* For each division, add 1 to k group each, and problem is converted to problem 1 'k positive numbers'
-				* n + k + 1 positions for k - 1  dividers, consecutive dividers are allowed to represent a element 0
-		* \# of subset
-			* Given a set of n distinct numbers
-				1. \# of subsets: 2<sup>n</sup>
-				2. \# of subsets of subsets: 3<sup>n</sup>
-					* f(n): =3f(n-1) : (i) f(n-1) subsets of subsets without number n; (ii) f(n-1) subsets of subsets with number n; (ii) f(n-1) subsets with subset {n};
-		* [Lattice Path](https://en.wikipedia.org/wiki/Lattice_path):
-			* North-East path: L((r<sub>1</sub>, c<sub>1</sub>), (r<sub>2</sub>, c<sub>2</sub>)) = C(r<sub>2</sub> - r<sub>1</sub> + r<sub>2</sub> - c<sub>2</sub>, r<sub>2</sub> - r<sub>1</sub>)
-			* Avoid 'bad' blocks [(Grid 2)](https://atcoder.jp/contests/dp/tasks/dp_y): paths from (1, 1) to (n, m) without touching any of the k bad blocks (r<sub>1</sub>, c<sub>1</sub>), (r<sub>2</sub>, c<sub>2</sub>)...(r<sub>k</sub>, c<sub>k</sub>), and **the bad blocks are ordered by r, c**
-				* DP
-					1. dp(r<sub>1</sub>, c<sub>1</sub>) = L((1, 1), (r<sub>1</sub>, c<sub>1</sub>))
-					2. dp(r<sub>i</sub>, c<sub>i</sub>) = L((1, 1), (r<sub>i</sub>, c<sub>i</sub>)) - sum(dp(r<sub>j</sub>, c<sub>j</sub>) * L((r<sub>j</sub>, c<sub>j</sub>), (r<sub>i</sub>, c<sub>i</sub>))) where j in [1, i-1] and block (r<sub>j</sub>, c<sub>j</sub>) is within the range of [(1, 1), (r<sub>i</sub>, c<sub>i</sub>)]
-						* dp(r<sub>j</sub>, c<sub>j</sub>) * L((r<sub>j</sub>, c<sub>j</sub>), (r<sub>i</sub>, c<sub>i</sub>)): bad paths from (1,1) to (r<sub>i</sub>, c<sub>i</sub>) with the first bad block (r<sub>j</sub>, c<sub>j</sub>)
-				* reference: [Change the object to dp](https://codeforces.com/blog/entry/47764)
-		* [Catalan number](https://en.wikipedia.org/wiki/Catalan_number)
-			* Catalan(n) = sum(Catalan(i) * Catalan(n-i)) where 0 <= i <= n
-			* Catalan(n) = C(2n, n) - C(2n, n+1) = C(2n, n)/(n+1)
-			* Counting: 
-				* full binray tree
-				* all parenthesis matching
-				* lattice path
-		* Stirling number (Concrete Math)
-			* Type I (n cycles k): devide a set of n distinct numbers to k non-empty circle
-				* StirlingI(n, k) = (n-1) * StirlingI(n-1, k) + StirlingI(n-1, k-1)
-			* Type II (n subsets k): devide a set of n distinct numbers to k non-empty set
-				* StirlingII(n, k) = k * StirlingII(n-1, k) + StirlingII(n-1, k-1)
-					* Consider the 2 scenarios of how to place the last element
-		* [Bertrand ballot problem](https://en.wikipedia.org/wiki/Bertrand%27s_ballot_theorem)
-	* Probability models
-		* Bernoulli: coin toss with Prb. p of getting head
-		* Binomial: 
-			* The total # of heads in n tosses: `X ~ B(n, p)`
-			* The prob. of getting k heads in total in n tosses: <code>P(X = k) = C(n, k)p<sup>k</sup>(1 - p)<sup>n-k</sup></code>
-			* Expected # of heads in n tosses: `E(X) = np`
-		* Geometric distribution: 
-			* The # of tosses to get the 1st head: `X ~ G(p)`
-			* Prob. of getting the 1st head until the kth toss: <code>P(X = k) = (1-p)<sup>k</sup>p</code>
-			* Ecpected tosses to get the 1st head: `E(X) = 1/p` 
-			* Ecpected tail tosses before getting the 1st head: `E(Y) = 1/p - 1`
-		* [Birthday paradox](https://en.wikipedia.org/wiki/Birthday_problem): Probs of born on same day
-			* The prob. of at least 1 pair out of k people have the same birthday is 100% when k=367, 99% when k=70, and **50% when k=23**
-			* The expected # of pair of people who have same birthday among k people is k(k-1)/2n (n is # of days in a year)
-			* Collision problem: the expected number of N-bit hashes that can be generated before getting a collision is not 2<sup>N</sup>, but rather only 2<sup>N⁄2</sup>
-		* [Coupon collecter's problem](https://en.wikipedia.org/wiki/Coupon_collector%27s_problem): collect all coupons **with replacement** and win
-			* indicator variable X<sub>i</sub>: \# of a single coupon collection. E(X<sub>i</sub>)=1/p<sub>i</sub> for X<sub>i</sub> has geometric distribution
-			* E(X<sub>1</sub>+...+X<sub>n</sub>) = n(1+1/2+1/3+...+1/n) = nH<sub>n</sub>
-			* Expected # of collection for all coupons is O(nlnn)
-		* Hiring problem:
-			* interview n ranked candidates 1 by 1, and always hire the candidates with higher rank
-				* What is the expected # of total hiring?
-					* indicator variable X<sub>i</sub>: candidate i gets hired. E(X<sub>i</sub>) = 1/i when i is the one with the largest rank among the candidates interviewed before him.
-					* E(X<sub>1</sub>+...+X<sub>n</sub>) = 1+1/2+1/3+...1/n = H<sub>n</sub>
-				* What is the probs of hiring k candidates out of n in total?
-					* Prob(n, k) = (1/n) * Prob(n-1, k-1) + ((n-1)/n) * Prob(n-1,k)
-						* consider if candidate with rank 1 is the last interviewer
-					* Prob(n, k) = (1/n) * sum(Prob(i-1, k-1)) where k <= i <= n
-						* consider the candidate with rank 1 at position k, k+1, ..., n
-		* Expected Value:
-			* E(X) = sum(x<sub>i</sub> * p<sub>i</sub>) for all possible value x<sub>i</sub>
-			* Linearity of EV: E(X + Y) = E(X) + E(Y) and X, Y need not to be independent
-			* Recusive form
-				* Solve the equation of recursive form: 
-					* Find EV of the number of coin tosses until you get heads two times in a row. 
-						* **E(HH)** = p<sub>T</sub> * (1 + E(HH)) + p<sub>H</sub> * (1 + E(HH | H)), **E(HH | H)** = p<sub>T</sub> * (1 + E(HH)) + p<sub>H</sub> * 1
-				* DP with state transfer equation
-					* [Sushi](https://atcoder.jp/contests/dp/tasks/dp_j): ![formula](../pics/sushi.png)
-				* Gaussian elmination for state transfer linear equations
-					* Random Walk (《挑战程序设计竞赛》p288): given a matrix of M * N with some obstacle grids, random walk with equal prob to 4 adjacent grids (up, down, left, right), find the EV of walks from top-left to bottom-right
-						* E(x, y) = 0.25 * E(x-1, y) + 0.25 * E(x+1, y) + 0.25 * E(x, y-1) + 0.25 * E(x, y+1) + 1
-			* The EV of size of a set E(S<sup>2</sup>) = sum(X<sub>i</sub> * X<sub>j</sub>) for all ordered pairs i, j (i=j is allowed)
-			* Reference: 
-				* [Sums and Expected Value — part 1](https://codeforces.com/blog/entry/62690)
-				* [Sums and Expected Value — part 2](https://codeforces.com/blog/entry/62792)
+## <a name='Number_Theory_II'></a>Number theory II
 
-	* Sampling and shuffling
-		* shuffle: See SamplingAndShuffling, [Modern shuffling](https://en.wikipedia.org/wiki/Fisher–Yates_shuffle)
+* The # of factor p in n! (the largest k which makes p^k devides n!)
+	*  f(n, p) = ⌊n/p⌋ + ⌊n/(p^2)⌋ +...
+*  Lattice point (x, y are both integer) on a line (from (a, b) to (c, d))
+	*  gcd(c-a, d-b) + 1
+	*  [Reference explaination](https://math.stackexchange.com/questions/628117/how-to-count-lattice-points-on-a-line): consider the representation of y in term of x
+*  Quick Modular multiplicative inverse of x modulo p
+	*  p is prime
+		*  [Fermat's theory](#Fermat), Fast modular exponentiation: inverse(x) = x<sup>(p-2)</sup> mod p
+		*  DP in O(n) ([ref1](https://www.quora.com/How-do-I-find-the-value-of-nCr-1000000007-for-the-large-number-n-n-10-6-in-C), [ref2](https://www.geeksforgeeks.org/modular-multiplicative-inverse-1-n)): inverse(x, p) = (inverse(p%x)(x-p/x))%x
+	*  p is not prime
+		*  [Euler's theorem](#Euler): invere(x, p) = x<sup>(φ(p-1)</sup> mod p
+*  Quick nCr % p with large p ([ref](https://www.geeksforgeeks.org/queries-of-ncrp-in-o1-time-complexity/)): 
+	*  nCr % p = (Fact(n) * inverseFact(n-r) * inverseFact(r))%p
+* Find the best fraction between 2 fractions
+	* Contunued Fraction
+		* 2 Representations: 
+			* short form: 3.14155 = [3; 7, 15, 2, 7, 1, 4, 2]
+			* long form: 3.14155 = [3; 7, 15, 2, 7, 1, 4, 1, 1]
+	* Stern-Brocot Tree
+		* start from [0/1, 1/0], constantly insert mediant of (p1, q1), (p2, q2) which is (p1+p2)/(q1+q2)
+		* all irreducable fractions are in the tree
+	* Find the best fraction between 2 fractions F1, F2
+		* best: This fraction will be best in the sense that no other fration in (F1, F2) will have a smaller numerator or a smaller denominator.
+		* F = LCA(F1, F2) of Stern-Brocot Tree, except when F1 (or F2) is the LCA, then F wil be one of the direct child of the F1 (or F2) who shares the path with F2 (or F1)
+		* algorithm: [ref](https://en.wikipedia.org/wiki/Continued_fraction#Best_rational_within_an_interval)
+			* for the 4 pairs of continued fraction representations of F1, F2: (short, long) x (short, long), find the sequence with the algorithm below
+				* if x = [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, a<sub>k</sub>, a<sub>k+1</sub>, …], 
+y = [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, b<sub>k</sub>, b<sub>k+1</sub>, …], then a best fraction candidate is  [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, min(a<sub>k</sub>, a<sub>k</sub>) + 1]
+				* the 1st candidate F' that satified the F1< F' <F2 is the best fraction F
+		* Reference: 
+			* [wiki](https://en.wikipedia.org/wiki/Continued_fraction)
+			* [codechef editorial](https://discuss.codechef.com/t/ebait-editorial/21245)
 
-		~~~
-		Random r = new Random();
-		int[] a = ...
-		for (int i = 0; i < a.length; i++) {
-			int j = r.nextInt(a.length - i) + i;
-			swap(a, i, j);
-		}
-		~~~
-		
-		* [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling)
-		* Reference: Programming pearls
+## <a name='Combinatonics_And_Probability'></a>Combinatonics and probability
+* Useful combinatonics formula
+	* C(n, 1) + C(n, 3) + ... = C(n, 0) + C(n, 2) + ... = 2<sup>n-1<sup>
+	* Vandermonde's Identity: C(m + n, r) = Sum(C(n, k) * C(m, r - k)) for k = 0 ~ r
+		* C(m + n, m) = Sum(C(n, k) * C(m, k)) for k = 0 ~ m
+* Counting: 
+	* \# of ways of k numbers sum to n
+		1. k positive numbers sum to n: C(n - 1, k - 1)
+			* n - 1 positions for k - 1 dividers
+		2. k non-negative numbers sum to n: C(n + k - 1, k - 1)
+			* For each division, add 1 to k group each, and problem is converted to problem 1 'k positive numbers'
+			* n + k + 1 positions for k - 1  dividers, consecutive dividers are allowed to represent a element 0
+	* \# of subset
+		* Given a set of n distinct numbers
+			1. \# of subsets: 2<sup>n</sup>
+			2. \# of subsets of subsets: 3<sup>n</sup>
+				* f(n): =3f(n-1) : (i) f(n-1) subsets of subsets without number n; (ii) f(n-1) subsets of subsets with number n; (ii) f(n-1) subsets with subset {n};
+	* [Lattice Path](https://en.wikipedia.org/wiki/Lattice_path):
+		* North-East path: L((r<sub>1</sub>, c<sub>1</sub>), (r<sub>2</sub>, c<sub>2</sub>)) = C(r<sub>2</sub> - r<sub>1</sub> + r<sub>2</sub> - c<sub>2</sub>, r<sub>2</sub> - r<sub>1</sub>)
+		* Avoid 'bad' blocks [(Grid 2)](https://atcoder.jp/contests/dp/tasks/dp_y): paths from (1, 1) to (n, m) without touching any of the k bad blocks (r<sub>1</sub>, c<sub>1</sub>), (r<sub>2</sub>, c<sub>2</sub>)...(r<sub>k</sub>, c<sub>k</sub>), and **the bad blocks are ordered by r, c**
+			* DP
+				1. dp(r<sub>1</sub>, c<sub>1</sub>) = L((1, 1), (r<sub>1</sub>, c<sub>1</sub>))
+				2. dp(r<sub>i</sub>, c<sub>i</sub>) = L((1, 1), (r<sub>i</sub>, c<sub>i</sub>)) - sum(dp(r<sub>j</sub>, c<sub>j</sub>) * L((r<sub>j</sub>, c<sub>j</sub>), (r<sub>i</sub>, c<sub>i</sub>))) where j in [1, i-1] and block (r<sub>j</sub>, c<sub>j</sub>) is within the range of [(1, 1), (r<sub>i</sub>, c<sub>i</sub>)]
+					* dp(r<sub>j</sub>, c<sub>j</sub>) * L((r<sub>j</sub>, c<sub>j</sub>), (r<sub>i</sub>, c<sub>i</sub>)): bad paths from (1,1) to (r<sub>i</sub>, c<sub>i</sub>) with the first bad block (r<sub>j</sub>, c<sub>j</sub>)
+			* reference: [Change the object to dp](https://codeforces.com/blog/entry/47764)
+	* [Catalan number](https://en.wikipedia.org/wiki/Catalan_number)
+		* Catalan(n) = sum(Catalan(i) * Catalan(n-i)) where 0 <= i <= n
+		* Catalan(n) = C(2n, n) - C(2n, n+1) = C(2n, n)/(n+1)
+		* Counting: 
+			* full binray tree
+			* all parenthesis matching
+			* lattice path
+	* Stirling number (Concrete Math)
+		* Type I (n cycles k): devide a set of n distinct numbers to k non-empty circle
+			* StirlingI(n, k) = (n-1) * StirlingI(n-1, k) + StirlingI(n-1, k-1)
+		* Type II (n subsets k): devide a set of n distinct numbers to k non-empty set
+			* StirlingII(n, k) = k * StirlingII(n-1, k) + StirlingII(n-1, k-1)
+				* Consider the 2 scenarios of how to place the last element
+	* [Bertrand ballot problem](https://en.wikipedia.org/wiki/Bertrand%27s_ballot_theorem)
+	* Inclusion-exclusion principle
+![inclusion-exclusion.png](../pics/inclusion-exclusion.png)
+		* Classic problems: \# of ways of n numbers sum to k with upperbound m: 
+			* a<sub>1</sub> + ... +a<sub>n</sub> = k, with 0<=a<sub>i</sub><= m
+			* let e<sub>i</sub> = {a<sub>i</sub>> m}, N<sub>Φ</sub> is the solution
+		* Reference
+			* [[Tutorial] Inclusion-Exclusion Principle, Part 1.](https://codeforces.com/blog/entry/64625)
+
+	* Mobius inverslion formula
+		* f(n) = sum(g(d)) for each d | n <=> d(n) = sum(μ(d) * f(n/d)) for each d | n
+			* μ(n): Mobius function 
+				* μ(n) = 0 if n has a squared prime factor
+				* μ(n) = 1 if n is a square-free positive integer with an even number of prime factors.
+				* μ(n) = −1 if n is a square-free positive integer with an odd number of prime factors.
+			* i.e.: f(n) is # of string with a period of n, g(n) is # of string with a period of just n
+		* μ(d) for all d | n can be calculated in O(n^0.5)
+		* reference: 
+			* 《挑战程序设计竞赛》p300
+	* Polya's counting theorem: 
+		* counting # of colorings given some colorings are equavalent under permutations
+			* sum(k<sup>c(π)</sup>)/|G| for each possible permutation π
+				* G is the group of all possible permutations
+				* c(π) is # of circles in permutation π
+		* [necklace coloring](https://en.wikipedia.org/wiki/Necklace_(combinatorics)#Number_of_necklaces): sum(φ(d)k<sup>n/d</sup>)/n for each d | n
+		* reference: 
+			* 《挑战程序设计竞赛》p300
+			* [cp-algortihms](https://cp-algorithms.com/combinatorics/burnside.html)
+
+
+* Probability models
+	* Bernoulli: coin toss with Prb. p of getting head
+	* Binomial: 
+		* The total # of heads in n tosses: `X ~ B(n, p)`
+		* The prob. of getting k heads in total in n tosses: <code>P(X = k) = C(n, k)p<sup>k</sup>(1 - p)<sup>n-k</sup></code>
+		* Expected # of heads in n tosses: `E(X) = np`
+	* Geometric distribution: 
+		* The # of tosses to get the 1st head: `X ~ G(p)`
+		* Prob. of getting the 1st head until the kth toss: <code>P(X = k) = (1-p)<sup>k</sup>p</code>
+		* Ecpected tosses to get the 1st head: `E(X) = 1/p` 
+		* Ecpected tail tosses before getting the 1st head: `E(Y) = 1/p - 1`
+	* [Birthday paradox](https://en.wikipedia.org/wiki/Birthday_problem): Probs of born on same day
+		* The prob. of at least 1 pair out of k people have the same birthday is 100% when k=367, 99% when k=70, and **50% when k=23**
+		* The expected # of pair of people who have same birthday among k people is k(k-1)/2n (n is # of days in a year)
+		* Collision problem: the expected number of N-bit hashes that can be generated before getting a collision is not 2<sup>N</sup>, but rather only 2<sup>N⁄2</sup>
+	* [Coupon collecter's problem](https://en.wikipedia.org/wiki/Coupon_collector%27s_problem): collect all coupons **with replacement** and win
+		* indicator variable X<sub>i</sub>: \# of a single coupon collection. E(X<sub>i</sub>)=1/p<sub>i</sub> for X<sub>i</sub> has geometric distribution
+		* E(X<sub>1</sub>+...+X<sub>n</sub>) = n(1+1/2+1/3+...+1/n) = nH<sub>n</sub>
+		* Expected # of collection for all coupons is O(nlnn)
+	* Hiring problem:
+		* interview n ranked candidates 1 by 1, and always hire the candidates with higher rank
+			* What is the expected # of total hiring?
+				* indicator variable X<sub>i</sub>: candidate i gets hired. E(X<sub>i</sub>) = 1/i when i is the one with the largest rank among the candidates interviewed before him.
+				* E(X<sub>1</sub>+...+X<sub>n</sub>) = 1+1/2+1/3+...1/n = H<sub>n</sub>
+			* What is the probs of hiring k candidates out of n in total?
+				* Prob(n, k) = (1/n) * Prob(n-1, k-1) + ((n-1)/n) * Prob(n-1,k)
+					* consider if candidate with rank 1 is the last interviewer
+				* Prob(n, k) = (1/n) * sum(Prob(i-1, k-1)) where k <= i <= n
+					* consider the candidate with rank 1 at position k, k+1, ..., n
+	* Expected Value:
+		* E(X) = sum(x<sub>i</sub> * p<sub>i</sub>) for all possible value x<sub>i</sub>
+		* Linearity of EV: E(X + Y) = E(X) + E(Y) and X, Y need not to be independent
+		* Recusive form
+			* Solve the equation of recursive form: 
+				* Find EV of the number of coin tosses until you get heads two times in a row. 
+					* **E(HH)** = p<sub>T</sub> * (1 + E(HH)) + p<sub>H</sub> * (1 + E(HH | H)), **E(HH | H)** = p<sub>T</sub> * (1 + E(HH)) + p<sub>H</sub> * 1
+			* DP with state transfer equation
+				* [Sushi](https://atcoder.jp/contests/dp/tasks/dp_j): ![formula](../pics/sushi.png)
+			* Gaussian elmination for state transfer linear equations
+				* Random Walk (《挑战程序设计竞赛》p288): given a matrix of M * N with some obstacle grids, random walk with equal prob to 4 adjacent grids (up, down, left, right), find the EV of walks from top-left to bottom-right
+					* E(x, y) = 0.25 * E(x-1, y) + 0.25 * E(x+1, y) + 0.25 * E(x, y-1) + 0.25 * E(x, y+1) + 1
+		* The EV of size of a set E(S<sup>2</sup>) = sum(X<sub>i</sub> * X<sub>j</sub>) for all ordered pairs i, j (i=j is allowed)
+		* Reference: 
+			* [Sums and Expected Value — part 1](https://codeforces.com/blog/entry/62690)
+			* [Sums and Expected Value — part 2](https://codeforces.com/blog/entry/62792)
+
+* Sampling and shuffling
+	* shuffle: See SamplingAndShuffling, [Modern shuffling](https://en.wikipedia.org/wiki/Fisher–Yates_shuffle)
+
+	~~~
+	Random r = new Random();
+	int[] a = ...
+	for (int i = 0; i < a.length; i++) {
+		int j = r.nextInt(a.length - i) + i;
+		swap(a, i, j);
+	}
+	~~~
+	
+	* [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling)
+	* Reference: Programming pearls
 	

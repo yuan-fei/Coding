@@ -12,6 +12,11 @@ public class Interval {
 		intvs = Arrays.asList(new Interval(1, 3), new Interval(6, 9));
 		newIntvs = insert(intvs, new Interval(2, 5));
 		System.out.println(newIntvs);
+		Interval[] a = new Interval[] { new Interval(1, 3), new Interval(8, 10) };
+		Interval[] b = new Interval[] { new Interval(2, 6), new Interval(15, 18) };
+		System.out.println(Arrays.toString(merge(a, b)));
+		System.out.println(Arrays.toString(merge(new Interval[0], new Interval[0])));
+		System.out.println(Arrays.toString(merge(new Interval[0], a)));
 	}
 
 	public static Comparator<Interval> StartComparator = new Comparator<Interval>() {
@@ -44,12 +49,15 @@ public class Interval {
 	}
 
 	public static boolean isOverlap(Interval intv1, Interval intv2) {
-		return (intv1.start <= intv2.end && intv1.end >= intv2.start)
-				|| (intv2.start <= intv1.end && intv2.end >= intv1.start);
+		return (intv1.start <= intv2.end && intv1.end >= intv2.start);
 	}
 
 	public static Interval merge(Interval intv1, Interval intv2) {
 		return new Interval(Math.min(intv1.start, intv2.start), Math.max(intv1.end, intv2.end));
+	}
+
+	public static Interval intersect(Interval intv1, Interval intv2) {
+		return new Interval(Math.max(intv1.start, intv2.start), Math.min(intv1.end, intv2.end));
 	}
 
 	/** Merge a list of intervals in O(nlogn) */
@@ -71,6 +79,57 @@ public class Interval {
 		}
 		res.add(last);
 		return res;
+	}
+
+	/** Merge two array of sorted intervals */
+	public static Interval[] merge(Interval[] a, Interval[] b) {
+		if (a.length == 0) {
+			return b;
+		}
+		if (b.length == 0) {
+			return a;
+		}
+		List<Interval> ret = new ArrayList<>();
+		Interval last = null;
+		int i, j;
+		i = j = 0;
+		while (i < a.length && j < b.length) {
+			Interval smaller = (a[i].start < b[j].start) ? a[i++] : b[j++];
+			if (last == null) {
+				last = smaller;
+			} else {
+				if (isOverlap(last, smaller)) {
+					last = merge(last, smaller);
+				} else {
+					// last < smaller
+					ret.add(last);
+					last = smaller;
+				}
+			}
+		}
+		while (i < a.length) {
+			if (isOverlap(last, a[i])) {
+				last = merge(last, a[i++]);
+			} else {
+				// last < smaller
+				ret.add(last);
+				last = a[i];
+			}
+		}
+		while (j < b.length) {
+			if (isOverlap(last, b[j])) {
+				last = merge(last, b[j++]);
+			} else {
+				// last < smaller
+				ret.add(last);
+				last = b[j];
+			}
+		}
+		if (last != null) {
+			ret.add(last);
+		}
+
+		return ret.toArray(new Interval[0]);
 	}
 
 	/**

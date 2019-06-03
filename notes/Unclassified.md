@@ -3,7 +3,7 @@
 ## Sqare-root decomposition
 
 ## Mo's algorithm
-* Given a array, answer multiple quries sum(L, R)
+* Given a array of size n, answer m quries of sum(L, R) in O((n+m)*n^0.5)
 * Reference: 
 	* [geeksforgeeks](https://www.geeksforgeeks.org/mos-algorithm-query-square-root-decomposition-set-1-introduction/)
 	* [hackerearch](https://www.hackerearth.com/practice/notes/mos-algorithm/)

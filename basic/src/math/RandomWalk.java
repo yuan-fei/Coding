@@ -13,6 +13,7 @@ public class RandomWalk {
 		System.out.println(walk(3, 2));
 		System.out.println(walk(4, 2));
 		System.out.println(walk(5, 2));
+		System.out.println(walk(10, 10));
 	}
 
 	static int[][] d4 = new int[][] { new int[] { 0, -1 }, new int[] { 0, 1 }, new int[] { -1, 0 },

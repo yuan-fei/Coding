@@ -218,8 +218,19 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 * Problems about consecutive subarray sum can be solved by prefix sum: 
 
 ```
-Let prefixSum[i] = sum(num[0], sum[1], ..., sum[i])
+Let prefixSum[i] = sum(a[0], a[1], ..., a[i])
 thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
+```
+* Problems about total gap to the max in a sorted sub array: (i.e. for [1,2,4,6,8], the total gap to max in subarray [2,4,6] is 4+2+0=6)
+
+```
+//Let prefixSum[i] = sum(a[0], a[1], ..., a[i])
+long gap(int start, in endInclusive) {
+	long vEnd = prefixSum[endInclusive] - prefixSum[endInclusive - 1];
+	long rangeSum = (prefixSum[endInclusive] - prefixSum[start - 1]);
+	return vEnd * (endInclusive - start + 1) - rangeSum;
+}
+
 ```
 * Event based offset
 	* Given a interval of length n, and m increments in range: ([l<sub>i</sub>, r<sub>i</sub>], inc), how to calculate sum in any range [l, r]?
@@ -235,11 +246,11 @@ thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 	Interval[] intervals;	//0-based: [0,1]
 	long[] val = new long[n+1];
 	for(int i = 0; i < intervals.length; i++){
-		val[intervals[i].left] = intervals[i].value;
+		val[intervals[i].left] += intervals[i].value;
 		val[intervals[i].right + 1] -= intervals[i].value;
 	}
 	long[] prefSum = new long[n+1];	
-	for(int i = 1; i < n; i++){
+	for(int i = 1; i <= n; i++){
 		val[i] += val[i-1];
 		prefSum[i] = prefSum[i-1] + val[i];
 	}
@@ -248,6 +259,13 @@ thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 * Related Problems
 	* [maximum-subarray](https://leetcode.com/problems/maximum-subarray)
 	* [minimum-size-subarray-sum](https://leetcode.com/problems/minimum-size-subarray-sum)
+
+## Sliding Window
+* [Sliding window maximum](https://leetcode.com/problems/sliding-window-maximum/)
+	* O(nlogk): use a self-balancing tree to keep the oder in the window with O(logk) for insert, max, delete
+	* O(n): Use a Deque to keep indexes of a decreasing sequence in window
+		* head of queue is the idx of the max in the window
+		* each subsequent element indicated by the idx in deque should be a potential max in following windows (for an element in a window, any element from left smaller than it will not be a max candidate)
 
 ## Math
 
@@ -269,6 +287,18 @@ thus, subarray[i..j] - prefixSum[j] - prefixSum[i-1]
 	* [Trailing zeros of n!] (https://leetcode.com/problems/factorial-trailing-zeroes): how many 5s in n!
 
 ## JAVA Data Structure
+* LinkedList: remove element while iterating in O(1)
+
+~~~
+LinkedList<Integer> l = new LinkedList<>;
+Iterator<Integer> it = l.iterator();
+while(it.hasNext()){
+	int val = it.next()
+	//...
+	it.remove()
+}
+~~~
+
 * Stack: check `StackTrick` class
 * Queue: use `offer(e)` and `poll()` instead of `add(e)` and `remove()` because they don't throw exceptions when failed.
 * Deque (ArrayDeque, LinkedList): enqueue and dequeue from both end. Used as sliding window

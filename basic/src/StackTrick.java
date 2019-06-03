@@ -11,11 +11,16 @@ public class StackTrick {
 
 		int[] lBounds = findLeftLowerBound(new int[] { 2, 1, 3, 6, 5, 4 });
 		System.out.println(Arrays.toString(lBounds));
+		lBounds = findLeftLowerBound(new int[] { 3, 2, 1 });
+		System.out.println(Arrays.toString(lBounds));
 	}
 
 	/**
 	 * For each number in the input, find the first lower heights to the left and
 	 * right. i.e. [2, 1, 3, 6, 5, 4] => [-1, -1, 1, 2, 2, 2], [1, -1, -1, 4, 5, -1]
+	 * 
+	 * 
+	 * always maintain a increasing stack
 	 */
 	public static int[][] findFirstLowerBound(int[] heights) {
 		Stack<Integer> s = new Stack<Integer>();

@@ -126,6 +126,7 @@ cooldown[i] = max(cooldown[i - 1], sold[i - 1]);
 ## Interval DP
 * Given a interval/sequence, find optimal solution from partitions of all its sub intervals
 * dp[start][end]: solution for interval [start, end]
+	* length i start from 2, ensure dp[k+1][j+i-1] exists
 
 ```
 // iterate all intervals dp[start][start+len-1]: O(n^3)

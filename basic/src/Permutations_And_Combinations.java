@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Permutations_And_Combinations {
 
@@ -12,27 +13,61 @@ public class Permutations_And_Combinations {
 		System.out.println(combinationResult);
 		List<List<Integer>> permutationResult = getFullPermutations(new int[] { 1, 2, 3 });
 		System.out.println(permutationResult);
+		permutationResult = getUniqueFullPermutations(new int[] { 1, 2, 2 });
+		System.out.println(permutationResult);
 	}
 
 	public static List<List<Integer>> getFullPermutations(int[] source) {
 		List<List<Integer>> result = new ArrayList<List<Integer>>();
-		_getFullPermutations(result, new ArrayList<Integer>(), source, 0);
+		_getFullPermutations(result, source, 0);
 		return result;
 	}
 
-	private static void _getFullPermutations(List<List<Integer>> result, List<Integer> current, int[] source, int pos) {
+	private static void _getFullPermutations(List<List<Integer>> result, int[] source, int pos) {
 		if (pos == source.length) {
-			result.add(new ArrayList<Integer>(current));
+			result.add(Arrays.stream(source).boxed().collect(Collectors.toList()));
 		}
 
 		for (int i = pos; i < source.length; i++) {
 			// in place swap is used instead of the alternative storage
 			// (currentSet)
 			swap(source, pos, i);
-			current.add(source[pos]);
-			_getFullPermutations(result, current, source, pos + 1);
-			current.remove(current.size() - 1);
+			_getFullPermutations(result, source, pos + 1);
 			swap(source, i, pos);
+		}
+	}
+
+	public static List<List<Integer>> getUniqueFullPermutations(int[] source) {
+		List<List<Integer>> result = new ArrayList<List<Integer>>();
+		_getUniqueFullPermutations(result, source, 0);
+		return result;
+	}
+
+	private static boolean shouldSwap(int[] source, int pos, int i) {
+		// if we swapped a element with the same value before, then a duplicate would
+		// occur
+		for (int j = pos; j < i; j++) {
+			if (source[j] == source[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static void _getUniqueFullPermutations(List<List<Integer>> result, int[] source, int pos) {
+		if (pos == source.length) {
+			result.add(Arrays.stream(source).boxed().collect(Collectors.toList()));
+		}
+
+		for (int i = pos; i < source.length; i++) {
+			// in place swap is used instead of the alternative storage
+			// (currentSet)
+			if (shouldSwap(source, pos, i)) {
+				swap(source, pos, i);
+				_getUniqueFullPermutations(result, source, pos + 1);
+				swap(source, i, pos);
+			}
+
 		}
 	}
 
