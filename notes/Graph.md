@@ -17,10 +17,25 @@
 ## <a name='Strongly_Connected_Components'></a>Strongly Connected Components
 * Directed Graph: 
 	* 2-pass DFS: O(V+E)
-		* 1st pass find all parent -> child
-		* 2nd pass find all child -> parent
-			* transposed graph: find reverse connectivity
-			* finish time descending order: find parent->child 
+		* DFS1: obtain topological order
+		* DFS2: find each component in topological order on reverse graph
+	* Application:
+		* 2-SAT: Find boolean assignment for each variable to make 2-CNF true
+			* i.e. (a,b,c) =(false,false,fasle) for (a∨¬b)∧(¬a∨b)∧(¬a∨¬b)∧(a∨¬c)
+			* equavalence between implication and disjunction:
+				* a∨b <=> (¬b=>a)∧(¬a=>b)
+			* implication graph: directed
+				* vertices: for each a add a,¬a
+				* edges: for each a∨b add (¬b, a), (¬a, b)
+			* solution: O(v+e)
+				1. transform a expression to implication graph, and obtain SCC
+				2. each component id is assigned in topological order 
+				4. for each vertices a,¬a, 
+					* if a,¬a in the same scc, then there is no solution (¬a=>a)∧(¬a=>a)
+					* else, assign the variable which has a bigger component id to true
+			* Reference:
+				* 《挑战程序设计竞赛》 p324
+				* [cp-algorithms](https://cp-algorithms.com/graph/2SAT.html)
 * Undirected graph
 	* Union Find Set: O(VlgV+E), O(V+E)
 	* DFS, BFS: O(V+E)

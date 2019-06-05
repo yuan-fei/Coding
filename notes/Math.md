@@ -242,6 +242,7 @@
 				* While computing each modular exponentiation, it looks for a **nontrivial square root of 1, modulo n**, during the final set of squarings. If it finds one, it stops and returns COMPOSITE.
 			* Error probability
 				* For Miller-Rabin(n, s) where s is the trial times, the err is at most 1/2<sup>s</sup>
+			* Complexity for Miller-Rabin(n, s): O(slog<sup>3</sup>n)
 	* RSA crptosystem
 		* Assumption
 			* RSA based on the fact that **factorization of a large number n is hard**: no polynomial time algorithm

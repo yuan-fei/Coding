@@ -31,7 +31,7 @@ public class StronglyConnectedComponentForDirectedGraph {
 				.addEdge(new GraphEdge<String>(c, d)).addEdge(new GraphEdge<String>(d, c))
 				.addEdge(new GraphEdge<String>(c, g)).addEdge(new GraphEdge<String>(d, h))
 				.addEdge(new GraphEdge<String>(g, h));
-		List<List<GraphNode<String>>> sccs = sscWithDFS(graph);
+		List<List<GraphNode<String>>> sccs = ssc(graph);
 		output(sccs);
 	}
 
@@ -43,7 +43,7 @@ public class StronglyConnectedComponentForDirectedGraph {
 		}
 	}
 
-	public static <T> List<List<GraphNode<T>>> sscWithDFS(Graph<T> graph) {
+	public static <T> List<List<GraphNode<T>>> ssc(Graph<T> graph) {
 		Map<GraphNode<T>, Integer> visited = new HashMap<GraphNode<T>, Integer>();
 		List<GraphNode<T>> nodesByFinishTime = new ArrayList<GraphNode<T>>();
 		for (GraphNode<T> node : graph.vertices) {
@@ -54,14 +54,14 @@ public class StronglyConnectedComponentForDirectedGraph {
 		}
 
 		Collections.reverse(nodesByFinishTime);
-		Graph<T> transposedGraph = transposeAndSortGraph(graph, nodesByFinishTime);
+		Graph<T> reversedGraph = graph.getTransposedGraph();
 		List<List<GraphNode<T>>> sccs = new ArrayList<List<GraphNode<T>>>();
 		visited.clear();
-		for (GraphNode<T> node : transposedGraph.vertices) {
+		for (GraphNode<T> node : nodesByFinishTime) {
 			visited.putIfAbsent(node, 0);
 			if (visited.get(node) == 0) {
 				List<GraphNode<T>> scc = new ArrayList<GraphNode<T>>();
-				dfs2(transposedGraph, node, visited, scc);
+				dfs2(reversedGraph, node, visited, scc);
 				sccs.add(scc);
 			}
 		}
@@ -95,21 +95,6 @@ public class StronglyConnectedComponentForDirectedGraph {
 			}
 		}
 		visited.put(root, 2);
-	}
-
-	/**
-	 * nodes in list must be in finish time descending order
-	 */
-	private static <T> Graph<T> transposeAndSortGraph(Graph<T> g, List<GraphNode<T>> nodes) {
-		Graph<T> tg = new Graph<T>();
-		tg.vertices = nodes;
-		for (int i = 0; i < nodes.size(); i++) {
-			for (GraphEdge<T> edge : g.edges.getOrDefault(nodes.get(i), Collections.<GraphEdge<T>>emptyList())) {
-				// This guarantee the children is stored in finish time descending order
-				tg.addEdge(edge.reverse());
-			}
-		}
-		return tg;
 	}
 
 }
