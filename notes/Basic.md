@@ -213,6 +213,8 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 		* LIS's non-DP solution is the first stage of patient sorting
 		* The strong duality: the length of longest increasing subsequence = the min # of piles of non-increasing subsequence
 		* Related problems: [Least non-increasing subsequence](https://www.lintcode.com/problem/least-subsequences/description)
+	* [remove duplicate letters](https://leetcode.com/problems/remove-duplicate-letters/)
+		* greedy + Stack, or greedy + 2 pointers
 
 ## Prefix Sum
 * Problems about consecutive subarray sum can be solved by prefix sum: 
@@ -261,11 +263,42 @@ long gap(int start, in endInclusive) {
 	* [minimum-size-subarray-sum](https://leetcode.com/problems/minimum-size-subarray-sum)
 
 ## Sliding Window
-* [Sliding window maximum](https://leetcode.com/problems/sliding-window-maximum/)
-	* O(nlogk): use a self-balancing tree to keep the oder in the window with O(logk) for insert, max, delete
-	* O(n): Use a Deque to keep indexes of a decreasing sequence in window
-		* head of queue is the idx of the max in the window
-		* each subsequent element indicated by the idx in deque should be a potential max in following windows (for an element in a window, any element from left smaller than it will not be a max candidate)
+* fix sized window
+	* [Sliding window maximum](https://leetcode.com/problems/sliding-window-maximum/)
+		* O(nlogk): use a self-balancing tree to keep the oder in the window with O(logk) for insert, max, delete
+		* O(n): Use a Deque to keep indexes of a decreasing sequence in window
+			* head of queue is the idx of the max in the window
+			* each subsequent element indicated by the idx in deque should be a potential max in following windows (for an element in a window, any element from left smaller than it will not be a max candidate) 
+* varible sized window
+
+	~~~
+	//template
+	int findMaxLengthWithNoMoreThanKDistinctChars(int[] a, int K){
+		int left = 0;
+		Map<Integer,Integer> window = new HashMap<>();
+		int maxLen = 0;
+		for(int i = 0; i<n; i++){
+			window.put(a[i], window.getOrDefault(a[i], 0) + 1);
+			while(window.size() > K){
+				int cnt = window.get(a[left]) - 1;
+				if(cnt == 0){
+					window.remove(a[left]);
+				}
+				else{
+					window.put(a[left], cnt);
+				}
+				left++;
+			}
+			maxLen = Math.max(maxLen, i-left+1);
+		}
+		return maxLen;
+	}
+	~~~
+
+	* related problems
+		* [longest-substring-without-repeating-characters](https://leetcode.com/problems/longest-substring-without-repeating-characters)
+		* [minimum-window-substring](https://leetcode.com/problems/minimum-window-substring/)
+		* [longest-repeating-character-replacement](https://leetcode.com/problems/longest-repeating-character-replacement)
 
 ## Math
 

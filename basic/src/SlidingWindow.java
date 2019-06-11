@@ -10,6 +10,7 @@ public class SlidingWindow {
 		System.out.println(minWindowContainsT("ADOBECODEBANC", "ABC"));
 		System.out.println(findLongestSubstringWithAtMostKDistinctChars("ADOBECODEBANC", 5));
 		System.out.println(findLongestSubstringWithoutDuplicateChars("ADOBECODEBANC"));
+		System.out.println(findLongestSubstringWithoutDuplicateChars2("ADOBECODEBANC"));
 	}
 
 	/** min window from s contains all characters in t */
@@ -105,5 +106,54 @@ public class SlidingWindow {
 			end++;
 		}
 		return str;
+	}
+
+	public static String findLongestSubstringWithoutDuplicateChars2(String s) {
+		Map<Character, Integer> LastPos = new HashMap<>();
+
+		int[] uniqStartIdx = new int[s.length() + 1];
+		int maxLen = 0;
+		String str = "";
+		for (int i = 1; i <= s.length(); i++) {
+			// leftmost start of unique-letter substring end at i
+			uniqStartIdx[i] = Math.max(uniqStartIdx[i - 1], LastPos.getOrDefault(s.charAt(i - 1), -2) + 1);
+			LastPos.put(s.charAt(i - 1), i - 1);
+			if (i - uniqStartIdx[i] > maxLen) {
+				maxLen = i - uniqStartIdx[i];
+				str = s.substring(uniqStartIdx[i], i);
+			}
+		}
+		return str;
+	}
+
+	/** Count # of subarrays with exact K distinct numbers */
+	public int subarraysWithKDistinct(int[] A, int K) {
+		return atMostKDistinct(A, K) - atMostKDistinct(A, K - 1);
+	}
+
+	/** Count # of subarrays with at most distinct K numbers */
+	public int atMostKDistinct(int[] A, int K) {
+		Map<Integer, Integer> cntMap = new HashMap<>();
+		int left = 0;
+		int ways = 0;
+		for (int i = 0; i < A.length; i++) {
+			int cnt = 0;
+			if (cntMap.containsKey(A[i])) {
+				cnt = cntMap.get(A[i]);
+			}
+			cntMap.put(A[i], cnt + 1);
+
+			while (cntMap.size() > K) {
+				cnt = cntMap.get(A[left]) - 1;
+				if (cnt == 0) {
+					cntMap.remove(A[left]);
+				} else {
+					cntMap.put(A[left], cnt);
+				}
+				left++;
+			}
+			ways += i - left + 1;
+		}
+		return ways;
 	}
 }
