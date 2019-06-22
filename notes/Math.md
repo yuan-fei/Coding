@@ -315,12 +315,16 @@
 *  Lattice point (x, y are both integer) on a line (from (a, b) to (c, d))
 	*  gcd(c-a, d-b) + 1
 	*  [Reference explaination](https://math.stackexchange.com/questions/628117/how-to-count-lattice-points-on-a-line): consider the representation of y in term of x
-*  Quick Modular multiplicative inverse of x modulo p
+*  Modular multiplicative inverse of x modulo p
 	*  p is prime
 		*  [Fermat's theory](#Fermat), Fast modular exponentiation: inverse(x) = x<sup>(p-2)</sup> mod p
-		*  DP in O(n) ([ref1](https://www.quora.com/How-do-I-find-the-value-of-nCr-1000000007-for-the-large-number-n-n-10-6-in-C), [ref2](https://www.geeksforgeeks.org/modular-multiplicative-inverse-1-n)): inverse(x, p) = (inverse(p%x)(x-p/x))%x
 	*  p is not prime
-		*  [Euler's theorem](#Euler): invere(x, p) = x<sup>(φ(p-1)</sup> mod p
+		*  [Euler's theorem](#Euler): inverse(x, p) = x<sup>(φ(p-1)</sup> mod p
+
+*  Quick Inverse fact (x!)<sup>-1</sup> mod p
+  	*  Quick modular multiplicative inverse modulo p for all [1..x] 
+		*  DP in O(n) ([ref1](https://www.quora.com/How-do-I-find-the-value-of-nCr-1000000007-for-the-large-number-n-n-10-6-in-C), [ref2](https://www.geeksforgeeks.org/modular-multiplicative-inverse-1-n)): inverse(x, p) = (inverse(p%x)(x-p/x))%x
+	*  inverseFact(x) = (inverseFact(x-1) * inverse(x,p)) % p
 *  Quick nCr % p with large p ([ref](https://www.geeksforgeeks.org/queries-of-ncrp-in-o1-time-complexity/)): 
 	*  nCr % p = (Fact(n) * inverseFact(n-r) * inverseFact(r))%p
 * Find the best fraction between 2 fractions

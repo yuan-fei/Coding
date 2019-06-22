@@ -9,13 +9,19 @@ public class FastPower {
 		System.out.println(fastExpRecursive(3, 5));
 		System.out.println(fastExpIterative(3, 4));
 		System.out.println(fastExpIterative(3, 5));
+
 		System.out.println(modularExp(3, 4, 5));
 		System.out.println(modularExp(3, 5, 5));
-		// 2052166149
+
+		System.out.println(modularExpWithPrimeModulo(3, 5, 5));
+		System.out.println(modularExpWithPrimeModulo(3, -1, 5));
+		System.out.println(modularExpWithPrimeModulo(3, -6, 5));
+		System.out.println(modularExpWithPrimeModulo(3, 0, 5));
+
+		// 377860091
 		System.out.println(modularExp(413606424, 582988447, 837153029));
 		long[][] a = new long[][] { new long[] { 1, 1 }, new long[] { 1, 0 } };
 		System.out.println(Arrays.deepToString(fastMatrixExp(a, 3)));
-
 	}
 
 	public static long fastExpRecursive(int base, int exp) {
@@ -42,19 +48,32 @@ public class FastPower {
 		return res;
 	}
 
-	public static long modularExp(int base, long exp, long n) {
-		return modularExpRecursive(base, exp, n);
+	/**
+	 * modulo m is prime, exp can be any integer i.e. 3^4 , 3^-3
+	 */
+	public static long modularExpWithPrimeModulo(int base, long exp, long m) {
+		exp %= m - 1;
+		// in case negative exp
+		exp += m - 1;
+		exp %= m - 1;
+		base %= m;
+		return modularExp(base, exp, m);
 	}
 
-	private static long modularExpRecursive(int base, long exp, long n) {
+	/** exp>=0 */
+	public static long modularExp(int base, long exp, long m) {
+		return modularExpRecursive(base, exp, m);
+	}
+
+	private static long modularExpRecursive(int base, long exp, long m) {
 		if (exp == 0) {
 			return 1;
 		} else if (exp % 2 == 1) {
-			long l = base * modularExpRecursive(base, exp - 1, n);
-			return l % n;
+			long l = base * modularExpRecursive(base, exp - 1, m);
+			return l % m;
 		} else {
-			long t = modularExpRecursive(base, exp / 2, n);
-			return (t * t) % n;
+			long t = modularExpRecursive(base, exp / 2, m);
+			return (t * t) % m;
 		}
 	}
 
