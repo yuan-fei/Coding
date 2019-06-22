@@ -123,8 +123,10 @@ cooldown[i] = max(cooldown[i - 1], sold[i - 1]);
 	* [best-time-to-buy-and-sell-stock-with-transaction-fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee)
 	* [maximum-product-subarray](https://leetcode.com/problems/maximum-product-subarray)
 
+
 ## Interval DP
 * Given a interval/sequence, find optimal solution from partitions of all its sub intervals
+* TC = O(n^3)
 * dp[start][end]: solution for interval [start, end]
 	* length i start from 2, ensure dp[k+1][j+i-1] exists
 
@@ -193,6 +195,13 @@ long solve(String s, int i, boolean isLess, state){
 	* [Digit Sum](https://atcoder.jp/contests/dp/tasks/dp_s)
 * Reference: 
 	* [桁DP入門](https://pekempey.hatenablog.com/entry/2015/12/09/000603)
+
+## Recrusive DP
+* When the boundary ('initial' or 'done' of DP) of the dp states are not explicit
+* add cache for state
+* Problems:
+	* [Can I win](https://leetcode.com/problems/can-i-win/description/)
+		*	a initial 'win' state is a state whose sum is less than target, and when adding any 1 of available number can make the sum above target. (Or we can define initial 'lose' as any state whose sum is over target)
 
 ## Bitmask DP for full permutation
 * DP on a set/graph: bitmap for a subset of elements present
