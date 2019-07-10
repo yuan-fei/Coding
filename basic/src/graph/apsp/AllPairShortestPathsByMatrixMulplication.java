@@ -12,7 +12,7 @@ import utils.Util;
  * APSP by matrix multiplication with repeated squaring optimization O(n^3*lgn),
  * Can be used for negative weight circle check.
  */
-public class AllPairShortestPatsByMatrixMulplication {
+public class AllPairShortestPathsByMatrixMulplication {
 
 	public static void main(String[] args) {
 		Graph<String> g = new Graph<String>();

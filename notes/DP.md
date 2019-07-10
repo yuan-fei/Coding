@@ -343,6 +343,9 @@ long solve(String s, int i, boolean isLess, state){
 	* dp[l][i] is all valid permutations of lenth l end with number i
 		* dp[l][i] = sum(dp[l - 1][j]) for each j <= i, when ">"
 		* dp[l][i] = sum(dp[l - 1][j]) for each j > i, when "<"
+* [filling-bookcase-shelves](https://leetcode.com/contest/weekly-contest-143/problems/filling-bookcase-shelves/)
+	* O(n^2): dp[i] is min height of books from 1 to i
+		* dp[i] = min(max(h[j],...,h[i])+dp[j-1], dp[i]) for all j that book j to book i can be put in one shelf layer
 
 ## Reference
 * [Dynamic Programming Type](https://codeforces.com/blog/entry/325)

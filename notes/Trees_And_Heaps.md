@@ -178,7 +178,7 @@ vEB tree with elements [2, 3, 4, 5, 7, 14, 15]
 * Merge-Sort Tree: each node stores all elements of the segment.  
 	* It can be used to solve problems like 'given (l, r, k), find the smallest element >= k in range (l, r)'.
 	* build in O(nlogn) in time and space, query in O(log<sup>2</sup>n)
-* Reference: [1](https://cp-algorithms.com/data_structures/segment_tree.html#toc-tgt-3)
+* Reference: [cp-algorithms](https://cp-algorithms.com/data_structures/segment_tree.html#toc-tgt-3)
 
 ## Persistent Segment Tree
 * Segment tree with version info
@@ -228,3 +228,20 @@ vEB tree with elements [2, 3, 4, 5, 7, 14, 15]
 		* An unordered list of heaps, and a 'min' point to minimum heap top element
 		* Only extractMin will reorganize the list
 		* A 'mark' indicates whether a node has lost a child since it became a child of its parent. The 'mark' enforces the sub tree be cut and re-added as a new heap, which garantees the 'extractMin' runs in O(logn)
+
+## <a name='Lowest_Common_Ancestor'></a>Lowest Common Ancestor
+* Problem: Given a root tree T, answer the query lca(u, v)
+* Solutions:
+	* No preprocessing: O(n) for each query
+		* recursively find the first node who has seen both u,v in its subtree
+	* Preprocessing:
+		* [LCA with Binary lifting](https://cp-algorithms.com/graph/lca_binary_lifting.html): O(nlogn) preprocessing, O(logn) for each query
+			* ancestor[u][k]: the 2<sup>k</sup>th level ancestor of u
+			* lca(u,v): for i from k down to 0, find ancestor[u][i] is not ancestor of v while ancestor[ancestor[u][i]][0] is ancestor of v
+		* [LCA with RMQ](https://cp-algorithms.com/graph/lca.html): O(n) preprocessing, O(logn) for each query
+			* euler tour for tree, record the first time seen a node first[u]
+			* lca(u,v): node who has smallest height in the euler path from u to v
+	* Offline query: O(n+m)
+		* [Tarjan's offline Least common ancester algorithm] (https://en.wikipedia.org/wiki/Tarjan%27s_off-line_lowest_common_ancestors_algorithm):  with help of union find set
+* Reference:
+	* 《挑战程序设计竞赛》p328

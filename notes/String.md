@@ -42,6 +42,19 @@
 	* [jianshu](https://www.jianshu.com/p/799bc53d4e3d)
 	* [leetcode](https://articles.leetcode.com/longest-palindromic-substring-part-ii/)
 
+## Shunting yard: expression parsing
+* Applicaton
+	* Convert infix expression to postfix expression (Reverse Poland Notation)
+	* Expression evaluation
+* Expression with
+	* multiple operators and different operator precedences: (`+` = `-` < `*` = `/`)
+	* function call: `max(a, b)`
+	* left and right association: `^` is right associative
+* Implementation:
+	* 2 stacks: op stack and oprand stack
+	* operator action: operator precedence, associativity and whether it's a function call
+* Reference: [Shunting yard](https://en.wikipedia.org/wiki/Shunting-yard_algorithm)
+
 ## Aho-Corasick: Multi-pattern String Matching in O(n+m)	
 * Idea: Trie based automaton with suffix link (which prefix to go to when mismatched)
 * Reference:

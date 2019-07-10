@@ -1,3 +1,5 @@
+package tree.lca;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +12,9 @@ import tree.UnionFindSet;
 /**
  * Tarjan's offline Least common ancester algorithm with union find set
  * (https://en.wikipedia.org/wiki/Tarjan%27s_off-line_lowest_common_ancestors_algorithm)
+ * 
+ * Offline means: the m query is fixed, and queries can be processed during the
+ * dfs in O(n+m)
  */
 public class OfflineAllPairLeastCommonAncester {
 

@@ -42,6 +42,7 @@ public class FordFulkersonMaxFlow {
 
 	public void addEdges(int from, int to, double capacity) {
 		Edge e1 = new Edge(to, capacity);
+		// init reverse edge capacity to 0
 		Edge e2 = new Edge(from, 0);
 		e1.reverse = e2;
 		e2.reverse = e1;
