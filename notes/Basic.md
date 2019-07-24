@@ -369,7 +369,9 @@ while(it.hasNext()){
 		* [Shunting yard](https://en.wikipedia.org/wiki/Shunting-yard_algorithm): op stack and oprand stack
 			* [basic calculator ii](https://leetcode.com/problems/basic-calculator-ii/)
 			* [brace expansion ii](https://leetcode.com/problems/brace-expansion-ii/)
-
+	* [Maximum Frequency Stack](https://leetcode.com/problems/maximum-frequency-stack/)
+		* pop most frequent number in stack
+		* use frequency as index
 * Queue: use `offer(e)` and `poll()` instead of `add(e)` and `remove()` because they don't throw exceptions when failed.
 * Deque (ArrayDeque, LinkedList): enqueue and dequeue from both end. Used as sliding window
 	* pollFisrt(), pollLast(), offerFisrt(), offerFisrt()
@@ -419,6 +421,14 @@ while(it.hasNext()){
 	```
 	* [first-missing-positive](https://leetcode.com/problems/first-missing-positive)
 * [maximum-frequency-stack](https://leetcode.com/problems/maximum-frequency-stack): frequent is continuous, so index stack by frequent
+* [longest-subarray-count-1s-one-count-0s](https://www.geeksforgeeks.org/longest-subarray-count-1s-one-count-0s/)
+	* calculate accumulate difference sequence `diff[n]`, it has the following property
+		1. `differ by 1`: the sequence starts at 0, and two adjacent elements in sequence differs by 1
+		2. `monotonicity`: denote `first[d]` the position first time we see diff d. if a and b are 2 elements in sequence
+			* a,b>0, a>b, then `first[b] < first[a]`
+			* a,b<0, a>b, then `first[a] < first[b]`
+	* if `diff[i]<=0`, we should try to find the j with smallest `first[j]` and `diff[i]-diff[i]>0`. According to 'monotonicity' before, such `j = first[diff[i-1]]`, and the span is `i-j`
+	* A similar problem: [longest-well-performing-interval](https://leetcode.com/problems/longest-well-performing-interval)
 
 ## Tricks
 * <a name='skip_duplicates_in_sorted_array'></a>Skip duplicates in **sorted** array: move pointer only once in each loop

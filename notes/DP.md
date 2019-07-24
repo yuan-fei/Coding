@@ -325,27 +325,95 @@ long solve(String s, int i, boolean isLess, state){
 	* [Intervals](https://atcoder.jp/contests/dp/tasks/dp_w)
 
 ## DP Optimization: Convex Hull Trick
-* O(n^2) -> O(nlogn)
+* O(n^2) -> O(nlogn) or O(n)
 * When dp[i] is obtained by iterate all its previous dp states
-	* dp[i] = max(k(j) * a[i] + b(j) + dp[j]) where 0 < j < i
-	* with constraint (k(j)≥k(j+1)) or (a[i]≤a[i+1])
-* Optimization: CHT
-	* adding a line [k(i), b(i) + dp[j]] after dp[i] is calculated 
-	* query for max(k(j) * a[i] + b(j) + dp[j]) by binary search in CHT for the proper line
+	* dp[i] = max(k(j) * a[i] + b(j) + dp[j]) where j < i and j~i satisfies a limit function limit(j...i) > 0
+* Intuition
+	* It can be seen as find the optimal value for input a[i] among a set of lines
+		* What's a line
+			* dp[i] = max(k(j) * a[i] + b(j) + dp[j]) where 0 < j < i
+				* denote f(x) = k(j) * x + b(j) + dp[j]. Then f(x) is a line, x is variable whose value is in {a[1], ...a[n]}, k(j) is slope, b(j) + dp[j] is intercept
+				
+				~~~
+				i.e. 
+				1. 
+				dp[i] = max(dp[j]+(j-i)^2) where 0<j<i
+				dp[i] = max(-2j*i+j^2+dp[j])+i^2
+				A line is with slope -2j, intercept j^2+dp[j]
+				2.
+				dp[i] = max(dp[j]+(a[j]+...+a[i])*a[i])
+				we introduce prefixSum S
+				dp[i] = max(-S[j]*a[i]+dp[j])+S[i]*a[i]
+				A line is with slope -S[j], intercept dp[j]
+				~~~
+	* For a line, it can only answer a section of optimal values which are part of this line. All answers of optimal values are on the convex hull of the set of lines
+	* Find a data structure CHT (deque/BST)to maitain the convex hull
+		* adding a line [k(i), b(i) + dp[i]] as [k, b] to CHT after dp[i] is calculated 
+		* query for max(k * a[i] + b) by binary search in CHT for the proper line
+* Implementation details:
+	* When to delete a line? 
+		1. Not part of convex hull any more 
+			* assume the slope of l1, l2, l3 are in order, and l3 is a new line, interX(l1,l2) means the x of intersection between l1, l2. The table below lists all the conditions when l2 should be removed because l3 is a better choice than l2 (l2 is not part of convex hull any more after l3 is added).
+			![](../pics/convex_hull_validation.jpg)
+
+				| slope order   | max   | min |
+				| ----  | ----  |---- |
+				| ascending (l1<l2<l3)  | `interX(l1, l2) >= interX(l1, l3)` <br>`interX(l1, l2) >= interX(l2, l3)` <br><code>**(b1-b2)\*(k3-k2)>=(b2-b3)\*(k2-k1)**</code>|`interX(l1, l2) <= interX(l1, l3)` <br> `interX(l1, l2) <= interX(l2, l3)`<br><code>**(b1-b2)\*(k3-k2)<=(b2-b3)\*(k2-k1)**</code>|
+				| descending (l1>l2>l3)  | `interX(l1, l2) <= interX(l1, l3)` <br> `interX(l1, l2) <= interX(l2, l3)`<br><code>**(b1-b2)\*(k3-k2)<=(b2-b3)\*(k2-k1)**</code>|`interX(l1, l2) >= interX(l1, l3)` <br> `interX(l1, l2) >= interX(l2, l3)`<br><code>**(b1-b2)\*(k3-k2)>=(b2-b3)\*(k2-k1)**</code>|
+				
+				**Note use the formula in bold above for checking because it takes the 'adjacent lines with same solpe' problem into consideration**
+				
+		2. Out of query range
+			* a line j is out of query range for breaking the limit function limit(j, i)<0
+	* O(n) or O(nlogn)
+		* Order matters
+			1. slope order: whether the slope of lines are in order during insertion
+			2. query order: whether the variable x are in order during query `for x find max/min of kx+b for all [k,b]`
+		* O(n) when both are ordered
+			* For 'max' problem, the convex hull is in shape '∪', the slope increases as the x varaible increases; while for 'min' problem, the convex hull is in shape '∩', the slope decreases as the x varaible increases
+			* When slope is ordered we can do 'Not part of convex hull any more' deletion on new line insertion from just one end of the queue; when query is ordered, we can do 'Out of query range' deletion during query from just one end of the queue (this can be the same or opposite end of 'Not part of convex hull any more' deletion)
+
+				| order   | max   | min |
+				| ----  | ----  |---- |
+				| slope order = query order  | deque |stack |
+				| slope order = - query order  | stack |deque |
+
+		* O(nlogn) when at most 1 ordered: monotonic queue optimization
+			* When slope unordered, we must use BST to find and insert new line, and we must do 'Not part of convex hull any more' deletion for two directons (towards high, towards low)
+			* When query unordered, we must keep all inserted lines and use binary search to find the best answer
+			* When both are unordered, this is called `dynamic convex hull trick`, we use BST
+	* Classical problems:
+		* Multiple knapsack optimization in O(nV) (n - item count, V - volume of backpack)
+		* [K-Anonymous Sequence](http://poj.org/problem?id=3709): 《挑战程序设计竞赛》p342
+		* [filling-bookcase-shelves optimization](#filling-bookcase-shelves-optimization)
 * Reference
-	* [[Tutorial] Convex Hull Trick — Geometry being useful](https://codeforces.com/blog/entry/63823)
+	* [[Tutorial] Convex Hull Trick — Geometry being useful](https://codeforces.com/blog/entry/63823): 
+		* CHT formula explained by geometry based method
 	* [Convex hull trick and Li Chao tree](https://cp-algorithms.com/geometry/convex_hull_trick.html)
-	* [CONVEX HULL TRICK](https://jeffreyxiao.me/blog/convex-hull-trick)
+	* [CONVEX HULL TRICK](https://jeffreyxiao.me/blog/convex-hull-trick): CHT formula explained by elements comparison 
 	* [Dynamic Programming Optimizations](https://codeforces.com/blog/entry/8219)
+	* [Algorithm lives](https://algorithms-live.blogspot.com/2017/03/episode-11-convex-hull-optimization.html): 
+		* demonstrate one problem with dequeue in O(n) and one problem with dynamic CHT in O(nlogn)
+		* obsolete removal check by 'time overtaken'
+	* 《挑战程序设计竞赛》p342
 
 ## Miscellaneous
 * [Permutation](https://atcoder.jp/contests/dp/tasks/dp_t) 
 	* dp[l][i] is all valid permutations of lenth l end with number i
 		* dp[l][i] = sum(dp[l - 1][j]) for each j <= i, when ">"
 		* dp[l][i] = sum(dp[l - 1][j]) for each j > i, when "<"
-* [filling-bookcase-shelves](https://leetcode.com/contest/weekly-contest-143/problems/filling-bookcase-shelves/)
+* [filling-bookcase-shelves](https://leetcode.com/problems/filling-bookcase-shelves)
 	* O(n^2): dp[i] is min height of books from 1 to i
 		* dp[i] = min(max(h[j],...,h[i])+dp[j-1], dp[i]) for all j that book j to book i can be put in one shelf layer
+	 	* <a name='filling-bookcase-shelves-optimization'></a>[filling-bookcase-shelves optimization](https://leetcode.com/problems/filling-bookcase-shelves/discuss/323518/This-problem-is-simplified-from-USACO-12'-Bookshelf-which-has-O(NlogN)-solution): O(nlogn)
+		 	* [editorial](http://www.usaco.org/current/data/sol_bookshelf_gold.html)
+		 	* Use deque to maintain intervals for different hmax [a0, a1], [a1+1, a2], [a2+1, a3], ..., [an+1, i], s.t., height[a1] > height[a2] > ... > height[i]
+		 	* Use BST to maintain partial answer: dp[x-1]+hmax(x, i), we only need to add partial answer in case x is start of interval
+* [Partition a set into 2 subsets and minimize the difference of subsets sum](https://www.geeksforgeeks.org/partition-a-set-into-two-subsets-such-that-the-difference-of-subset-sums-is-minimum/)
+	* Suppose `n` is size of set, `S` is the sum of all numbers.
+	* Use 0-1 knapsack to find all the possible sum of subsets: `boolean dp[i][sum]`
+	* find a subset sum which is closest to `floor(S/2)` (or `ceiling(S/2)`)
+	* TC: O(nS)
 
 ## Reference
 * [Dynamic Programming Type](https://codeforces.com/blog/entry/325)

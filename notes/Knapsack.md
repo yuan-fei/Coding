@@ -101,7 +101,43 @@
 		* '<=' or '=': although the code snippet are same for the 4 problems, the j in state[i][j] / state[j] stands for (i) the solutions of first i items whose sum of size <= j (problem 1, 2); or (ii) the solutions of first i items whose sum of size = j (problem 3, 4), what make the difference?
 			* the answer relies in the state inializaiton step: when default value (i.e. 0, false) is not a valid solution (as in Proble 3, 4, the `state[0] = true or 1` must be specified), state[j] is being used under a strict '=' semantic.
 			* the '=' semantic can be used in 0-1 backpack when volume limit is large and values are small. Populate state[i][j] which stands for the size of i items whose value sum exactly to j, and find the largest value j whose state[i][j] <= volume limit.
-* reference
-	* 《挑战程序设计竞赛》
-	* lintcode backpack ladder
-	* http://blog.sina.com.cn/s/blog_8cf6e8d90100zldn.html
+	* reference
+		* 《挑战程序设计竞赛》
+		* lintcode backpack ladder
+		* http://blog.sina.com.cn/s/blog_8cf6e8d90100zldn.html
+
+* Multiple backpack optimization
+	* DP state transition: 
+	
+		~~~
+		i - ith item, 
+		j - current volume, 
+		m[i] - bound of item count
+		
+		state transition:
+		dp[i][j] = max(dp[i-1][j], dp[i-1][j-w[i]]+v[i],..., dp[i-1][j-k*w[i]]+k*v[i]) where j>=k*w[i], k<m[i]`
+		~~~
+	* O(Vnlogn) by binarization
+		* Binarization: For m[i] can be represented as a binary decomposition: <code>m[i] = 1+2+..2<sup>n</sup> + a where 0<=a<2<sup>n</sup> </code>, any number in [0, m[i]] can be represented by the sum of a subsets of {1,2,...2<sup>n</sup>, a}, 
+		* Convert to 0-1 backpack problem: item i can be decomposed into logm[i] sub 0-1 items: {[w[i], v[i]], [2\*w[i], 2\*v[i]], ..., [a\*w[i], a\*v[i]]}
+	* O(Vn) by CHT
+		* By observation, j, j-w[i], ..., j-k\*w[i] are in the same congruence of  j
+		
+		~~~
+		if j = x*w[i] + r, l = max(x-m[i], 0)
+		dp[i][j] = max(dp[i-1][x*w[i]+r], 
+						dp[i-1][(x-1)*w[i]+r]+v[i],
+						..., 
+						dp[i-1][l*r]+(x-l)*v[i])
+		         = x*v[i] + max(dp[i-1][x*w[i]+r]-x*v[i], 
+				         		dp[i-1][(x-1)*w[i]+r]-(x-1)*v[i],
+				         		..., 
+				         		dp[i-1][l*r]-l*v[i])
+		denote dp1[i][r][x] = dp[i][x*w[i]+r] - x*v[i]
+		dp1[i][r][x] = max(dp1[i][r][x], ..., dp1[i][r][l])
+		dp1 can be soled by using CHT with monotonic deque implementation
+		~~~
+
+	* reference
+		* 《挑战程序设计竞赛》p339
+		* [淺談多重背包問題 (Multiple Knapsack Problem) 優化那些事](http://morris821028.github.io/2016/12/18/jg-20008/)

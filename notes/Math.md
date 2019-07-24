@@ -328,7 +328,7 @@
 *  Quick nCr % p with large p ([ref](https://www.geeksforgeeks.org/queries-of-ncrp-in-o1-time-complexity/)): 
 	*  nCr % p = (Fact(n) * inverseFact(n-r) * inverseFact(r))%p
 * Find the best fraction between 2 fractions
-	* Contunued Fraction
+	* Continued Fraction
 		* 2 Representations: 
 			* short form: 3.14155 = [3; 7, 15, 2, 7, 1, 4, 2]
 			* long form: 3.14155 = [3; 7, 15, 2, 7, 1, 4, 1, 1]
@@ -341,7 +341,7 @@
 		* algorithm: [ref](https://en.wikipedia.org/wiki/Continued_fraction#Best_rational_within_an_interval)
 			* for the 4 pairs of continued fraction representations of F1, F2: (short, long) x (short, long), find the sequence with the algorithm below
 				* if x = [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, a<sub>k</sub>, a<sub>k+1</sub>, …], 
-y = [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, b<sub>k</sub>, b<sub>k+1</sub>, …], then a best fraction candidate is  [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, min(a<sub>k</sub>, a<sub>k</sub>) + 1]
+y = [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, b<sub>k</sub>, b<sub>k+1</sub>, …], then a best fraction candidate is  [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, min(a<sub>k</sub>, b<sub>k</sub>) + 1]
 				* the 1st candidate F' that satified the F1< F' <F2 is the best fraction F
 		* Reference: 
 			* [wiki](https://en.wikipedia.org/wiki/Continued_fraction)

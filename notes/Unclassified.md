@@ -66,4 +66,3 @@ let solve(state) be a function:
 	* [geeksforgeeks: SG](https://www.geeksforgeeks.org/combinatorial-game-theory-set-4-sprague-grundy-theorem/)
 	* [cp-algorithm](https://cp-algorithms.com/game_theory/sprague-grundy-nim.html)
 	* GCJ 2019 1C p3
-	
