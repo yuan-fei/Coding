@@ -361,7 +361,7 @@ long solve(String s, int i, boolean isLess, state){
 				| ascending (l1<l2<l3)  | `interX(l1, l2) >= interX(l1, l3)` <br>`interX(l1, l2) >= interX(l2, l3)` <br><code>**(b1-b2)\*(k3-k2)>=(b2-b3)\*(k2-k1)**</code>|`interX(l1, l2) <= interX(l1, l3)` <br> `interX(l1, l2) <= interX(l2, l3)`<br><code>**(b1-b2)\*(k3-k2)<=(b2-b3)\*(k2-k1)**</code>|
 				| descending (l1>l2>l3)  | `interX(l1, l2) <= interX(l1, l3)` <br> `interX(l1, l2) <= interX(l2, l3)`<br><code>**(b1-b2)\*(k3-k2)<=(b2-b3)\*(k2-k1)**</code>|`interX(l1, l2) >= interX(l1, l3)` <br> `interX(l1, l2) >= interX(l2, l3)`<br><code>**(b1-b2)\*(k3-k2)>=(b2-b3)\*(k2-k1)**</code>|
 				
-				**Note use the formula in bold above for checking because it takes the 'adjacent lines with same solpe' problem into consideration**
+				**Note use the formula in bold above for checking because it takes the 'parallel lines' problem into consideration**
 				
 		2. Out of query range
 			* a line j is out of query range for breaking the limit function limit(j, i)<0
@@ -384,7 +384,7 @@ long solve(String s, int i, boolean isLess, state){
 			* When both are unordered, this is called `dynamic convex hull trick`, we use BST
 	* Classical problems:
 		* Multiple knapsack optimization in O(nV) (n - item count, V - volume of backpack)
-		* [K-Anonymous Sequence](http://poj.org/problem?id=3709): 《挑战程序设计竞赛》p342
+		* [K-Anonymous Sequence](http://poj.org/problem?id=3709): (《挑战程序设计竞赛》p342): be careful of parallel lines
 		* [filling-bookcase-shelves optimization](#filling-bookcase-shelves-optimization)
 * Reference
 	* [[Tutorial] Convex Hull Trick — Geometry being useful](https://codeforces.com/blog/entry/63823): 
