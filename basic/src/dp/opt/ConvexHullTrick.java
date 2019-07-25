@@ -18,6 +18,7 @@ public class ConvexHullTrick {
 		}
 	};
 
+	/** type = 1 for max; type = -1 for min */
 	public ConvexHullTrick(final int type) {
 		this.type = type;
 		this.hull = new TreeSet<>(comp);
@@ -29,6 +30,8 @@ public class ConvexHullTrick {
 
 	public void add(ConvexHullTrick.Line a) {
 		ConvexHullTrick.Line[] LR = { hull.lower(a), hull.ceiling(a) };
+		// if a line with same slope is added before but not optimal compared to
+		// the new line now, then remove it
 		for (int i = 0; i < 2; i++)
 			if (LR[i] != null && LR[i].m == a.m) {
 				if (type == 1 && LR[i].b >= a.b)
@@ -39,11 +42,15 @@ public class ConvexHullTrick {
 			}
 
 		hull.add(a);
+
+		// if the new line is not on the convex hull
 		ConvexHullTrick.Line L = hull.lower(a), R = hull.higher(a);
 		if (L != null && R != null && a.inter(R) <= R.left) {
 			hull.remove(a);
 			return;
 		}
+
+		// new line on the convex hull, remove obsolete ones in both direction
 		ConvexHullTrick.Line LL = (L != null) ? hull.lower(L) : null;
 		ConvexHullTrick.Line RR = (R != null) ? hull.higher(R) : null;
 		if (L != null)
@@ -78,6 +85,7 @@ public class ConvexHullTrick {
 	public static class Line {
 		long m;
 		long b;
+		// intersection with the line on its left
 		double left = Long.MIN_VALUE;
 
 		public Line(long m, long x, long y) {
