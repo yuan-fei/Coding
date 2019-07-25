@@ -19,6 +19,7 @@ public class Fraction implements Comparable<Fraction> {
 		System.out.println(Fraction.getBestFraction(f1, f2));
 		System.out.println(Fraction.getBestFraction(new Fraction(1, 4), new Fraction(3, 5)));
 		System.out.println(Fraction.getBestFraction(new Fraction(1, 4), new Fraction(1, 2)));
+		System.out.println(Fraction.getBestFraction(new Fraction(5, 9), new Fraction(4, 7)));
 	}
 
 	long num, den;
