@@ -14,8 +14,8 @@
 			3. How many ways that the backpack can be fullfilled (aka. Give n numbers, choose numbers that sum to a A)
 				* item permutation as solution
 				* item conbination as solution
-			4. How many different sizes can be populated by the items
-	* Problem conversion
+			4. (All possible values) How many different sizes can be populated by the items 
+	* Problem conversion 
 		* 2 implementation of Complete Backpack
 			1. state[i-1] based solution: inefficient
 			`state[i][j] = max(state[i - 1][j], state[i - 1][j - k * size[i]] + value[i]) while j >= k * size[i]`
@@ -106,38 +106,53 @@
 		* lintcode backpack ladder
 		* http://blog.sina.com.cn/s/blog_8cf6e8d90100zldn.html
 
-* Multiple backpack optimization
-	* DP state transition: 
+* Backpack optimization
+	* Multiple backpack
+		* DP original state transition: O(Vn^2)
+		
+			~~~
+			i - ith item, 
+			j - current volume, 
+			m[i] - bound of item count
+			
+			state transition:
+			dp[i][j] = max(dp[i-1][j], dp[i-1][j-w[i]]+v[i],..., dp[i-1][j-k*w[i]]+k*v[i]) where j>=k*w[i], k<m[i]`
+			~~~
+		* O(Vnlogn) by binarization
+			* Binarization: For m[i] can be represented as a binary decomposition: <code>m[i] = 1+2+..2<sup>n</sup> + a where 0<=a<2<sup>n</sup> </code>, any number in [0, m[i]] can be represented by the sum of a subsets of {1,2,...2<sup>n</sup>, a}, 
+			* Convert to 0-1 backpack problem: item i can be decomposed into logm[i] sub 0-1 items: {[w[i], v[i]], [2\*w[i], 2\*v[i]], ..., [a\*w[i], a\*v[i]]}
+		* O(Vn) by CHT
+			* By observation, j, j-w[i], ..., j-k\*w[i] are in the same congruence of  j
+			
+			~~~
+			if j = x*w[i] + r, l = max(x-m[i], 0)
+			dp[i][j] = max(dp[i-1][x*w[i]+r], 
+							dp[i-1][(x-1)*w[i]+r]+v[i],
+							..., 
+							dp[i-1][l*r]+(x-l)*v[i])
+			         = x*v[i] + max(dp[i-1][x*w[i]+r]-x*v[i], 
+					         		dp[i-1][(x-1)*w[i]+r]-(x-1)*v[i],
+					         		..., 
+					         		dp[i-1][l*r]-l*v[i])
+			denote dp1[i][r][x] = dp[i][x*w[i]+r] - x*v[i]
+			dp1[i][r][x] = max(dp1[i][r][x], ..., dp1[i][r][l])
+			dp1 can be soled by using CHT with monotonic deque implementation
+			~~~
+		* reference
+			* 《挑战程序设计竞赛》p339
+			* [淺談多重背包問題 (Multiple Knapsack Problem) 優化那些事](http://morris821028.github.io/2016/12/18/jg-20008/)
+	* Mutiple backpack all possible values
+		* O(n\*sum(maxItemCnt))->O(n\*count(maxItemCnt))
+		* dp->newDp
+			* `boolean dp[i][j]`: is value j possible composed with items chosen from first i items?
+			* `int newDp[i][j]`: the amount left for ith item to fullfill total value j
+		* transition:
 	
 		~~~
-		i - ith item, 
-		j - current volume, 
-		m[i] - bound of item count
-		
-		state transition:
-		dp[i][j] = max(dp[i-1][j], dp[i-1][j-w[i]]+v[i],..., dp[i-1][j-k*w[i]]+k*v[i]) where j>=k*w[i], k<m[i]`
+		newDp[i][j] = m if newDp[i-1][j]>=0
+		newDp[i][j] = -1 if j<m_i or newDp[i-1][j-m_i]<=0
+		newDp[i][j] = newDp[i][j-m_i] - 1 otherwise
 		~~~
-	* O(Vnlogn) by binarization
-		* Binarization: For m[i] can be represented as a binary decomposition: <code>m[i] = 1+2+..2<sup>n</sup> + a where 0<=a<2<sup>n</sup> </code>, any number in [0, m[i]] can be represented by the sum of a subsets of {1,2,...2<sup>n</sup>, a}, 
-		* Convert to 0-1 backpack problem: item i can be decomposed into logm[i] sub 0-1 items: {[w[i], v[i]], [2\*w[i], 2\*v[i]], ..., [a\*w[i], a\*v[i]]}
-	* O(Vn) by CHT
-		* By observation, j, j-w[i], ..., j-k\*w[i] are in the same congruence of  j
-		
-		~~~
-		if j = x*w[i] + r, l = max(x-m[i], 0)
-		dp[i][j] = max(dp[i-1][x*w[i]+r], 
-						dp[i-1][(x-1)*w[i]+r]+v[i],
-						..., 
-						dp[i-1][l*r]+(x-l)*v[i])
-		         = x*v[i] + max(dp[i-1][x*w[i]+r]-x*v[i], 
-				         		dp[i-1][(x-1)*w[i]+r]-(x-1)*v[i],
-				         		..., 
-				         		dp[i-1][l*r]-l*v[i])
-		denote dp1[i][r][x] = dp[i][x*w[i]+r] - x*v[i]
-		dp1[i][r][x] = max(dp1[i][r][x], ..., dp1[i][r][l])
-		dp1 can be soled by using CHT with monotonic deque implementation
-		~~~
-
-	* reference
-		* 《挑战程序设计竞赛》p339
-		* [淺談多重背包問題 (Multiple Knapsack Problem) 優化那些事](http://morris821028.github.io/2016/12/18/jg-20008/)
+	
+		* reference
+			* 《挑战程序设计竞赛》p62

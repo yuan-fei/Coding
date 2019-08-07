@@ -3,7 +3,9 @@ package tree.range;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -37,14 +39,14 @@ public class HeavyLightDecomposition {
 	Node[] nodes;
 	List<Edge>[] edges;
 	int[] chainHeads;
-	LazyPropSegmentTree segTree;
+	RangeIncRangeSum segTree;
 
 	public HeavyLightDecomposition(int n) {
 		edges = new List[n];
 		nodes = new Node[n];
 		chainHeads = new int[n];
 		Arrays.fill(chainHeads, -1);
-		segTree = new LazyPropSegmentTree(n);
+		segTree = new RangeIncRangeSum(n);
 	}
 
 	public void addEdge(int u, int v, int weight) {
@@ -187,5 +189,143 @@ public class HeavyLightDecomposition {
 			this.to = v;
 		}
 
+	}
+
+	class RangeIncRangeSum {
+
+		public RangeIncRangeSum(int[] nums) {
+			build(nums);
+		}
+
+		public RangeIncRangeSum(int n) {
+			build(new int[n]);
+		}
+
+		class SegmentTreeNode {
+			public int start, end;
+			public SegmentTreeNode left, right;
+			public boolean pendingPushDown;
+			public long answer;
+			public long pendingPushDownInc;
+
+			public SegmentTreeNode(int start, int end) {
+				this.start = start;
+				this.end = end;
+				this.left = this.right = null;
+			}
+
+			@Override
+			public String toString() {
+				return "[" + start + ", " + end + "] = " + answer + ", " + pendingPushDownInc + ", " + pendingPushDown;
+			}
+		}
+
+		SegmentTreeNode root;
+
+		public void build(int[] nums) {
+			if (nums.length > 0) {
+				root = build(0, nums.length - 1, nums);
+			}
+		}
+
+		public long query(int start, int end) {
+			return query(root, start, end);
+		}
+
+		public void increase(int start, int end, long value) {
+			increase(root, start, end, value);
+		}
+
+		private SegmentTreeNode build(int start, int end, int[] nums) {
+			SegmentTreeNode r = new SegmentTreeNode(start, end);
+			if (start == end) {
+				r.answer = nums[start];
+			} else {
+				r.left = build(start, start + (end - start) / 2, nums);
+				r.right = build(start + (end - start) / 2 + 1, end, nums);
+				build(r);
+			}
+			return r;
+		}
+
+		long zeroAnswer() {
+			return 0;
+		}
+
+		long combineAnswer(long a, long b) {
+			return a + b;
+		}
+
+		void applyInc(SegmentTreeNode r, long inc) {
+			r.answer += (r.end - r.start + 1) * inc;
+			r.pendingPushDownInc += inc;
+		}
+
+		void apply(SegmentTreeNode r, long inc) {
+			if (r != null) {
+				r.pendingPushDown = true;
+				applyInc(r, inc);
+			}
+		}
+
+		void build(SegmentTreeNode r) {
+			r.answer = combineAnswer(r.left.answer, r.right.answer);
+		}
+
+		void pushDown(SegmentTreeNode r) {
+			if (r.pendingPushDown) {
+				apply(r.left, r.pendingPushDownInc);
+				apply(r.right, r.pendingPushDownInc);
+			}
+			r.pendingPushDown = false;
+			r.pendingPushDownInc = 0;
+		}
+
+		private long query(SegmentTreeNode r, int start, int end) {
+			if (r == null) {
+				return zeroAnswer();
+			} else if (start > r.end || end < r.start) {
+				return zeroAnswer();
+			} else if (start <= r.start && r.end <= end) {
+				return r.answer;
+			} else {
+				pushDown(r);
+				long leftSum = query(r.left, start, end);
+				long rightSum = query(r.right, start, end);
+				return combineAnswer(leftSum, rightSum);
+			}
+		}
+
+		private void increase(SegmentTreeNode r, int start, int end, long value) {
+			if (r != null && start <= r.end && r.start <= end) {
+				if (start <= r.start && r.end <= end) {
+					apply(r, value);
+				} else {
+					pushDown(r);
+					increase(r.left, start, end, value);
+					increase(r.right, start, end, value);
+					build(r);
+				}
+			}
+		}
+
+		public void print() {
+			Queue<SegmentTreeNode> q = new LinkedList<SegmentTreeNode>();
+			q.offer(root);
+			while (!q.isEmpty()) {
+				int cnt = q.size();
+				String s = "";
+				for (int i = 0; i < cnt; i++) {
+					SegmentTreeNode n = q.poll();
+					s += (n + ",");
+					if (n != null) {
+						q.offer(n.left);
+						q.offer(n.right);
+					}
+				}
+				System.out.println(s);
+			}
+			System.out.println();
+		}
 	}
 }

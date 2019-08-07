@@ -27,6 +27,28 @@
  */
 class Solution {
     public int[][] generateMatrix(int n) {
+
+    	int[] dx = new int[]{0,1,0,-1};
+    	int[] dy = new int[]{1,0,-1,0};
+    	int[][] m = new int[n][n];
+    	int i = 0;
+    	int x=0,y=-1;
+    	int direction = 0;
+        while(i < n*n){
+        	// if the next position is not available, then change direction
+        	while(available(n, m, x + dx[direction], y + dy[direction])){
+        		x += dx[direction];
+        		y += dy[direction];
+        		m[x][y] = ++i;
+        	}
+        	direction++;
+        	direction%=4;
+        }
         
+        return m;
     }
+
+	private boolean available(int n, int[][] m, int i, int j){
+		return (i>=0&&i<n&&j>=0&&j<n&&m[i][j]==0);
+	}
 }

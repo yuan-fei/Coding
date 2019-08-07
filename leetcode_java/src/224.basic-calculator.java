@@ -6,9 +6,9 @@
  * https://leetcode.com/problems/basic-calculator/description/
  *
  * algorithms
- * Hard (32.65%)
- * Total Accepted:    110.2K
- * Total Submissions: 334.1K
+ * Hard (33.46%)
+ * Total Accepted:    115.9K
+ * Total Submissions: 346.6K
  * Testcase Example:  '"1 + 1"'
  *
  * Implement a basic calculator to evaluate a simple expression string.

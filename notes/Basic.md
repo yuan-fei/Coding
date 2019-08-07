@@ -294,13 +294,26 @@ long gap(int start, in endInclusive) {
 		return maxLen;
 	}
 	~~~
-
 	* related problems
 		* [longest-substring-without-repeating-characters](https://leetcode.com/problems/longest-substring-without-repeating-characters)
 		* [minimum-window-substring](https://leetcode.com/problems/minimum-window-substring/)
 		* [longest-repeating-character-replacement](https://leetcode.com/problems/longest-repeating-character-replacement)
 
-## Math
+## Subarray counting
+* Count subarrays that satisfy a certain condition
+	1. for each element A[i] in array, find the max interval [left ,right] contains it and satisfies the condition, and solve a sub problem:
+		* count how many subarrays in the interval contains A[i]: `cnt = (i-left+1) * (right-i+1);`
+	2. 	if the condition is like subarray sum which can be represented as prefix sum, then the problem is converted to 
+		*  find how many prfixSum[j] - prefixSum[i] = limit, where i<j. 
+		*  This is *two-sum* problem
+* Sliding window vs. subarray counting
+	* both deals with problems about 'good' subarrays, and use '2-pointer' techniques, while
+		* SW is used for **max/min** size of 'good' interval/window
+		* SC is used for **count #** of 'good' subarrays
+* Problems:
+	* [unique-letter-string](https://leetcode.com/problems/unique-letter-string)
+
+## Bit operaton
 
 * Bit operation:
 	* Shift operator: i << k left shift k%32 times (**do not truncate for k > 32**); >> signed right shift; >>> unsigned right shift
@@ -314,10 +327,6 @@ long gap(int start, in endInclusive) {
 		* Clear lowest 1: `n - (n & (-n))`
 		* Check if n is power-of-2: only 1 bit is set `n == (n & (n-1))`
 	* Bitmask all subsets enumeration: `int x = mask; while(x!=0){x=(x-1)&mask;}`
-* Factorial factors: 
-	* how many p in n! (the largest k which makes p^k devides n!)
-		*  f(n, p) = ⌊n/p⌋ + ⌊n/(p^2)⌋ +...
-	* [Trailing zeros of n!] (https://leetcode.com/problems/factorial-trailing-zeroes): how many 5s in n!
 
 ## JAVA Data Structure
 * LinkedList: remove element while iterating in O(1)

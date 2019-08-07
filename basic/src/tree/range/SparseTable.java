@@ -1,3 +1,4 @@
+package tree.range;
 /**
  * Sparse table for range query on immutable array. Preprocess in O(nlogn),
  * query in O(logn) (or O(1) for RMQ)

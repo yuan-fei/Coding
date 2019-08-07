@@ -6,9 +6,9 @@
  * https://leetcode.com/problems/basic-calculator-ii/description/
  *
  * algorithms
- * Medium (33.41%)
- * Total Accepted:    113.1K
- * Total Submissions: 335.6K
+ * Medium (34.09%)
+ * Total Accepted:    119.9K
+ * Total Submissions: 351.7K
  * Testcase Example:  '"3+2*2"'
  *
  * Implement a basic calculator to evaluate a simple expression string.

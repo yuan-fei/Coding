@@ -6,14 +6,15 @@ public class MultipleBackpackAllPossibleValues {
 
 	public static void main(String[] args) {
 		System.out.println(allValuesWithSpaceEfficiency(5, new int[] { 1, 4 }, new int[] { 2, 1 })); // 4
-		System.out.println(allValues(5, new int[] { 1, 4 }, new int[] { 2, 1 })); // 4
+		System.out.println(allValuesFast(5, new int[] { 1, 4 }, new int[] { 2, 1 })); // 4
 	}
 
-	/** All possible values that can be populated */
+	/** All possible values that can be populated in O(n*m*max(amount)) */
 	public static int allValuesWithSpaceEfficiency(int n, int[] values, int[] amount) {
+		int m = values.length;
 		boolean[] state = new boolean[n + 1];
 		state[0] = true;
-		for (int i = 1; i <= values.length; i++) {
+		for (int i = 1; i <= m; i++) {
 			for (int j = 1; j <= amount[i - 1]; j++) {
 				for (int k = n; k >= 1; k--) {
 					if (k - values[i - 1] >= 0) {
@@ -31,12 +32,17 @@ public class MultipleBackpackAllPossibleValues {
 		return res;
 	}
 
-	/** state[i][j]: the amount left for ith item to fullfill total value j */
-	public static int allValues(int n, int[] values, int[] amount) {
+	/**
+	 * O(n*m)
+	 * 
+	 * state[i][j]: the amount left for ith item to fullfill total value j
+	 */
+	public static int allValuesFast(int n, int[] values, int[] amount) {
 		int[] state = new int[n + 1];
 		Arrays.fill(state, -1);
 		state[0] = 0;
-		for (int i = 1; i <= values.length; i++) {
+		int m = values.length;
+		for (int i = 1; i <= m; i++) {
 			for (int k = 0; k <= n; k++) {
 				if (state[k] >= 0) {
 					state[k] = amount[i - 1];
