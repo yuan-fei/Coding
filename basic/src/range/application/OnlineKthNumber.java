@@ -1,8 +1,8 @@
-package tree.range.application;
+package range.application;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import tree.range.PersistentSegmentTree;
+import range.PersistentSegmentTree;
 
 /**
  * https://codeforces.com/blog/entry/15890

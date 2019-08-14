@@ -1,4 +1,4 @@
-package tree.range;
+package range;
 
 /**
  * Support range update and query in O(logn)

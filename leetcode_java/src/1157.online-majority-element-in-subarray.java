@@ -53,6 +53,8 @@
  * 
  * 
  */
+
+/**sqrt decomposition*/
 class MajorityChecker {
 	int[] a;
 	List<Integer>[] occurs = new List[20001];
@@ -128,7 +130,7 @@ class MajorityChecker {
     	while ( i<=right) {
     		int step = 0;
     		int mode = -1;
-    		if(i%chunckSize==0 && (i+1)*chunckSize-1<=right){
+    		if(i%chunckSize==0 && i+chunckSize-1<=right){
     			step = chunckSize;
     			mode = st[i/chunckSize];
     		}

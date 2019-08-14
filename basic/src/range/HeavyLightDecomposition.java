@@ -1,4 +1,4 @@
-package tree.range;
+package range;
 
 import java.util.ArrayList;
 import java.util.Arrays;
