@@ -7,6 +7,9 @@
 		* gray = being queued in BFS, or being visited in DFS
 		* black = visited
 	* Graph search generates a spanning tree
+* Multiple Source BFS
+	* find the shortest distance for a target from any sources
+	* Related Problems: [as-far-from-land-as-possible](https://leetcode.com/contest/weekly-contest-150/problems/as-far-from-land-as-possible/)
 
 ## <a name='Topological_Sort'></a>Topological Sort
 * DFS: O(V+E)

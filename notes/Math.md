@@ -363,10 +363,6 @@ y = [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, b<sub>k<
 			* For points P1(x<sub>1</sub>, y<sub>1</sub>), P2(x<sub>2</sub>, y<sub>2</sub>), <code>d<sub>M</sub> = |x<sub>1</sub>-x<sub>2</sub>| + |y<sub>1</sub>-y<sub>2</sub>| = max(|(x<sub>1</sub>+y<sub>1</sub>) - (y<sub>2</sub>+y<sub>2</sub>)|,|(x<sub>1</sub>+y<sub>1</sub>) - (y<sub>2</sub>+y<sub>2</sub>)|)</code>
 				* denote S = x+y, D = x-y, <code>d = max(diff(S), diff(D))</code>
 				* for points in 3-dimension like P(x, y, z), we can denote A = x+y+z, B = x-y+z, C = x+y-z, D = x-y-z, <code>d = max(diff(A), diff(B), diff(C), diff(D))</code>
-			* problems
-				* max manhattan distance among points: 
-					* interate points and find max(S), min(S), max(D), min(D)
-					* maxdist = max(max(S)-min(S), max(D)-min(D))
 		* Chebyshev distance
 			* For points P1(x<sub>1</sub>, y<sub>1</sub>), P2(x<sub>2</sub>, y<sub>2</sub>), <code>d<sub>C</sub> = max(|x<sub>1</sub>-x<sub>2</sub>|, |y<sub>1</sub>-y<sub>2</sub>)</code>
 		* Manhattan and Chebyshev distance are equivalent
@@ -374,6 +370,18 @@ y = [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, b<sub>k<
 				* M->C: (x, y)<sub>M</sub> -> (x+y, x-y)<sub>C</sub>
 				* C->M: (x, y)<sub>C</sub> -> (x+y, x-y)<sub>M</sub>/2
 			* Reference: [曼哈顿距离与切比雪夫距离及其相互转化](https://www.cnblogs.com/zwfymqz/p/8253530.html)
+		* Related Problems
+			* max manhattan distance among points: [maximum-of-absolute-value-expression](https://leetcode.com/problems/maximum-of-absolute-value-expression)
+				* interate points and find max(S), min(S), max(D), min(D)
+				* maxdist = max(max(S)-min(S), max(D)-min(D))
+			* Given a matrix of 0s and 1s, find  (see ManhattanDistanceInMatrix.java)
+				* max Manhattan dist among any 0 to closest 1: [as-far-from-land-as-possible](https://leetcode.com/contest/weekly-contest-150/problems/as-far-from-land-as-possible/)
+					* multiple source BFS
+				* min Manhattan dist among any 0 to farthest 1: ['Parcels' - Google Kickstart round A 2019](https://codingcompetitions.withgoogle.com/kickstart/round/0000000000050e01/000000000006987d)
+					* binary search for distance
+					* 'check' function: if there is a 0 that has its distances to all 1s less than K
+						1. maitain a intersection of every 1's 'distance-k-diamond'
+						2. check each 0 if it's in the bound of intersection
 
 ## <a name='Combinatonics_And_Probability'></a>Combinatonics and probability
 * Useful combinatonics formula

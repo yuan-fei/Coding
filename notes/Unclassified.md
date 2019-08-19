@@ -1,6 +1,12 @@
 # Notes
 
+## Sparse Table
 ## Sqare-root decomposition
+* Range query in O(n^0.5)
+	* chuncks: n^0.5 chuncks with length n^0.5 each
+	* a range query can be decomposed into combination of 'full' chuncks (pre-built) and partial chuncks (calc on the fly)
+* Reference
+	* [cp-algorithms](https://cp-algorithms.com/data_structures/sqrt_decomposition.html)
 
 ## Mo's algorithm
 * Given a array of size n, answer m quries of sum(L, R) in O((n+m)*n^0.5)
