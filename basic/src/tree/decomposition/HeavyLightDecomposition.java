@@ -1,4 +1,4 @@
-package range;
+package tree.decomposition;
 
 import java.util.ArrayList;
 import java.util.Arrays;

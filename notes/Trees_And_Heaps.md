@@ -4,6 +4,9 @@
 * Comparison based: O(nlogn) ~ O(n^2)
 	* Quick Sort, Merge Sort, Heap Sort, Bubble sort...
 	* Comparison:[wiki](https://en.wikipedia.org/wiki/Sorting_algorithm)
+	* Merge sort: O(nlogn)
+		* [count-of-smaller-numbers-after-self](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)
+		* [ugly-number-ii](https://leetcode.com/problems/ugly-number-ii)
 * Counting based: O(k+n)
 	* Counting sort: O(k+n)
 		* all elements in array are in range [0, k)
@@ -198,7 +201,36 @@ vEB tree with elements [2, 3, 4, 5, 7, 14, 15]
 	* [CodeForces1](https://codeforces.com/blog/entry/15729)
 	* [CodeForces2](https://codeforces.com/blog/entry/15890)
 
-## Heavy-Light Decompose
+## Centroid Decomposition (Divide and Conquer on Tree)
+* Centroid Decompose an **un-rooted** tree
+	* When: an **un-rooted** tree
+	* Why: a plain 'divide and conquer' (DFS) on an unrooted tree might be degenerated to O(n^2) when you pick a inappropriate root (the tree is degenerated to a chain), centroid decomposition will help to choose the 'root' for each subtree and guarrantee the 'height of tree' (depth of recursion) to be O(logn)
+	* a centroid decomposed tree has max height <= logn
+* Centroid of tree
+	* The node which minimizes the max sub tree size after it is removed
+	* max(subtree size)<=n/2
+* Implementation
+	* divide and conquer (DFS) with centroid decomposed tree: 
+
+	~~~
+	void dfs(int centroid){
+		centroidMarked[centroid] = true;
+		// do sth
+		for(int n: adj[centroid]){
+			if(!centroidMarked[n]){
+				dfs(n);
+			}
+		}
+		centroidMarked[centroid] = false;
+	}
+	~~~
+* Reference
+	* poj1741:《挑战程序设计竞赛》p360
+	* [GeeksforGeeks: centroid-decomposition-of-tree](https://www.geeksforgeeks.org/centroid-decomposition-of-tree/)
+	* [Algorithms live: Divide and Conquer on Trees](https://www.youtube.com/watch?v=3pk02p1-weU)
+
+
+## Heavy-Light Decompositon
 * Decompose a tree into a set of vertex-disjoint chains so that we can apply segment tree on chains. 
 	* With the help of segment tree on the chains, We can do range update(u, v, c) in O(logn) and query(u, v) in O(log<sup>2</sup>n)
 	* Heavy edge: if among all children of u, v has the largest subtree size, then edge uv is heavy edge
