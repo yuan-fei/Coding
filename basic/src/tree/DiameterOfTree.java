@@ -10,8 +10,9 @@ public class DiameterOfTree {
 		int[][] edges = new int[][] { new int[] { 0, 1 }, new int[] { 1, 2 }, new int[] { 2, 3 }, new int[] { 2, 4 },
 				new int[] { 3, 5 }, new int[] { 4, 6 }, new int[] { 6, 7 }, new int[] { 5, 8 } };
 		// edges = new int[][] { new int[] { 0, 1 } };
-		System.out.println(getDiameter1(8, edges)); // 6
-		System.out.println(getDiameter2(8, edges)); // 6
+		UnrootedTree t = new UnrootedTree(8, edges);
+		System.out.println(getDiameter1(8, t.edges)); // 6
+		System.out.println(getDiameter2(8, t.edges)); // 6
 	}
 
 	/**
@@ -19,14 +20,13 @@ public class DiameterOfTree {
 	 * 
 	 * Find v with max height from any root, take v as root, find max height
 	 */
-	public static int getDiameter1(int nV, int[][] edges) {
-		UnrootedTree t = new UnrootedTree(nV, edges);
-		Iterator<Integer> it = t.edges.keySet().iterator();
+	public static int getDiameter1(int nV, Map<Integer, List<Integer>> edges) {
+		Iterator<Integer> it = edges.keySet().iterator();
 		if (!it.hasNext()) {
 			return -1;
 		}
-		int[] start = findMaxHeight(it.next(), -1, t.edges);
-		int[] end = findMaxHeight(start[1], -1, t.edges);
+		int[] start = findMaxHeight(it.next(), -1, edges);
+		int[] end = findMaxHeight(start[1], -1, edges);
 		return end[0];
 	}
 
@@ -50,13 +50,12 @@ public class DiameterOfTree {
 	}
 
 	/** Recursive find the max height */
-	public static int getDiameter2(int nV, int[][] edges) {
-		UnrootedTree t = new UnrootedTree(nV, edges);
-		Iterator<Integer> it = t.edges.keySet().iterator();
+	public static int getDiameter2(int nV, Map<Integer, List<Integer>> edges) {
+		Iterator<Integer> it = edges.keySet().iterator();
 		if (!it.hasNext()) {
 			return -1;
 		}
-		int[] d = getDiameterRec(it.next(), -1, t.edges);
+		int[] d = getDiameterRec(it.next(), -1, edges);
 		return Math.max(d[0], d[1]);
 	}
 

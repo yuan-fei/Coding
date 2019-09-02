@@ -62,10 +62,7 @@ public class K_Sum {
 				continue;
 			}
 			if (target == (nums[low] + nums[high])) {
-				List<Integer> result = new ArrayList<Integer>();
-				result.add(nums[low]);
-				result.add(nums[high]);
-				results.add(result);
+				results.add(Arrays.asList(nums[low], nums[high]));
 				low++;
 				high--;
 			} else if (target > (nums[low] + nums[high])) {

@@ -2,8 +2,10 @@ package tree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import utils.Util;
 
@@ -95,6 +97,14 @@ public class UnionFindSet<T> {
 				}
 			}
 		}
+	}
+
+	public int countSets() {
+		Set<T> s = new HashSet<>();
+		for (T k : parents.keySet()) {
+			s.add(findSet(k));
+		}
+		return s.size();
 	}
 
 	public Map<T, List<T>> getAllDisjointSets() {

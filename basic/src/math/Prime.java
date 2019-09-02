@@ -7,7 +7,7 @@ public class Prime {
 	public static void main(String[] args) {
 		System.out.println(sieve(100));
 		System.out.println(linearSieve(100));
-		System.out.println(segmentSieve(1, 100));
+		System.out.println(segmentSieve(10, 100));
 	}
 
 	/** O(nloglogn) */
@@ -33,8 +33,8 @@ public class Prime {
 	 * 
 	 * n = smallest_prime_in_n * other_larger_primes
 	 * 
-	 * for a "other_larger_primes" x, iterate all primes p_i less then x's smallest
-	 * prime, and mark p_i * x to composite.
+	 * for a "other_larger_primes" x, iterate all primes p_i less then x's
+	 * smallest prime, and mark p_i * x to composite.
 	 */
 	public static List<Integer> linearSieve(int n) {
 		List<Integer> primes = new ArrayList<>();
@@ -58,6 +58,7 @@ public class Prime {
 		int smallPrimesEnd = (int) Math.sqrt(end);
 		boolean[] isSmallComposite = new boolean[smallPrimesEnd + 1];
 		boolean[] isLargeComposite = new boolean[end - start + 1];
+		// Assume "1" is not prime
 		for (int i = 0; start + i < 2; i++) {
 			isLargeComposite[i] = true;
 		}
@@ -66,9 +67,9 @@ public class Prime {
 				for (int j = i * i; j < smallPrimesEnd; j += i) {
 					isSmallComposite[j] = true;
 				}
-			}
-			for (int j = Math.max(i, (start + i - 1) / i) * i; j <= end; j += i) {
-				isLargeComposite[j - start] = true;
+				for (int j = Math.max(i, (start + i - 1) / i) * i; j <= end; j += i) {
+					isLargeComposite[j - start] = true;
+				}
 			}
 		}
 		for (int i = 0; i < isLargeComposite.length; i++) {
