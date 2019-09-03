@@ -2,6 +2,10 @@ package math;
 
 import math.matrix.LUP;
 
+/**
+ * given a matrix of M * N, random walk with equal prob to 4 adjacent grids (up,
+ * down, left, right), find the EV of walks from top-left to bottom-right
+ */
 public class RandomWalk {
 
 	public static void main(String[] args) {
@@ -19,6 +23,14 @@ public class RandomWalk {
 	static int[][] d4 = new int[][] { new int[] { 0, -1 }, new int[] { 0, 1 }, new int[] { -1, 0 },
 			new int[] { 1, 0 } };
 
+	/**
+	 * Solve Equation: E(x, y) is the expectation from (x, y) to (M-1, N-1)
+	 * 
+	 * 1. E(x, y) = 0.25 * E(x-1, y) + 0.25 * E(x+1, y) + 0.25 * E(x, y-1) +
+	 * 0.25 * E(x, y+1) + 1
+	 * 
+	 * 2. E(M, N) = 0
+	 */
 	public static double walk(int n, int m) {
 		double[][] A = new double[n * m][n * m];
 		double[] b = new double[n * m];
@@ -39,7 +51,6 @@ public class RandomWalk {
 					A[x * m + y][x * m + y] = count;
 					b[x * m + y] = count;
 				}
-
 			}
 		}
 		A[n * m - 1][n * m - 1] = 1;

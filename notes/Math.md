@@ -491,7 +491,9 @@ y = [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, b<sub>k<
 				* [Sushi](https://atcoder.jp/contests/dp/tasks/dp_j): ![formula](../pics/sushi.png)
 			* Gaussian elmination for state transfer linear equations
 				* Random Walk (《挑战程序设计竞赛》p288): given a matrix of M * N with some obstacle grids, random walk with equal prob to 4 adjacent grids (up, down, left, right), find the EV of walks from top-left to bottom-right
-					* E(x, y) = 0.25 * E(x-1, y) + 0.25 * E(x+1, y) + 0.25 * E(x, y-1) + 0.25 * E(x, y+1) + 1
+					* E(x, y): the expected steps start from (x, y) to (M, N)
+						* E(x, y) = 0.25 * E(x-1, y) + 0.25 * E(x+1, y) + 0.25 * E(x, y-1) + 0.25 * E(x, y+1) + 1
+						* E(M, N) = 0
 		* The EV of size of a set E(S<sup>2</sup>) = sum(X<sub>i</sub> * X<sub>j</sub>) for all ordered pairs i, j (i=j is allowed)
 		* Reference: 
 			* [Sums and Expected Value — part 1](https://codeforces.com/blog/entry/62690)
