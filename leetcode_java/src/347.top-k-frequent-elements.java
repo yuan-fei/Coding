@@ -39,6 +39,31 @@
  */
 class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
-        
+    	List<Integer> ans = new ArrayList<>();
+    	if(nums.length > 0){
+			Map<Integer, Integer> cntMap = new HashMap<>();
+	        for (int n : nums) {
+	        	int cnt = 0;
+	        	if(cntMap.containsKey(n)){
+	        		cnt = cntMap.get(n);
+	        	}
+	        	cntMap.put(n, cnt+1);
+	        }
+
+	        PriorityQueue<int[]> q = new PriorityQueue<>((a, b)->Integer.compare(a[1], b[1]));
+
+	        for(int e : cntMap.keySet()){
+	        	q.offer(new int[]{e, cntMap.get(e)});
+	        	if(q.size() > k){
+	        		q.poll();
+	        	}
+	        }
+
+	        while(!q.isEmpty()){
+	        	ans.add(q.poll()[0]);
+	        }
+	        Collections.reverse(ans);
+    	}
+        return ans;
     }
 }

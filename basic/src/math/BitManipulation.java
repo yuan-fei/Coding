@@ -23,7 +23,8 @@ public class BitManipulation {
 		System.out.println(Integer.toBinaryString(clearLowestOne(6)));
 		System.out.println(Integer.toBinaryString(getLowestOneMask(6)));
 		System.out.println(countOnes(6));
-		allSubset(13);
+		allSubsets(13);
+		allSubsets(7);
 	}
 
 	public static int getBitMask(int b) {
@@ -78,7 +79,8 @@ public class BitManipulation {
 		return count;
 	}
 
-	public static void allSubset(int mask) {
+	public static void allSubsets(int mask) {
+		System.out.println("all subsets");
 		int x = mask;
 		while (x != 0) {
 			System.out.println(Integer.toBinaryString(x));
