@@ -56,6 +56,16 @@
 	* value range: when array is unsorted
 		* [find-the-duplicate-number](https://leetcode.com/problems/find-the-duplicate-number)
 		* [kth-smallest-element-in-a-sorted-matrix](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix)
+	* Binary search for ratio:
+		* Given array of values and weights, find a subset that maximize the ratio: sum(v<sub>i</sub>) / sum(w<sub>i</sub>) (see 'MaximizeRatio')
+		* binary search on ratio:
+			* termination condition: 
+				* `high - low < eps` or 
+				* for-loop 100 times for normal 'high'
+		* ratio check: convert ratio to sum
+			* <code>sum(v<sub>i</sub>) / sum(w<sub>i</sub>) >= r</code> equivalent to <code>sum(v<sub>i</sub> - r * w<sub>i</sub>) >= 0</code>
+			* sort by <code>v<sub>i</sub> - r * w<sub>i</sub></code> and sum k largest
+		* Reference: 《挑战程序设计竞赛》p143
 * Related Problems
 	* [Search for a range](https://leetcode.com/problems/search-for-a-range/)
 	* [Search insert position](https://leetcode.com/problems/search-insert-position): index of first element greater or equal to target
