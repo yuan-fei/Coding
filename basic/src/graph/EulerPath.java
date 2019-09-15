@@ -7,10 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-/** Hierholzer's algorithm: O(E) */
+/** Hierholzer's algorithm: O(V+E) */
 public class EulerPath {
 
 	public static void main(String[] args) {
+		// undirected graph
 		{
 			EulerPath ep = new EulerPath();
 			ep.addEdges(0, 1);

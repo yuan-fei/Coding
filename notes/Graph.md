@@ -43,10 +43,77 @@
 	* Union Find Set: O(VlgV+E), O(V+E)
 	* DFS, BFS: O(V+E)
 
+## <a name='Bridge'></a>Bridge and Articulation Point
+* Bridge: An edge in an undirected connected graph is a bridge iff removing it disconnects the graph
+	* O(V+E) with dfs
+		* maintain inTime[u]: dfs in time for vertex u; lowestInTimeReached[u]: lowest inTime that u or its subtree can reach
+		* for edge u-v, if v can not reach a vertex with lower inTime than u: `lowestInTimeReached[v] > inTime[u]`, then, u-v is bridge
+
+	~~~
+	void dfs(int u, int p, List<int[]> ans) {
+		lowestInTimeReached[u] = inTime[u] = counter++;
+		for (int v : adj[u]) {
+			if (v != p) {
+				if (inTime[v] == -1) {
+					dfs(v, u, ans);
+					if (inTime[u] < lowestInTimeReached[v]) {
+						ans.add(new int[] { u, v });
+					}
+				}
+				lowestInTimeReached[u] = Math.min(lowestInTimeReached[u], lowestInTimeReached[v]);
+			}
+		}
+	}
+	~~~
+* Articulation point: A vertex in an undirected connected graph is an articulation point (or cut vertex) iff removing it (and edges through it) disconnects the graph
+	* O(V+E) with dfs
+		* for each 'bridge' u-v:
+			* u is non-root, then u is AP
+			* u is root, then u is AP only when u has to visit more than 1 children directly in DFS
+			
+	~~~
+	void dfs(int u, int p, List<Integer> ans) {
+		inTime[u] = counter++;
+		lowestInTimeReached[u] = inTime[u];
+		int unVisitedChildren = 0;
+		for (int v : adj[u]) {
+			if (v != p) {
+				if (inTime[v] == -1) {
+					unVisitedChildren++;
+					dfs(v, u, ans);
+					// non-root case
+					if (inTime[u] > 0 && inTime[u] < lowestInTimeReached[v]) {
+						ans.add(u);
+					}
+				}
+				lowestInTimeReached[u] = Math.min(lowestInTimeReached[u], lowestInTimeReached[v]);
+			}
+		}
+		// root case
+		if (inTime[u] == 0 && unVisitedChildren > 1) {
+			ans.add(u);
+		}
+	}
+	~~~
+* Reference:
+	* [geeksforgeeks: bridge-in-a-graph](https://www.geeksforgeeks.org/bridge-in-a-graph/)
+	* [geeksforgeeks: articulation-points-or-cut-vertices-in-a-graph](https://www.geeksforgeeks.org/articulation-points-or-cut-vertices-in-a-graph/)
+
 ## <a name='Euler_Path'></a>Euler Path
-* Hierholzer's algorithm: O(E)
+* Hierholzer's algorithm: O(V+E)
+	* This algorithm works for both directed graph and undirected graph
 	* The graph will still be euler graph after removing a cycle in graph.
+		* for a node with multiple out edges, each of its out edge belongs to a separate circle
+		
+		~~~
+		dfs(u){
+			for all edges of u->v
+				dfs(v)	//add other circle first
+				add u->v to result path	  //add current circle
+		}
+		~~~
 	* [notebook](https://cs.stanford.edu/group/acm/SLPC/notebook.pdf)
+	* [geeksforgeeks](https://www.geeksforgeeks.org/hierholzers-algorithm-directed-graph/)
 
 ## <a name='Minimum_Spanning_Tree'></a>Minimum Spanning Tree
 * Kruskal: O((V+E)lgV)
@@ -67,6 +134,9 @@
 * SSSP for DG with non-negative weights
 	* Dijkstra: `O((V+E)lgV)`
 		* Can be used only for non-negative weight graph for the triangle inequity: D(u, v)+D(v, w) >= D(u, w)
+		* Simple Implementation: 
+			* use priorityqueue and add distance array
+			* offer item to pQueue without delete/update obsolte items
 * Application: 
 	* System of difference constraint
 
