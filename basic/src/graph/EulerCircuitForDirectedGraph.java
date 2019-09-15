@@ -8,26 +8,28 @@ import java.util.Map;
 import java.util.Stack;
 
 /** Hierholzer's algorithm: O(V+E) */
-public class EulerPath {
+public class EulerCircuitForDirectedGraph {
 
 	public static void main(String[] args) {
 		// undirected graph
 		{
-			EulerPath ep = new EulerPath();
+			EulerCircuitForDirectedGraph ep = new EulerCircuitForDirectedGraph();
 			ep.addEdges(0, 1);
 			ep.addEdges(1, 2);
-			ep.addEdges(2, 3);
+			ep.addEdges(2, 0);
+			ep.addEdges(0, 3);
 			ep.addEdges(3, 4);
-			ep.addEdges(2, 4);
+			ep.addEdges(4, 0);
 			System.out.println(ep.findPathRec());
 		}
 		{
-			EulerPath ep = new EulerPath();
+			EulerCircuitForDirectedGraph ep = new EulerCircuitForDirectedGraph();
 			ep.addEdges(0, 1);
 			ep.addEdges(1, 2);
-			ep.addEdges(2, 3);
+			ep.addEdges(2, 0);
+			ep.addEdges(0, 3);
 			ep.addEdges(3, 4);
-			ep.addEdges(2, 4);
+			ep.addEdges(4, 0);
 			System.out.println(ep.findPathIter());
 		}
 
@@ -37,76 +39,77 @@ public class EulerPath {
 
 	public void addEdges(int from, int to) {
 		Edge e1 = new Edge(to);
-		Edge e2 = new Edge(from);
-		e1.reverse = e2;
-		e2.reverse = e1;
 		if (!edges.containsKey(from)) {
 			edges.put(from, new ArrayList<>());
 		}
 		edges.get(from).add(e1);
-		if (!edges.containsKey(to)) {
-			edges.put(to, new ArrayList<>());
-		}
-		edges.get(to).add(e2);
 	}
 
 	public boolean hasPath() {
 		if (isConnected()) {
-			int oddEdges = 0;
-			for (List<Edge> es : edges.values()) {
-				if (es.size() % 2 == 1) {
-					oddEdges++;
-					if (oddEdges > 2) {
-						return false;
-					}
+			Map<Integer, Integer> map = new HashMap<>();
+			for (int from : edges.keySet()) {
+				for (Edge e : edges.get(from)) {
+					map.put(from, map.getOrDefault(from, 0) + 1);
+					map.put(e.to, map.getOrDefault(e.to, 0) - 1);
 				}
 			}
-			return true;
+			int onePositive = 0;
+			int oneNegative = 0;
+			for (int c : map.values()) {
+				if (c == 1) {
+					if (++onePositive > 1) {
+						return false;
+					}
+				} else if (c == -1) {
+					if (++oneNegative > 1) {
+						oneNegative++;
+					}
+				} else if (c != 0) {
+					return false;
+				}
+			}
+			return onePositive == oneNegative;
 		} else {
 			return false;
 		}
 	}
 
 	private boolean isConnected() {
-		boolean[] visited = new boolean[edges.size()];
-		dfs(edges.keySet().iterator().next(), visited);
-		for (int i = 0; i < visited.length; i++) {
-			if (visited[i] == false) {
-				return false;
+		Graph<Integer> graph = new Graph<>();
+		Map<Integer, GraphNode<Integer>> map = new HashMap<>();
+		for (int from : edges.keySet()) {
+			map.put(from, new GraphNode<>(from));
+			graph.addVertex(map.get(from));
+		}
+		for (int from : edges.keySet()) {
+			for (Edge e : edges.get(from)) {
+				graph.addEdge(new GraphEdge<Integer>(map.get(from), map.get(e.to)));
 			}
 		}
-		return true;
+
+		List<List<GraphNode<Integer>>> sccs = StronglyConnectedComponentForDirectedGraph.ssc(graph);
+		return sccs.size() == 1;
 	}
 
-	private void dfs(int u, boolean[] visited) {
-		visited[u] = true;
-		for (Edge e : edges.get(u)) {
-			if (!visited[e.to]) {
-				dfs(e.to, visited);
-			}
-		}
+	private int getStart() {
+		return edges.keySet().iterator().next();
 	}
 
 	public List<Integer> findPathRec() {
 		if (hasPath()) {
-			for (int k : edges.keySet()) {
-				if (edges.get(k).size() % 2 == 1) {
-					List<Integer> path = new ArrayList<>();
-					findPath(k, path);
-					return path;
-				}
-			}
+			int k = getStart();
+			List<Integer> path = new ArrayList<>();
+			findPath(k, path);
+			return path;
 		}
 		return Collections.emptyList();
 	}
 
 	public List<Integer> findPathIter() {
 		if (hasPath()) {
-			for (int k : edges.keySet()) {
-				if (edges.get(k).size() % 2 == 1) {
-					return findPath(k);
-				}
-			}
+			int k = getStart();
+			return findPath(k);
 		}
 		return Collections.emptyList();
 	}
@@ -114,7 +117,6 @@ public class EulerPath {
 	public void findPath(int u, List<Integer> path) {
 		while (!edges.get(u).isEmpty()) {
 			Edge e = edges.get(u).remove(0);
-			edges.get(e.to).remove(e.reverse);
 			findPath(e.to, path);
 		}
 		path.add(u);
@@ -128,7 +130,6 @@ public class EulerPath {
 			int u = s.peek();
 			if (!edges.get(u).isEmpty()) {
 				Edge e = edges.get(u).remove(0);
-				edges.get(e.to).remove(e.reverse);
 				s.push(e.to);
 			} else {
 				path.add(s.pop());
@@ -139,15 +140,9 @@ public class EulerPath {
 
 	class Edge {
 		int to;
-		Edge reverse;
 
 		public Edge(int to) {
 			this.to = to;
-		}
-
-		@Override
-		public String toString() {
-			return reverse.to + "->" + to;
 		}
 	}
 }
