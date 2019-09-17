@@ -5,6 +5,9 @@
 * [trapping-rain-water-ii](https://leetcode.com/problems/trapping-rain-water-ii/): heap
 
 * [find-k-th-smallest-pair-distance](https://leetcode.com/problems/find-k-th-smallest-pair-distance): binary search for dist + sliding window for counting sub arrays
+* [shortest-path-visiting-all-nodes](https://leetcode.com/problems/shortest-path-visiting-all-nodes): 
+	* bit operation + BFS
+	* allowing a node visited multiple times makes DP on bitmasks harder (see the DP solution in problem solution)
 
 ## interesting problems and tricks
 
