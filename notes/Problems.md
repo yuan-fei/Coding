@@ -22,3 +22,4 @@
 	* [find-k-pairs-with-smallest-sums](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/)
 * [shortest-path-to-get-all-keys](https://leetcode.com/problems/shortest-path-to-get-all-keys): BFS with state combination: position + which keys are holding
 * [distant-barcodes](https://leetcode.com/problems/distant-barcodes/): watch out for element with the largest occurance (N+1)/2.
+* [candy](https://leetcode.com/problems/candy/): see my solution O(nlogn). sort and iterate from smallest to largest, update with max(left, right) + 1
