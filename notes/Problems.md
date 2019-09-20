@@ -5,9 +5,16 @@
 * [trapping-rain-water-ii](https://leetcode.com/problems/trapping-rain-water-ii/): heap
 
 * [find-k-th-smallest-pair-distance](https://leetcode.com/problems/find-k-th-smallest-pair-distance): binary search for dist + sliding window for counting sub arrays
-* [shortest-path-visiting-all-nodes](https://leetcode.com/problems/shortest-path-visiting-all-nodes): 
-	* bit operation + BFS
-	* allowing a node visited multiple times makes DP on bitmasks harder (see the DP solution in problem solution)
+* [shortest-path-visiting-all-nodes](https://leetcode.com/problems/shortest-path-visiting-all-nodes): bit operation + BFS
+	* State: the last visited node and a bitmap for tracking all visited nodes
+	* DP on bitmasks: allowing a node visited multiple times makes DP on bitmasks harder (see the DP solution in LC's problem solution)
+* [maximum-gap](https://leetcode.com/problems/maximum-gap): bucket + pigeon hole
+	* n numbers in interval [a, b], the lower bound of max gap of adjacent numbers is `(b-a)/(n-1)`
+	* use bucket size of `(b-a)/(n-1)`, the max gap can only exist in between-buckets 
+* [dungeon-game](https://leetcode.com/problems/dungeon-game): DP on matrix, or binary search
+	* Direction matters: 
+		* For check a 'feasible' value in binary search, DP from top-left to bottom-right is OK
+		* For direct DP solution, bottom-right to top-left is much more easier because you don't need to remember a current HP value which is not only related to adjacent dp states.
 
 ## interesting problems and tricks
 
