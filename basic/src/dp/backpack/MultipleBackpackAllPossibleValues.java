@@ -2,6 +2,7 @@ package dp.backpack;
 
 import java.util.Arrays;
 
+/** All possible values that can be populated not more than V */
 public class MultipleBackpackAllPossibleValues {
 
 	public static void main(String[] args) {
@@ -9,14 +10,14 @@ public class MultipleBackpackAllPossibleValues {
 		System.out.println(allValuesFast(5, new int[] { 1, 4 }, new int[] { 2, 1 })); // 4
 	}
 
-	/** All possible values that can be populated in O(n*m*max(amount)) */
-	public static int allValuesWithSpaceEfficiency(int n, int[] values, int[] amount) {
+	/** O(V*sum(amount_i)) */
+	public static int allValuesWithSpaceEfficiency(int V, int[] values, int[] amount) {
 		int m = values.length;
-		boolean[] state = new boolean[n + 1];
+		boolean[] state = new boolean[V + 1];
 		state[0] = true;
 		for (int i = 1; i <= m; i++) {
 			for (int j = 1; j <= amount[i - 1]; j++) {
-				for (int k = n; k >= 1; k--) {
+				for (int k = V; k >= 1; k--) {
 					if (k - values[i - 1] >= 0) {
 						state[k] = state[k] || state[k - values[i - 1]];
 					}
@@ -37,13 +38,13 @@ public class MultipleBackpackAllPossibleValues {
 	 * 
 	 * state[i][j]: the amount left for ith item to fullfill total value j
 	 */
-	public static int allValuesFast(int n, int[] values, int[] amount) {
-		int[] state = new int[n + 1];
+	public static int allValuesFast(int V, int[] values, int[] amount) {
+		int[] state = new int[V + 1];
 		Arrays.fill(state, -1);
 		state[0] = 0;
 		int m = values.length;
 		for (int i = 1; i <= m; i++) {
-			for (int k = 0; k <= n; k++) {
+			for (int k = 0; k <= V; k++) {
 				if (state[k] >= 0) {
 					state[k] = amount[i - 1];
 				} else if (k < values[i - 1] || state[k - values[i - 1]] <= 0) {
@@ -63,8 +64,8 @@ public class MultipleBackpackAllPossibleValues {
 	}
 
 	/**
-	 * Given max counts of m distinct numbers, count all possible permutations of
-	 * choosing n numbers.
+	 * Given max counts of m distinct numbers, count all possible permutations
+	 * of choosing n numbers.
 	 * 
 	 * TC: O(n*sum(maxC))
 	 * 
