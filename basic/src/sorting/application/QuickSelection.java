@@ -1,3 +1,4 @@
+package sorting.application;
 /** O(n) */
 public class QuickSelection {
 

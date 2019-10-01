@@ -9,7 +9,7 @@ public class MergeSort implements ISorting {
 		int[] arr = new int[] { 1, 8, 2, 1, 4, 7, 3, 2, 3, 6 };
 		new MergeSort().sort(arr);
 		System.out.println(Arrays.toString(arr));
-		arr = new int[] { 1, 2 };
+		arr = new int[] { 2, 1 };
 		new MergeSort().sort(arr);
 		System.out.println(Arrays.toString(arr));
 	}

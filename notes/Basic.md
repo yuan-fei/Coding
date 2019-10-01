@@ -398,6 +398,7 @@ while(it.hasNext()){
 		* pop most frequent number in stack
 		* use frequency as index
 * Queue: use `offer(e)` and `poll()` instead of `add(e)` and `remove()` because they don't throw exceptions when failed.
+	* min Queue: 2 min stacks
 * Deque (ArrayDeque, LinkedList): enqueue and dequeue from both end. Used as sliding window
 	* pollFisrt(), pollLast(), offerFisrt(), offerFisrt()
 * PriorityQueue: Heap implementation in java

@@ -1,5 +1,3 @@
-import java.util.Stack;
-
 /** Queue with min support in O(1) */
 public class MinQueue {
 
@@ -70,29 +68,5 @@ class Element {
 	@Override
 	public String toString() {
 		return "e: " + e + ", min: " + min;
-	}
-}
-
-class MinStack {
-	Stack<Element> s = new Stack<>();
-
-	void push(int e) {
-		int min = Integer.MAX_VALUE;
-		if (!s.isEmpty()) {
-			min = s.peek().min;
-		}
-		s.push(new Element(e, Math.min(e, min)));
-	}
-
-	boolean isEmpty() {
-		return s.isEmpty();
-	}
-
-	int pop() {
-		return s.pop().e;
-	}
-
-	public int min() {
-		return s.peek().min;
 	}
 }
