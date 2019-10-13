@@ -15,7 +15,13 @@ public class ArticulationPointsOfGraph {
 
 	public static void main(String[] args) {
 		int[][] edges = { { 0, 1 }, { 1, 2 }, { 2, 0 }, { 1, 3 } };
-		List<Integer> r = new ArticulationPointsOfGraph().findArticulationPoints(4, edges); // [1,3]
+		List<Integer> r = new ArticulationPointsOfGraph().findArticulationPoints(4, edges); // [1]
+		System.out.println(r);
+		edges = new int[][] { { 0, 1 }, { 1, 2 }, { 2, 0 }, { 1, 3 }, { 3, 4 }, { 4, 1 } };
+		r = new ArticulationPointsOfGraph().findArticulationPoints(5, edges); // [1]
+		System.out.println(r);
+		edges = new int[][] { { 0, 1 }, { 1, 2 }, { 2, 0 }, { 0, 3 }, { 3, 4 }, { 4, 0 } };
+		r = new ArticulationPointsOfGraph().findArticulationPoints(5, edges); // [0]
 		System.out.println(r);
 	}
 
@@ -53,11 +59,14 @@ public class ArticulationPointsOfGraph {
 					unVisitedChildren++;
 					dfs(v, u, ans);
 					// non-root case
-					if (inTime[u] > 0 && inTime[u] < lowestInTimeReached[v]) {
+					if (inTime[u] > 0 && inTime[u] <= lowestInTimeReached[v]) {
 						ans.add(u);
 					}
+					lowestInTimeReached[u] = Math.min(lowestInTimeReached[u], lowestInTimeReached[v]);
+				} else {
+					lowestInTimeReached[u] = Math.min(lowestInTimeReached[u], inTime[v]);
 				}
-				lowestInTimeReached[u] = Math.min(lowestInTimeReached[u], lowestInTimeReached[v]);
+
 			}
 		}
 		// root case

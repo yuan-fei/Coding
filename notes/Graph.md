@@ -1,6 +1,33 @@
 # Notes
 
-## <a name='Graph'></a>Graph Search
+## <a name='Graph'></a>Graph
+* construction
+
+	~~~
+	List<Integer>[] adj = new List[nV];
+	int[] from = new int[nE];
+	int[] to = new int[nE];
+	int[] weight = new int[nE];
+	for(int i = 0; i < nE; i++){
+		int u, v, w;	//read fro input
+		adj[u].add(i);
+		// undirected
+		// adj[v].add(i);
+		from[i] = u;
+		to[i] = v;
+		weight[i] = w;
+	}
+	~~~
+* iterate adjacent vertices
+
+	~~~
+	//given vertex u, how to find all its adjacent vertices
+	for(int e: adj[u]){
+		int v = from[e] + to[e] - u;
+		//or int v = from[e] ^ to[e] ^ u;
+	}
+	~~~	
+## <a name='Graph_Search'></a>Graph Search
 * DFS and BFS
 	* Node state:
 		* white = unvisited
@@ -134,9 +161,13 @@
 * SSSP for DG with non-negative weights
 	* Dijkstra: `O((V+E)lgV)`
 		* Can be used only for non-negative weight graph for the triangle inequity: D(u, v)+D(v, w) >= D(u, w)
-		* Simple Implementation: 
+		* Implementation for sparse graph `O((E+V)logE)`: 
 			* use priorityqueue and add distance array
 			* offer item to pQueue without delete/update obsolte items
+		* Implementation for dense graph `O(V^2)`: 
+			* no priority queue
+			* loop all verteices to find the min dist vertex `minV`
+			* relax paths through `minV`
 * Application: 
 	* System of difference constraint
 

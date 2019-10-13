@@ -39,6 +39,8 @@ public class FloydWarshall {
 
 	}
 
+	static final int MAX = Integer.MAX_VALUE;
+
 	public static AllPairShortestPathResult getShortestPaths(int n, double[][] weights) {
 		AllPairShortestPathResult r = new AllPairShortestPathResult(n);
 		Util.copy(weights, r.distance);
@@ -46,13 +48,15 @@ public class FloydWarshall {
 		for (int k = 0; k < n; k++) {
 			for (int i = 0; i < n; i++) {
 				for (int j = 0; j < n; j++) {
-					if (r.distance[i][j] > r.distance[i][k] + r.distance[k][j]) {
-						r.distance[i][j] = r.distance[i][k] + r.distance[k][j];
-						r.predecessor[i][j] = r.predecessor[k][j];
-					}
-					if (i == j && r.distance[i][j] < 0) {
-						r.hasNegativeCircle = true;
-						return r;
+					if (r.distance[i][k] < MAX && r.distance[k][j] < MAX) {
+						if (r.distance[i][j] > r.distance[i][k] + r.distance[k][j]) {
+							r.distance[i][j] = r.distance[i][k] + r.distance[k][j];
+							r.predecessor[i][j] = r.predecessor[k][j];
+						}
+						if (i == j && r.distance[i][j] < 0) {
+							r.hasNegativeCircle = true;
+							return r;
+						}
 					}
 				}
 			}

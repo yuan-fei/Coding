@@ -56,14 +56,11 @@ public class CountingSort implements ISorting {
 		for (int i = 0; i < counter.length - 1; i++) {
 			counter[i + 1] += counter[i];
 		}
-		int[] b = new int[a.length];
 		int[] t = new int[s.length];
 		for (int i = a.length - 1; i >= 0; i--) {
-			b[counter[a[i]] - 1] = a[i];
 			t[counter[a[i]] - 1] = s[i];
 			counter[a[i]]--;
 		}
-		System.arraycopy(b, 0, a, 0, a.length);
 		System.arraycopy(t, 0, s, 0, s.length);
 	}
 }

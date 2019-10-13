@@ -62,9 +62,9 @@ public class BellmanFord<T> {
 	}
 
 	/**
-	 * Get single source shortest path. Populate the distances and return true if
-	 * there is no negative circle, or populate the negativeWeightCircle and return
-	 * false if there is no negative circle.
+	 * Get single source shortest path. Populate the distances and return true
+	 * if there is no negative circle, or populate the negativeWeightCircle and
+	 * return false if there is no negative circle.
 	 */
 	public static <T> boolean getShortestPath(Graph<T> g, GraphNode<T> s, Map<GraphNode<T>, GraphNode<T>> predecessor,
 			Map<GraphNode<T>, Double> distance, List<GraphNode<T>> negativeWeightCircle) {
@@ -80,7 +80,7 @@ public class BellmanFord<T> {
 			}
 		}
 		for (GraphEdge<T> e : g.getEdges()) {
-			if (distance.containsKey(e.source) && distance.containsKey(e.target)) {
+			if (distance.containsKey(e.source)) {
 				if (distance.get(e.target) > distance.get(e.source) + e.weight) {
 					negativeWeightCircle.addAll(getCircle(e.target, predecessor));
 					return false;
