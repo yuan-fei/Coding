@@ -1,11 +1,15 @@
 package dp;
+
 import java.util.Arrays;
+import java.util.TreeSet;
 
 public class LongestIncreasingSubsequence {
 
 	public static void main(String[] args) {
 		System.out.println(solve(new int[] { 4, 2, 3, 1, 5 })); // 3
-		System.out.println(solveWithBinarySearch(new int[] { 4, 2, 3, 3, 1, 5, 6 })); // 6
+		System.out.println(solveWithBinarySearch(new int[] { 4, 2, 3, 3, 1, 5, 6 })); // 4
+		System.out.println(solveWithTreeSet(new int[] { 4, 2, 3, 3, 1, 5, 6 })); // 4
+		System.out.println(longestNonDecreasingSubequence(new int[] { 4, 2, 3, 3, 1, 5, 6 })); // 5
 	}
 
 	/** O(n^2) */
@@ -48,7 +52,7 @@ public class LongestIncreasingSubsequence {
 			if (index < 0) {
 				state[-index - 1] = a[i - 1];
 			} else {
-				state[index + 1] = a[i - 1];
+				state[index] = a[i - 1];
 			}
 		}
 		for (int i = state.length - 1; i >= 0; i--) {
@@ -57,5 +61,32 @@ public class LongestIncreasingSubsequence {
 			}
 		}
 		return -1;
+	}
+
+	/** O(nlogn): inspired by the binary search method (patient sorting) */
+	public static int solveWithTreeSet(int[] a) {
+		TreeSet<Integer> ts = new TreeSet<>();
+		for (int i = 0; i < a.length; i++) {
+			Integer ceiling = ts.ceiling(a[i]);
+			if (ceiling != null) {
+				ts.remove(ceiling);
+			}
+			ts.add(a[i]);
+		}
+		return ts.size();
+	}
+
+	/** O(nlogn): inspired by the binary search method (patient sorting) */
+	public static int longestNonDecreasingSubequence(int[] a) {
+		TreeSet<Integer> ts = new TreeSet<>(
+				(i, j) -> (Integer.compare(a[i], a[j]) != 0) ? Integer.compare(a[i], a[j]) : Integer.compare(i, j));
+		for (int i = 0; i < a.length; i++) {
+			Integer ceiling = ts.ceiling(i);
+			if (ceiling != null) {
+				ts.remove(ceiling);
+			}
+			ts.add(i);
+		}
+		return ts.size();
 	}
 }

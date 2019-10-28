@@ -227,8 +227,37 @@ long solve(String s, int i, boolean isLess, state){
 		* For each subset of a set - a bitmask, check all subsets of it with 'Bitmask all subsets enumeration' trick
 	* [SOS (Sum Over Subsets)](https://codeforces.com/blog/entry/45223)
 		* Sum over all subsets with bitmask: O(3<sup>n</sup>) -> O(2<sup>n</sup>*n)
-			* dp[mask][i] = dp[mask][i-1] when bit(mask, i) = 0; 
-			* dp[mask][i] = dp[mask][i-1] + dp[mask ^ (1<<i)][i-1] when bit(mask, i) = 1; 
+		* Sum over all supersets can be processed as Sum over all subsets of complement
+
+		~~~
+		//sum over subsets
+		int[] dp = new int[1 << n];
+		for (int i = 0; i < subsets.length; i++) {
+			dp[i] = subsets[i];
+		}
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < (1 << n); j++) {
+				if ((j & (1 << i)) != 0) {
+					dp[j] += dp[j ^ (1 << i)];
+				}
+			}
+		}
+		~~~
+		
+		~~~
+		//sum over supersets
+		int[] dp = new int[1 << n];
+		for (int i = 0; i < subsets.length; i++) {
+			dp[i] = subsets[i];
+		}
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < (1 << n); j++) {
+				if ((j & (1 << i)) != 0) {
+					dp[j ^ (1 << i)] += dp[j];
+				}
+			}
+		}
+		~~~
 * DP on a matrix: bitmap for the latest grid of each column
 	* [Floorboard](https://community.topcoder.com/stat?c=problem_statement&pm=8397)
 		* bitmap for vertical board state
@@ -237,6 +266,7 @@ long solve(String s, int i, boolean isLess, state){
 	* [A little bit of classics: dynamic programming over subsets and paths in graphs](https://codeforces.com/blog/entry/337)
 	* [Algorithms live - Bitmask Dynamic Programming](http://algorithms-live.blogspot.com/2017/05/episode-20-bitmask-dynamic-programming.html) 
 	* [[Tutorial] Non-trivial DP Tricks and Techniques](https://codeforces.com/blog/entry/47764)
+	* 《挑战程序设计竞赛》p193
 
 
 ## Fast Matrix Power DP

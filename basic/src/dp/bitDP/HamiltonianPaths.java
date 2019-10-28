@@ -1,5 +1,6 @@
 package dp.bitDP;
 
+/** O(N^2*2^(N-1)) */
 public class HamiltonianPaths {
 	private static int N;
 	private static char[][] adj;
@@ -14,7 +15,7 @@ public class HamiltonianPaths {
 		findHamiltonPaths(3, a);
 	}
 
-	private static void findHamiltonPaths(int n, char[][] a) {
+	public static void findHamiltonPaths(int n, char[][] a) {
 		N = n;
 		adj = a;
 		from = new int[N];

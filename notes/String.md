@@ -29,12 +29,33 @@
 			* So 2m cost at most => O(m)
 * Match with help of jump table
 
+## Robin-Karp
+* string hashing computation with a large prime factor p, and a mod m
+* string match: O(m + n)
+ 	* hash pattern string in O(m)
+	* rolling target string hash in O(1)
+	* compare hashes in O(1)
+* when to use hash
+	* fix start or end, and expand string in one direction
+		* string match
+		* longest pre-suf-fix: longest prefix which is also a suffix (《挑战程序设计竞赛》p375)
+		* largest palindrome start from a index i (see shortest palindrome)
+* Implementation
+	* In competiitve programming, 
+		* use a large prime factor 10^9 + 7, and `long` for hash value computation
+		* implicit mod: use long type overflow for modular instead of explicitly find a m
+* Problems
+	* [shortest Palindrome](https://leetcode.com/problems/shortest-palindrome/solution/)
+* Reference: 《挑战程序设计竞赛》p373
+
+
 ## Manacher: Largest Palindrome in O(n)
 * LP algorithm comparison: brute force in O(n^3), DP in O(n^2), Manacher in O(n)
 * Implementation
 	* Add filling special characters to eliminate the difference in algorithm for odd length and even length
 		* aba -> #a#b#c#
 	* Leverage the symmetry of reconginzed palindromes
+		* L[i] is the largest symmetry length centered at i
 		* Check if s[i] is in right part of a formerly recognized palindrome centered at c, then we can use the reflection in the left part L[2*c - i] as initial L[i]
 			* `L[i] = (i < maxRight) ? Math.min(L[2 * center - i], maxRight - i + 1) : 1;`
 		* Start at i with L[i] and increase L[i] to find the largest palindrome centered at i

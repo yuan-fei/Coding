@@ -498,6 +498,9 @@ y = [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, b<sub>k<
 		* Reference: 
 			* [Sums and Expected Value — part 1](https://codeforces.com/blog/entry/62690)
 			* [Sums and Expected Value — part 2](https://codeforces.com/blog/entry/62792)
+	* [Airplane Seat Assignment Probability](https://leetcode.com/problems/airplane-seat-assignment-probability/submissions/): 
+		* X: P<sub>n</sub> (passenger n) in S<sub>n</sub> (seat n)
+		* P(X) = P(P<sub>1</sub> in S<sub>1</sub>) + P(P<sub>1</sub> in S<sub>x</sub>, P<sub>x</sub> in S<sub>1</sub>) = 1/n + (n-2)/n * 1/2 = 1/2
 
 * Sampling and shuffling
 	* shuffle: See SamplingAndShuffling, [Modern shuffling](https://en.wikipedia.org/wiki/Fisher–Yates_shuffle)

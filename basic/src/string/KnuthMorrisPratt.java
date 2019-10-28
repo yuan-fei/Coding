@@ -1,5 +1,6 @@
 package string;
 
+/** O(n+m) */
 public class KnuthMorrisPratt {
 
 	/**
