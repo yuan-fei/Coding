@@ -258,7 +258,12 @@ long solve(String s, int i, boolean isLess, state){
 			}
 		}
 		~~~
-* DP on a matrix: bitmap for the latest grid of each column
+* DP on a matrix: bitmap for the rolling skyline (latest grid of each column)
+	* A bitmask of m-bit for n * m matrix
+		* skyline: represents the highest/latest grid of each column
+		* rolling: for grid (i,j), the bitmask represents prev+cur line (i, 0), (i, 1), ..., (i-1,j), (i-1,j+1), ... (i-1, m) (or cur+next line (i+1, 0), (i+1, 1), ..., (i,j), (i,j+1), ... (i, m))
+		* dp state relation: for grid (i, j), it may only corelates to the points next to it
+	* 铺砖问题(《挑战程序设计竞赛》p193)
 	* [Floorboard](https://community.topcoder.com/stat?c=problem_statement&pm=8397)
 		* bitmap for vertical board state
 		* DP by recursion and memoization can be used
