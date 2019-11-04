@@ -14,18 +14,26 @@ public class BipartiteMaxMatchingByHungarian {
 
 	int[] matchx;
 	int[] matchy;
+	int N;
+	int M;
+	boolean[][] connections;
 
-	public int match(boolean[][] connection) {
+	/** connection: M person * N jobs */
+	public int match(boolean[][] connections) {
 		int matchCount = 0;
-		matchx = new int[connection.length];
-		matchy = new int[connection[0].length];
+		this.connections = connections;
+		M = connections.length;
+		N = connections[0].length;
+
+		matchx = new int[M];
+		matchy = new int[N];
 		Arrays.fill(matchx, -1);
 		Arrays.fill(matchy, -1);
 
 		/* For each one, check it can find a match */
-		for (int i = 0; i < connection.length; i++) {
-			boolean[] seen = new boolean[connection[0].length];
-			if (findMatch(i, connection, matchx, matchy, seen)) {
+		for (int i = 0; i < M; i++) {
+			boolean[] seen = new boolean[N];
+			if (matchx[i] != -1 || findMatch(i, matchx, matchy, seen)) {
 				matchCount++;
 			}
 		}
@@ -33,11 +41,11 @@ public class BipartiteMaxMatchingByHungarian {
 	}
 
 	/* For x, find if others can adjust so that it can find a mate */
-	private boolean findMatch(int x, boolean[][] connection, int[] matchx, int[] matchy, boolean[] seen) {
-		for (int y = 0; y < connection[x].length; y++) {
-			if (!seen[y] && connection[x][y]) {
+	private boolean findMatch(int x, int[] matchx, int[] matchy, boolean[] seen) {
+		for (int y = 0; y < N; y++) {
+			if (!seen[y] && connections[x][y]) {
 				seen[y] = true;
-				if (matchy[y] == -1 || findMatch(matchy[y], connection, matchx, matchy, seen)) {
+				if (matchy[y] == -1 || findMatch(matchy[y], matchx, matchy, seen)) {
 					matchx[x] = y;
 					matchy[y] = x;
 					return true;
