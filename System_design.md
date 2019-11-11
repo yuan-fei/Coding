@@ -137,6 +137,7 @@
 	* Chunck server aliveness
 		* keepalive with master
 * Big table
+	* SStable (Sorted String Table): [sstable-and-log-structured-storage-leveldb/](https://www.igvita.com/2012/02/06/sstable-and-log-structured-storage-leveldb/)
 	* mem+file
 		* memory: 
 			* index(sstable -> offset)
@@ -191,3 +192,4 @@
 * Reference:
 	* [System design primer](https://github.com/donnemartin/system-design-primer)
 	* [Scaling Up to Your First 10 Million Users](https://www.youtube.com/watch?v=w95murBkYmU)
+	* [Latency Numbers Every Programmer Should Know](https://gist.github.com/jboner/2841832)
