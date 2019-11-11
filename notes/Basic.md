@@ -273,13 +273,7 @@ long gap(int start, in endInclusive) {
 	* [minimum-size-subarray-sum](https://leetcode.com/problems/minimum-size-subarray-sum)
 
 ## Sliding Window
-* fix sized window
-	* [Sliding window maximum](https://leetcode.com/problems/sliding-window-maximum/)
-		* O(nlogk): use a self-balancing tree to keep the oder in the window with O(logk) for insert, max, delete
-		* O(n): Use a Deque to keep indexes of a decreasing sequence in window
-			* head of queue is the idx of the max in the window
-			* each subsequent element indicated by the idx in deque should be a potential max in following windows (for an element in a window, any element from left smaller than it will not be a max candidate) 
-* varible sized window
+* Two-Pointer: like maintaining a 'Queue'
 
 	~~~
 	//template
@@ -310,6 +304,35 @@ long gap(int start, in endInclusive) {
 		* [longest-repeating-character-replacement](https://leetcode.com/problems/longest-repeating-character-replacement)
 		* [find-k-th-smallest-pair-distance](https://leetcode.com/problems/find-k-th-smallest-pair-distance)
 		
+* Monotonic deque
+	* [Sliding window maximum](https://leetcode.com/problems/sliding-window-maximum/)
+		* O(nlogk): use a self-balancing tree to keep the oder in the window with O(logk) for insert, max, delete
+		* O(n): Use a Deque to keep indexes of a decreasing sequence in window
+			* head of queue is the idx of the max in the window
+			* each subsequent element indicated by the idx in deque should be a potential max in following windows (for an element in a window, any element from left smaller than it will not be a max candidate) 
+	* 	Problems:
+		*  [shortest-subarray-with-sum-at-least-k](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k)
+* Two-pointer window sufficient requirement
+	* 'max' problem: 
+		* Mononicity: for a starting index i, [i, j] is legal as the ending index j increases, until some k, [i, k] becomes illegal and keep illegal for [i, j] with j>k forever. 
+		* The mononicity should hold for ending index j as well (legal -> illegal as i decreases)
+* Queue (Two pointer) or Deque?
+	* The difference between Queue nad Deque is whether you need to manage the end of the queue to maintain the monotonicity of the queue/deque
+		*  Queue
+			*  [longest-substring-without-repeating-characters](https://leetcode.com/problems/longest-substring-without-repeating-characters): for [i, j] which is not legal with repeating chars, increase i until it's legal (no repeating chars), then any [k, j] where k>i will not be better.
+			*  [minimum-window-substring](https://leetcode.com/problems/minimum-window-substring/): for [i, j] which is legal (window just contains all chars), increase i to get better solutions until it's not legal
+		*  Deque
+			*  [shortest-subarray-with-sum-at-least-k](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k):  for [i, j] which is good (sum to k), we don't know if we shall proceed to increase i to get a better solution if the prefix sum in queue is not monotonic, so we need to maintain the monotonicity of the queue by removing any obsolete elements (for j which `j<i && ps[j] >= ps[i]`) from the end of the queue.
+* Min or Max?
+	* Max: 
+		* for each start i, find max j that [i, j] is legal
+		* fast pointer moves first greedily until not legal, then slow pointer moves until legal
+	* Min: 
+		* for each end j, find max i that [i, j] is legal
+		* fast pointer moves first until legal, then slow pointer moves greedily until not legal
+
+
+
 ## Subarray counting
 * Count subarrays that satisfy a certain condition
 	1. for each element A[i] in array, find the max interval [left ,right] contains it and satisfies the condition, and solve a sub problem:
@@ -328,6 +351,7 @@ long gap(int start, in endInclusive) {
 * slow-fast
 	* Sliding window
 	* DeleteASubarray
+
 
 ## Bit operaton
 
