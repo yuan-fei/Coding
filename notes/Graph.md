@@ -126,7 +126,7 @@
 	* [geeksforgeeks: bridge-in-a-graph](https://www.geeksforgeeks.org/bridge-in-a-graph/)
 	* [geeksforgeeks: articulation-points-or-cut-vertices-in-a-graph](https://www.geeksforgeeks.org/articulation-points-or-cut-vertices-in-a-graph/)
 
-## <a name='Euler_Path'></a>Euler Path
+## <a name='Euler_Path'></a>Euler Path: A Path visit each edge once
 * Hierholzer's algorithm: O(V+E)
 	* This algorithm works for both directed graph and undirected graph
 	* The graph will still be euler graph after removing a cycle in graph.
@@ -141,6 +141,14 @@
 		~~~
 	* [notebook](https://cs.stanford.edu/group/acm/SLPC/notebook.pdf)
 	* [geeksforgeeks](https://www.geeksforgeeks.org/hierholzers-algorithm-directed-graph/)
+
+## <a name='Hamiltonion_Path'></a>Hamiltonion Path: A Path visit each vertex once
+* NP-complete, but solvable for small n with bitmask DP in O(n2^n)
+* Sufficient condition for Hamiltonian cycle
+	* Diac: deg(v) >= n/2 for each vertex in G, then G is guaranteed to have a H cycle
+* Reference: 
+	* [A little bit of classics: dynamic programming over subsets and paths in graphs](https://codeforces.com/blog/entry/337)
+	* [Diac](https://en.wikipedia.org/wiki/Hamiltonian_path)
 
 ## <a name='Minimum_Spanning_Tree'></a>Minimum Spanning Tree
 * Kruskal: O((V+E)lgV)
