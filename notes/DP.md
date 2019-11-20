@@ -208,12 +208,15 @@ long solve(String s, int i, boolean isLess, state){
 	* Characteristic: 
 		* **Reduce n! permutation to 2<sup>n</sup> subsets**
 		* n is small (usually n<20)
-	* Shortest Hamiltonian path with small n (# of vertices)
+	* Find Hamiltonian path with small n (# of vertices)
 		* brute force: check all permutations of vertices: O(n!)
 		* bitmap DP: time O(2<sup>n</sup>n<sup>2</sup>), space O(2<sup>n</sup>n) 
-			* bitmask for subset of vertices - 0~2<sup>n</sup>-1
-			* dp[mask][i]: shortest path through vertices in mask and ends at vertex i
-			* transition: `dp[mask][i] = dp[mask&~(1<<j)][j] + cost(j, i)` for each 1 bit j in mask, if there is an edge (j,i) in E
+			* bitmask for subset of vertices: 0~2<sup>n</sup>-1
+			* dp[mask][i]: path through vertices in mask starts at 0 and ends at vertex i
+			* transition: `dp[mask][i] = OR(dp[mask&~(1<<j)][j])` for each 1 bit j in mask, if there is an edge (j,i) in E
+		* Reference: 
+			* [A little bit of classics: dynamic programming over subsets and paths in graphs](https://codeforces.com/blog/entry/337)
+			* Week 6 of 'How to Win Coding Competitions: Secrets of Champions'
 	* [matching](https://atcoder.jp/contests/dp/tasks/dp_o): 
 		* brute force: fix girls 1~n, check full permutations of boys: O(n!)
 		* bitmap DP: time O(2<sup>n</sup>n), space O(2<sup>n</sup>)
@@ -225,7 +228,7 @@ long solve(String s, int i, boolean isLess, state){
 	* [Grouping](https://atcoder.jp/contests/dp/tasks/dp_u)
 		* O(3<sup>n</sup>) DP for all subsets of subsets
 		* For each subset of a set - a bitmask, check all subsets of it with 'Bitmask all subsets enumeration' trick
-	* [SOS (Sum Over Subsets)](https://codeforces.com/blog/entry/45223)
+	* [SOS (Sum Over Subsets)](https://codeforces.com/blog/entry/45223): Also see SumOverSets.java
 		* Sum over all subsets with bitmask: O(3<sup>n</sup>) -> O(2<sup>n</sup>*n)
 		* Sum over all supersets can be processed as Sum over all subsets of complement
 
