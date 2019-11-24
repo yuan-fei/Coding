@@ -12,7 +12,7 @@ public class HyperLogLog {
 			nums[i] = r.nextInt();
 		}
 		System.out.println("Real cardinality: " + Arrays.stream(nums).distinct().count());
-		for (int i = 1; i <= 8; i++) {
+		for (int i = 1; i <= 14; i++) {
 			HyperLogLog hll = new HyperLogLog(i);
 			System.out.println(String.format("Estimated cardinality with buckets %d (alpha = %f, error = %f) : %d",
 					(1 << i), hll.getAlpha(), hll.error(), hll.approximateCardinality(nums)));
