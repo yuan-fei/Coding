@@ -3,7 +3,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class K_Sum {
 
@@ -11,8 +10,7 @@ public class K_Sum {
 		// TODO Auto-generated method stub
 		System.out.println(kSum(new int[] { 1, 2, 3, 4 }, 2, 5)); // 2
 		System.out.println(twoSumLessThanOrEqualTo(new int[] { 2, 7, 11, 15 }, 24));
-		TreeMap<String, String> tm;
-
+		System.out.println(threeSum(new int[] { 0, 0, -1, 1, -1, 1 }));
 	}
 
 	public static int[] twoSum(int[] nums, int target) {
@@ -62,7 +60,7 @@ public class K_Sum {
 				continue;
 			}
 			if (target == (nums[low] + nums[high])) {
-				results.add(Arrays.asList(nums[low], nums[high]));
+				results.add(new ArrayList<>(Arrays.asList(nums[low], nums[high])));
 				low++;
 				high--;
 			} else if (target > (nums[low] + nums[high])) {
@@ -75,7 +73,7 @@ public class K_Sum {
 	}
 
 	/*
-	 * count of soluotion to K-sum
+	 * count of solution to K-sum
 	 */
 	public static int kSum(int[] nums, int k, int target) {
 		int[][][] state = new int[nums.length + 1][k + 1][target + 1];
