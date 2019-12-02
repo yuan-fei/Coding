@@ -55,6 +55,8 @@
 	* dp[i][j]: state at grid s(i, j)
 * Problems
 	* [unique-paths-ii](https://leetcode.com/problems/unique-paths-ii)
+	* [count-square-submatrices-with-all-ones](https://leetcode.com/problems/count-square-submatrices-with-all-ones)
+	* [maximal-square](https://leetcode.com/problems/maximal-square/)
 
 ## Sequence
 * Sequence is ordered (unlike set)

@@ -34,3 +34,5 @@
 	* 2 indices: 
 		* occured number -> freq
 		* freq -> number count
+* [maximal-square](https://leetcode.com/problems/maximal-square/): square area dp with adjacent cells
+	* [count-square-submatrices-with-all-ones](https://leetcode.com/problems/count-square-submatrices-with-all-ones)
