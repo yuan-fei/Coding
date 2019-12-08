@@ -6,6 +6,10 @@
 	* Application: service and algorithm
 	* Kilobit: data storage design
 	* Evolve: performance, scalability and robustness
+* Back of the envelope estimation
+	* 1 day = 86000s
+	* disk seek: 10ms
+	* 1ms disk sequential read: 20ms
 * CAP
 * DNS
 	* Category
@@ -40,6 +44,19 @@
 		* Add/update entry in cache
 		* Asynchronously write entry to the data store, improving write performance
 	* refresh ahead
+* Database
+	* index
+		* implementation: 
+			* BTree for range: log<sub>b</sub>n
+			* B+Tree: disk friendly with continuous reading
+		* Clustered vs. non-clustered
+			* clustered index sort rows in key order phisically
+			* [How does insert a row work with clustered index](https://stackoverflow.com/questions/11601345/insert-into-table-with-clustered-index): store rows in pages, and insert modifies/split only 1 page
+	* log for recovery
+		* [redo log](http://www.mathcs.emory.edu/~cheung/Courses/554/Syllabus/6-logging/redo1.html): redo commited transactions
+			1. log: changed/modified values in a transaction
+			2. log: commit
+			3. flush data to disk (async operaton for performance)
 * Consistent Hashing for Sharding
 	* Problem to solve:
 	    * Elastic scaling: dynamic add/remove nodes
@@ -91,22 +108,35 @@
 	* Compact/GC
 		* copy all indexed value to new file: O(n)
 * User system
+	* Scenario
+		* account: register/update profile/remove
+		* session: login/logout
+		* wallet: balance/membership
 	* User State management: 
 		* User (uid, name, hashed_pw, state)
 			* register, approve, disapprove, deactivate, ban
 	* User session management: 
 		* Session (uid, session_id, state)
 			* login, logout
-	* Indexing for uid for lookup
-		* Hash: for point
-		* BTree for range: log<sub>b</sub>n
 	* Membership management
 		* membership (uid, balance, end_time)
-			* charge, extend_end_time
+			* charge, extend\_end\_time
 		* transaction for consistency
 	* Availability
 		* translog for failure recover
 		* Redundency against data loss
+* Payment system
+	* Scenario
+		* charge(deposit)/withdraw
+		* transfer/payment
+	* Neccessary
+		* QPS of charge
+	* Application (charge)
+		* Order: bank account -> app account
+	* Data
+		* User: userId
+		* Order: orderId, bankId, userId, amount, opType, state, time
+		* Payment Method: bankId, userId
 * Crawler system
 	* crawl list and page
 	* Master-slave

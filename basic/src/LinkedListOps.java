@@ -56,6 +56,21 @@ public class LinkedListOps {
 		if (head == null) {
 			return head;
 		}
+		LinkNode dummy = new LinkNode(-1);
+		dummy.next = head;
+		LinkNode slow = dummy;
+		LinkNode fast = dummy;
+		while (fast != null && fast.next != null) {
+			fast = fast.next.next;
+			slow = slow.next;
+		}
+		return slow;
+	}
+
+	public static LinkNode findMiddle2(LinkNode head) {
+		if (head == null) {
+			return head;
+		}
 		LinkNode slow = head;
 		LinkNode fast = head.next;
 		while (fast != null && fast.next != null) {

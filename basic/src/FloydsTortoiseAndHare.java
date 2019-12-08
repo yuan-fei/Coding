@@ -1,4 +1,3 @@
-
 public class FloydsTortoiseAndHare {
 
 	public static void main(String[] args) {
@@ -31,6 +30,33 @@ public class FloydsTortoiseAndHare {
 	}
 
 	public ListNode detectCycle(ListNode head) {
+		if (head == null) {
+			return null;
+		}
+		ListNode dummy = new ListNode(-1);
+		dummy.next = head;
+		ListNode slow = dummy;
+		ListNode fast = dummy;
+		while (fast != null && fast.next != null) {
+			slow = slow.next;
+			fast = fast.next.next;
+			if (slow == fast) {
+				break;
+			}
+		}
+		if (fast == null || fast.next == null) {
+			return null;
+		} else {
+			slow = dummy;
+			while (slow != fast) {
+				slow = slow.next;
+				fast = fast.next;
+			}
+			return slow;
+		}
+	}
+
+	public ListNode detectCycle2(ListNode head) {
 		ListNode slow = head;
 		ListNode fast = head;
 		while (fast != null && fast.next != null) {
