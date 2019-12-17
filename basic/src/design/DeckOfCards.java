@@ -7,7 +7,7 @@ public class DeckOfCards {
 }
 
 enum CardType {
-	SPADE, DIAMOND, HEART, CLUBS,
+	SPADE, DIAMOND, HEART, CLUB,
 }
 
 class Card {

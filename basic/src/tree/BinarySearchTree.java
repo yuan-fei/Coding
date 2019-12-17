@@ -28,10 +28,14 @@ public class BinarySearchTree<K extends Comparable<K>> implements ISearchable<K>
 		bst.inOrderTraverseRec();
 		System.out.println("\nin-it: ");
 		bst.inOrderTraverseIterative();
+		System.out.println("\nin-it-simple: ");
+		bst.inOrderTraverseIterativeSimple();
 		System.out.println("\npost-rec: ");
 		bst.postOrderTraverseRec();
 		System.out.println("\npost-it: ");
 		bst.postOrderTraverseIterative();
+		System.out.println("\npost-it-simple: ");
+		bst.postOrderTraverseIterativeSimple();
 		System.out.println();
 
 		System.out.println("pre-succ");
@@ -293,6 +297,10 @@ public class BinarySearchTree<K extends Comparable<K>> implements ISearchable<K>
 		System.out.print(n + ",");
 	}
 
+	void visit(K n) {
+		System.out.print(n + ",");
+	}
+
 	public void preOrderTraverseRec() {
 		preOrderTraverseRec(root);
 	}
@@ -361,6 +369,25 @@ public class BinarySearchTree<K extends Comparable<K>> implements ISearchable<K>
 		}
 	}
 
+	public void inOrderTraverseIterativeSimple() {
+		Stack<Object> s = new Stack<Object>();
+		s.push(root);
+		while (!s.isEmpty()) {
+			Object n = s.pop();
+			if (n == null) {
+				continue;
+			} else if (n instanceof Integer) {
+				visit((K) n);
+
+			} else {
+				BinaryTreeNode<K> r = (BinaryTreeNode<K>) n;
+				s.push(r.right);
+				s.push(r.key);
+				s.push(r.left);
+			}
+		}
+	}
+
 	public void postOrderTraverseIterative() {
 		Stack<BinaryTreeNode<K>> s = new Stack<BinaryTreeNode<K>>();
 		BinaryTreeNode<K> n = root;
@@ -376,6 +403,25 @@ public class BinarySearchTree<K extends Comparable<K>> implements ISearchable<K>
 				} else {
 					n = s.peek().right;
 				}
+			}
+		}
+	}
+
+	public void postOrderTraverseIterativeSimple() {
+		Stack<Object> s = new Stack<Object>();
+		s.push(root);
+		while (!s.isEmpty()) {
+			Object n = s.pop();
+			if (n == null) {
+				continue;
+			} else if (n instanceof Integer) {
+				visit((K) n);
+			} else {
+				BinaryTreeNode<K> r = (BinaryTreeNode<K>) n;
+				s.push(r.key);
+				s.push(r.right);
+				s.push(r.left);
+
 			}
 		}
 	}

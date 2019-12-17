@@ -13,6 +13,14 @@ public class RateLimiter {
 		System.out.println(swl.allow(900));
 		System.out.println(swl.allow(1000));
 		System.out.println(swl.allow(1200));
+		FixedSizedSlidingWindowLimiter fswl = new FixedSizedSlidingWindowLimiter(4);
+		System.out.println(fswl.allow(100));
+		System.out.println(fswl.allow(300));
+		System.out.println(fswl.allow(500));
+		System.out.println(fswl.allow(700));
+		System.out.println(fswl.allow(900));
+		System.out.println(fswl.allow(1000));
+		System.out.println(fswl.allow(1200));
 		TokenBucket tb = new TokenBucket(4, 0);
 		System.out.println(tb.allow(100));
 		System.out.println(tb.allow(300));
@@ -38,6 +46,31 @@ public class RateLimiter {
 			} else if (curTs - window.peek() > 1000) {
 				window.add(curTs);
 				window.poll(); // keep only n items
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	static class FixedSizedSlidingWindowLimiter {
+		int n;
+		long[] window;
+		int max = 0;
+		int min = 0;
+
+		public FixedSizedSlidingWindowLimiter(int n) {
+			this.n = n;
+			window = new long[n];
+		}
+
+		boolean allow(long curTs) {
+			if (max < n) {
+				window[max++] = curTs;
+				return true;
+			} else if (curTs - window[min] > 1000) {
+				window[min] = curTs;
+				min = (min + 1) % n;
 				return true;
 			} else {
 				return false;

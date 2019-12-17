@@ -141,6 +141,10 @@
 	* crawl list and page
 	* Master-slave
 		* scheduler: control each crawler machine 
+			* task table: 
+				* taskId, priority, type (list/detail), url, time 
+			* page table:
+				* page content
 		* slave: worker
 	* pull: 
 		* slaves monitor task queue/database
@@ -150,6 +154,34 @@
 	* push
 		* master pushes task to slave
 		* slave sends crawled page to master
+* Search Engine
+	* Core components
+		* Crawler for data retrieve
+		* Indexing service
+			* reverse index service + document service
+		* Search API
+* Tiny Url
+	* Scenario
+		* long -> short
+		* short -> long
+	* Neccesary
+		* 1M dau: 
+		* QPS 
+			* L->S: 1M * 1% * 10func / 86000 = 1.2
+			* S->L: 1M * 100% * 3func / 86000 = 35
+	* Application
+		* L->S: return table/list size as shorturl
+			* long number growing: log10(total)
+				* use base62 encoding: log62(total)
+	* Kilo
+		* 100K urls / day * 100B(L) + 8B(S) + 4B(state) = 10MB/day
+	* Extensibility
+		* How to support random?
+			* random(0, range), avoid conflicting by try again
+		* How to support expire?
+			* expire/state
+		* How to support analysis
+			* log access event + time bucket
 * Distributed file system
 	* Large file: metadata + chunks
 		* metadata: index (chuck_id -> offset)
@@ -164,37 +196,108 @@
 	* Chunck robustness:
 		* checksum: check chuck is broken
 		* replica: chunck copies on multiple server
+			* performance + availability: 2 on same rack + 1 on remote rack
 	* Chunck server aliveness
 		* keepalive with master
+	* Chunck server recover
+		* Once chuck server down, it's 'dead', never go back online
+		* master replicate chuncks to other chunck server
+	* Hot spot: hot file
+		* Master rebalance to replicate chuncks to more chunck server
+	* Read a file:
+		1. client query chunck server id of block from name node
+		2. client read from chunck server
+	* Write a file
+	 	1. client query chunck server id list (primary + replicas) of block from name node
+	 	2. client send data to primary
+	 	3. chunck server chain: primary->replica1->replica2
+		 	* 2-phase commit persist
+	 	4. primary chunck server ack client
 * Big table
-	* SStable (Sorted String Table): [sstable-and-log-structured-storage-leveldb/](https://www.igvita.com/2012/02/06/sstable-and-log-structured-storage-leveldb/)
-	* mem+file
-		* memory: 
-			* index(sstable -> offset)
-			* sstable(sorted by key)
-			* Addtional for performance
-				* sstable index(key->offset): quick search
-				* bloom filter: filter sstables with the search key
-		* file: sstables
-	* how to read: find in all sstables and merge the result
-	* how to write: 
-		* write to sstable in memory 
-		* write operation transaction log to disk
-		* dump the sstable to file system when full
+	* phisical view
+		* big table = a list of tablets
+			* tablet = a list of sorted <key, values> pairs
+				* a list of sstable
+		* SStable (Sorted String Table): [sstable-and-log-structured-storage-leveldb/](https://www.igvita.com/2012/02/06/sstable-and-log-structured-storage-leveldb/)
+		* mem+file
+			* memory: 
+				* index(sstable -> file address, bloomfilter)
+				* sstable(sorted by key)
+			* file: sstables
+		* how to read: find in all sstables and merge the result
+		* how to write: 
+			* write to sstable in memory 
+			* write operation transaction log to disk
+			* dump the sstable to file system when full
+		* How to store data on GFS
+			* a server can be both tablet server (memory) + chunck server (persistent)
+			* log, sstable replicates on chunck server
+	* Logical view
+		* row key: (column:col_value)* -> timestamp
+	* Architecture (see evernote 'hbase')
+		* client
+		* chubby: metadata for tablet server addresses
+		* master: manage metadata, balance load, health check
+		* client read/write data from tablet server
 * Map-reduce
 	* process
 		* input-split-map-shuffle-reduce-finalize
+		* split size = block size = 64M
+* Big data problem solution
+	* segment hash
+	* bitmap
+	* bloomfilter
+	* external sort
+	* map-reduce
 * Rate limiter
 	* limit qps to k
+		* time bucket (tumbling window)
+			* 1 bucket per second, limit k request for 1 bucket
+			
+			~~~
+			// single time bucket implementation
+			long cur_ts = 0;
+			int remaining = k;
+			boolean allow(long ts){
+				if(ts != cur_ts){
+					remaining = k;
+					cur_ts = ts;
+				}
+				if(remaining <= 0){
+					return false;
+				}
+				else{
+					remaining--;
+					return true;
+				}
+			}
+			~~~
 		* sliding window
 			* record enqueue time of each request
 			* for each request q<sub>n</sub>, it can be added to queue only when
 				* queue has less than k items, or
 				* now - t<sub>n-k</sub> > 1s
+* Seconds kill: 10 iphones
+	* Cache: browser, CDN, reverse proxy, server cache
+	* Queue: 2 level queue
+		* level 1 (de-peak traffic): n web servers, each has a queue, each allows 10 requests
+		* level 2: 1 queue for first 10 of 10*n requests
+	* Key point
+		* reduce traffic
+			* recude page size
+			* CDN for static page
+			* limit request
 * Typeahead
-	* return all suggestions(articles, friends, ...) according to the typed words
-	* aggregation of inverted index
-	* trie-tree
+	* Scenario
+		* return all suggestions(articles, friends, ...) according to the typed words
+	* Neccessary
+		* average latency < 100ms
+	* Application
+		* trie-tree
+	* Architecture
+		* aggregation of inverted index (global/personalized)
+		* cache result
+
 * Bloomfilter vs. hashset: 
 	* +: space saving
 	* -: hard handle element delete (we can leave it and false positive rate will increase)

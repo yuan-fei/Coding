@@ -77,11 +77,32 @@
 ## Rotated sorted array
 * Rotated sorted array without duplicated element
 	* Left sorted part A[0..k] increases monotonically, and right sorted part A[k+1..n] increases monotonically
-	* Binary search with O(logn) applies: **recursively**. A[mid] falls in either
-		1. left sorted part: A[low] <= A[mid], then A[mid..high] is a rotated sorted subarray
-		2. right sorted part: A[mid] <= A[high], then A[low..mid] is a rotated sorted subarray
+	* Binary search with O(logn) applies: **recursively**. 
+		1. decide where is mid: left part or the right part
+		2. A[mid] falls in either
+			* i. left sorted part: A[low] <= A[mid], then A[mid..high] is a rotated sorted subarray
+			* ii. right sorted part: A[mid] <= A[high], then A[low..mid] is a rotated sorted subarray
 
-		choose to stay in sorted part or rotated sorted part
+		~~~
+		if(nums[low] < nums[mid]){
+			// left part
+    		if(nums[low] <= target && target < nums[mid] ){
+    			high = mid;
+    		}
+    		else{
+    			low  = mid;
+    		}
+    	}
+    	else{
+			// right part    	
+    		if(nums[mid] < target && target <= nums[high] ){
+    			low = mid;
+    		}
+    		else{
+    			high  = mid;
+    		}	
+    	}
+		~~~
 * Rotated sorted array with duplicated element must be processed in at least O(n): consider [2,2,2,2,2,1,2] and [2,1,2,2,2,2,2]
 * Related Problems
 	* [Search in rotated sorted array](https://leetcode.com/problems/search-in-rotated-sorted-array)

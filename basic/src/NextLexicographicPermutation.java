@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class LexicographicPermutation {
+public class NextLexicographicPermutation {
 
 	public static void main(String[] args) {
 		printAllPermutation(new int[] { 1, 2, 3, 4 });
