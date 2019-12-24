@@ -84,8 +84,7 @@
 			* ii. right sorted part: A[mid] <= A[high], then A[low..mid] is a rotated sorted subarray
 
 		~~~
-		if(nums[low] < nums[mid]){
-			// left part
+		if(nums[low] < nums[mid]){// left part
     		if(nums[low] <= target && target < nums[mid] ){
     			high = mid;
     		}
@@ -93,8 +92,7 @@
     			low  = mid;
     		}
     	}
-    	else{
-			// right part    	
+    	else{// right part    	
     		if(nums[mid] < target && target <= nums[high] ){
     			low = mid;
     		}

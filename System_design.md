@@ -37,13 +37,18 @@
 	* Increased security, Increased scalability and flexibility
 	* reference: [reverse-proxy-vs-load-balancer](https://www.nginx.com/resources/glossary/reverse-proxy-vs-load-balancer/)
 * Cache
-	* cache aside: use both cache and DB explicitly
-	* write through: cache as data store, cache is responsible for R/w DB
-		* cache return data after persisted
-	* write behind: 
-		* Add/update entry in cache
-		* Asynchronously write entry to the data store, improving write performance
-	* refresh ahead
+	* Type
+		* cache aside: use both cache and DB explicitly
+		* write through: cache as data store, cache is responsible for R/w DB
+			* cache return data after persisted
+		* write behind: 
+			* Add/update entry in cache
+			* Asynchronously write entry to the data store, improving write performance
+		* refresh ahead
+	* How to update cache correctly?
+		* Incorrect: invalidate cache first then update db
+		* Correct: update db first then invalidate cache
+		* Reference: [缓存更新的套路](https://coolshell.cn/articles/17416.html)
 * Database
 	* index
 		* implementation: 
