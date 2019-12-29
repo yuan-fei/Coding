@@ -1,16 +1,16 @@
 /*
- * @lc app=leetcode id=5294 lang=java
+ * @lc app=leetcode id=1298 lang=java
  *
- * [5294] Maximum Candies You Can Get from Boxes
+ * [1298] Maximum Candies You Can Get from Boxes
  *
  * https://leetcode.com/problems/maximum-candies-you-can-get-from-boxes/description/
  *
  * algorithms
- * Hard (53.91%)
- * Likes:    6
- * Dislikes: 10
- * Total Accepted:    1.3K
- * Total Submissions: 2.4K
+ * Hard (58.67%)
+ * Likes:    41
+ * Dislikes: 42
+ * Total Accepted:    3.2K
+ * Total Submissions: 5.5K
  * Testcase Example:  '[1,0,1,0]\n[7,5,4,100]\n[[],[],[1],[]]\n[[1,2],[3],[],[]]\n[0]'
  *
  * Given n boxes, each box is given in the format [status, candies, keys,

@@ -1,16 +1,16 @@
 /*
- * @lc app=leetcode id=5292 lang=java
+ * @lc app=leetcode id=1296 lang=java
  *
- * [5292] Divide Array in Sets of K Consecutive Numbers
+ * [1296] Divide Array in Sets of K Consecutive Numbers
  *
  * https://leetcode.com/problems/divide-array-in-sets-of-k-consecutive-numbers/description/
  *
  * algorithms
- * Medium (42.62%)
- * Likes:    32
- * Dislikes: 1
- * Total Accepted:    2.8K
- * Total Submissions: 6.4K
+ * Medium (47.26%)
+ * Likes:    91
+ * Dislikes: 4
+ * Total Accepted:    5.9K
+ * Total Submissions: 12.4K
  * Testcase Example:  '[1,2,3,3,4,4,5,6]\n4'
  *
  * Given an array of integers nums and a positive integer k, find whether it's

@@ -1,16 +1,16 @@
 /*
- * @lc app=leetcode id=5293 lang=java
+ * @lc app=leetcode id=1297 lang=java
  *
- * [5293] Maximum Number of Occurrences of a Substring
+ * [1297] Maximum Number of Occurrences of a Substring
  *
  * https://leetcode.com/problems/maximum-number-of-occurrences-of-a-substring/description/
  *
  * algorithms
- * Medium (36.64%)
- * Likes:    20
- * Dislikes: 14
- * Total Accepted:    2K
- * Total Submissions: 5.2K
+ * Medium (44.06%)
+ * Likes:    55
+ * Dislikes: 55
+ * Total Accepted:    4.4K
+ * Total Submissions: 9.9K
  * Testcase Example:  '"aababcaab"\n2\n3\n4'
  *
  * Given a string s, return the maximum number of ocurrences of any substring
