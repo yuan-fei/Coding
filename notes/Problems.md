@@ -39,7 +39,7 @@
 	* fix 2 columns, convert the problem to 'find subarray sum to target'
 		* column prefix sum for each row, elements in subarray is the diff of prefix sum between 2 columns
 		* 'find subarray sum to target': calculate prefix sum for subarray and convert it to 2-sum to target problem
-* [maximal-square](https://leetcode.com/problems/maximal-square/): square area dp with adjacent cells
+* [maximal-square](https://leetcode.com/problems/maximal-square/): square area dp with adjacent cells: `dp[i][j] = min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1`
 	* [count-square-submatrices-with-all-ones](https://leetcode.com/problems/count-square-submatrices-with-all-ones)
 * [elimination-game](https://leetcode.com/problems/elimination-game/description/): recursion with odd/even number
 * [shortest-path-in-a-grid-with-obstacles-elimination](https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination): BFS with unusual state (r,c,elimination)
