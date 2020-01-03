@@ -371,7 +371,46 @@ long gap(int start, in endInclusive) {
 	* Sliding window
 	* DeleteASubarray
 
+## Stack: check `StackTrick` class
+* Monotonic Stack: given an array of ints, for each element, find the first higher(lower) element to its left and right
+	* [largest-rectangle-in-histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)
+	* [maximal-rectangle](https://leetcode.com/problems/maximal-rectangle/)
+* Expression parsing
+	* nested structure + single operator: 
+		* currentResult + resultStack
+			* currentResult keep current result in scope (current nesting level)
+			* when new level begins (see `(`), push result to resultStack and init a new currentResult for this new level
+			* when current level finishes (see `)`), combine last level result (`resultStack.pop()`) to the currentResult
 
+		~~~
+		Stack resultStack;
+		String result;
+		while(hasNExtToken()){
+			String t = nextToken();
+			switch(t){
+			case "(": //new level start
+				resultStack.push(result);
+				result="";
+			break;
+			case ")": //level end
+				String preResult = resultStack.pop();
+				result=preResult + result;
+			break;
+			...
+			}
+		}
+		return result;
+		~~~
+	
+		* Problems:
+			* [decode-string](https://leetcode.com/problems/decode-string/)
+			* [number-of-atoms](https://leetcode.com/problems/number-of-atoms)
+	* [Shunting yard](https://en.wikipedia.org/wiki/Shunting-yard_algorithm): op stack and oprand stack
+		* [basic calculator ii](https://leetcode.com/problems/basic-calculator-ii/)
+		* [brace expansion ii](https://leetcode.com/problems/brace-expansion-ii/)
+* [Maximum Frequency Stack](https://leetcode.com/problems/maximum-frequency-stack/)
+	* pop most frequent number in stack
+	* use frequency as index
 ## Bit operaton
 
 * Bit operation:
@@ -400,46 +439,7 @@ while(it.hasNext()){
 }
 ~~~
 
-* Stack: check `StackTrick` class
-	* given an array of ints, for each element, find the first higher(lower) element to its left and right
-		* [largest-rectangle-in-histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)
-		* [maximal-rectangle](https://leetcode.com/problems/maximal-rectangle/)
-	* Expression parsing
-		* nested structure + single operator: 
-			* currentResult + resultStack
-				* currentResult keep current result in scope (current nesting level)
-				* when new level begins (see `(`), push result to resultStack and init a new currentResult for this new level
-				* when current level finishes (see `)`), combine last level result (`resultStack.pop()`) to the currentResult
 
-			~~~
-			Stack resultStack;
-			String result;
-			while(hasNExtToken()){
-				String t = nextToken();
-				switch(t){
-				case "(": //new level start
-					resultStack.push(result);
-					result="";
-				break;
-				case ")": //level end
-					String preResult = resultStack.pop();
-					result=preResult + result;
-				break;
-				...
-				}
-			}
-			return result;
-			~~~
-		
-			* Problems:
-				* [decode-string](https://leetcode.com/problems/decode-string/)
-				* [number-of-atoms](https://leetcode.com/problems/number-of-atoms)
-		* [Shunting yard](https://en.wikipedia.org/wiki/Shunting-yard_algorithm): op stack and oprand stack
-			* [basic calculator ii](https://leetcode.com/problems/basic-calculator-ii/)
-			* [brace expansion ii](https://leetcode.com/problems/brace-expansion-ii/)
-	* [Maximum Frequency Stack](https://leetcode.com/problems/maximum-frequency-stack/)
-		* pop most frequent number in stack
-		* use frequency as index
 * Queue: use `offer(e)` and `poll()` instead of `add(e)` and `remove()` because they don't throw exceptions when failed.
 	* min Queue: 2 min stacks
 * Deque (ArrayDeque, LinkedList): enqueue and dequeue from both end. Used as sliding window
