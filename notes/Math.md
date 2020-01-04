@@ -394,7 +394,6 @@ y = [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, b<sub>k<
 			* n - 1 positions for k - 1 dividers
 		2. k non-negative numbers sum to n: C(n + k - 1, k - 1)
 			* For each division, add 1 to k group each, and problem is converted to problem 1 'k positive numbers'
-			* n + k + 1 positions for k - 1  dividers, consecutive dividers are allowed to represent a element 0
 	* \# of subset
 		* Given a set of n distinct numbers
 			1. \# of subsets: 2<sup>n</sup>
