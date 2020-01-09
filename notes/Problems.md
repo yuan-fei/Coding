@@ -2,6 +2,7 @@
  
 ## upsolved
 
+* [peak-index-in-a-mountain-array](https://leetcode.com/problems/peak-index-in-a-mountain-array): must check a[mid] and a[mid + 1] to determine the movement
 * [trapping-rain-water-ii](https://leetcode.com/problems/trapping-rain-water-ii/): heap
 
 * [find-k-th-smallest-pair-distance](https://leetcode.com/problems/find-k-th-smallest-pair-distance): binary search for dist + sliding window for counting sub arrays
@@ -15,6 +16,9 @@
 	* Direction matters: 
 		* For check a 'feasible' value in binary search, DP from top-left to bottom-right is OK
 		* For direct DP solution, bottom-right to top-left is much more easier because you don't need to remember a current HP value which is not only related to adjacent dp states.
+* [expression-add-operators](https://leetcode.com/problems/expression-add-operators/description/): 
+	* update multiplication by remember mulAcc state
+	* difference between first digit and following digits
 
 ## interesting problems and tricks
 

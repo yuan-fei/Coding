@@ -1,11 +1,13 @@
-/** search for max value of a uni-modal array in O(logn) */
+/**
+ * search for max value of a uni-modal array (strict increase and decrease: a1 <
+ * a2 < ...ai <... < an) in O(logn)
+ */
 public class TernarySearch {
 
 	public static void main(String[] args) {
 		System.out.println(find(new int[] { 1, 2, 3, 4, 5, 3, 2 }));
 		System.out.println(find(new int[] { 1, 2, 3, 4, 5 }));
 		System.out.println(find(new int[] { 4, 3, 2, 1 }));
-		System.out.println(find(new int[] { 1, 1, 1, 1 }));
 	}
 
 	public static int find(int[] nums) {
