@@ -19,6 +19,12 @@
 * [expression-add-operators](https://leetcode.com/problems/expression-add-operators/description/): 
 	* update multiplication by remember mulAcc state
 	* difference between first digit and following digits
+* [remove-invalid-parentheses](https://leetcode.com/problems/remove-invalid-parentheses): 
+	* find # of redundant left parenthesis and right parenthesis
+	* recursion on (pair, left, right)
+* [convert-integer-to-the-sum-of-two-no-zero-integers](https://leetcode.com/problems/convert-integer-to-the-sum-of-two-no-zero-integers): 
+	* recursion solution
+	* borrow 1 from higher bit
 
 ## interesting problems and tricks
 
