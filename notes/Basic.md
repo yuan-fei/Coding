@@ -210,6 +210,7 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 	* [n-queens](https://leetcode.com/problems/n-queens)
 	* [sudoku-solver](https://leetcode.com/problems/sudoku-solver)
 	* [palindrome-partitioning](https://leetcode.com/problems/palindrome-partitioning)
+	* [longest-increasing-path-in-a-matrix](https://leetcode.com/problems/longest-increasing-path-in-a-matrix)
 	* Topological sort: [course-schedule](https://leetcode.com/problems/course-schedule)
 
 ## Backtracking
@@ -244,6 +245,31 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 		* Related problems: [Least non-increasing subsequence](https://www.lintcode.com/problem/least-subsequences/description)
 	* [remove duplicate letters](https://leetcode.com/problems/remove-duplicate-letters/)
 		* greedy + Stack, or greedy + 2 pointers
+* [delete-digits](https://www.lintcode.com/problem/delete-digits)
+
+	~~~
+		//delete k digits and make the left number smallest
+		public static String deleteDigits(String A, int k) {
+			String res = "";
+			Deque<Character> q = new LinkedList<>();
+			for (int i = 0; i < A.length(); i++) {
+				while (!q.isEmpty() && A.charAt(i) < q.peekLast() && i - q.size() < k) {
+					q.pollLast();
+				}
+				q.offerLast(A.charAt(i));
+			}
+			int maxLeft = A.length() - k;
+			while (!q.isEmpty() && maxLeft > 0) {
+				maxLeft--;
+				char c = q.pollFirst();
+				res += c;
+			}
+			return res;
+		}
+	~~~
+* [patching-array](https://leetcode.com/problems/patching-array/)
+	* reference: [Share-my-thinking-process](https://leetcode.com/problems/patching-array/discuss/78495/Share-my-thinking-process)
+
 
 ## Prefix Sum
 * Problems about consecutive subarray sum can be solved by prefix sum: 

@@ -25,6 +25,31 @@
 * [convert-integer-to-the-sum-of-two-no-zero-integers](https://leetcode.com/problems/convert-integer-to-the-sum-of-two-no-zero-integers): 
 	* recursion solution
 	* borrow 1 from higher bit
+* [burst-balloons](https://leetcode.com/problems/burst-balloons)
+	* instead of iterate the 1st busrst baloon during DP, we can iterate the last burst baloon during DP which means the sections devided by the baloon is fixed 2 subproblems
+* [create-maximum-number](https://leetcode.com/problems/create-maximum-number)
+	* get the largest k numbers when keeping the relative order in 1d array
+	* merge numbers in 2 arrays to largest number
+* [count-of-range-sum](https://leetcode.com/problems/count-of-range-sum)
+	* segment tree range is large, compression required
+		* sort array of distinct values
+
+	~~~
+	private SegmentTreeNode build(long[] arr, int start, int end) {
+		SegmentTreeNode r = new SegmentTreeNode(start, end);
+		r.left = arr[start];
+		r.right = arr[end];
+		if (start < end) {
+			r.left = build(arr, start, start + (end - start) / 2);
+			r.right = build(arr, start + (end - start) / 2 + 1, end);
+		}
+		return r;
+	}
+	~~~
+* [pour-water](https://www.lintcode.com/problem/pour-water)
+	* simulation, two pointer(index and i)
+* [reverse-subarray-to-maximize-array-value/](https://leetcode.com/problems/reverse-subarray-to-maximize-array-value/)
+	* abs, analyze all possible cases and find the only case increases
 
 ## interesting problems and tricks
 

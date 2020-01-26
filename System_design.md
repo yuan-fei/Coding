@@ -38,7 +38,9 @@
 	* reference: [reverse-proxy-vs-load-balancer](https://www.nginx.com/resources/glossary/reverse-proxy-vs-load-balancer/)
 * Cache
 	* Type
-		* cache aside: use both cache and DB explicitly
+		* cache aside pattern: use both cache and DB explicitly
+			* read: when cache miss, load data from db and update cache 
+			* write: write to db first and invalidate cache
 		* write through: cache as data store, cache is responsible for R/w DB
 			* cache return data after persisted
 		* write behind: 
@@ -46,8 +48,18 @@
 			* Asynchronously write entry to the data store, improving write performance
 		* refresh ahead
 	* How to update cache correctly?
-		* Incorrect: invalidate cache first then update db
-		* Correct: update db first then invalidate cache
+		* factors
+			* concurrency: multiple r/w
+			* failure: cache operation failure, db operation failure
+		* solutions
+			* cache invalidate instead of cache set: old data can be loaded to cache during concurrency (multiple writes)
+			* 2 incomplete solutions
+				* invalidate cache + update db
+					* pros: consistent over failure (cache failure or db faliure)
+					* cons: inconsistent over concurrency (i1, r2, w1)
+				* update db + invalidate cache (cache aside pattern)
+					* pros: consistent over concurrency (different order of r/w operations)
+					* cons: inconsistent over failure (cache invalidation failure)
 		* Reference: [缓存更新的套路](https://coolshell.cn/articles/17416.html)
 * Database
 	* index
