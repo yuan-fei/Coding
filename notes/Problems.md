@@ -50,6 +50,18 @@
 	* simulation, two pointer(index and i)
 * [reverse-subarray-to-maximize-array-value/](https://leetcode.com/problems/reverse-subarray-to-maximize-array-value/)
 	* abs, analyze all possible cases and find the only case increases
+* [wiggle-sort-ii](https://leetcode.com/problems/wiggle-sort-ii/)
+	* only 1 arrangement is correct
+
+	~~~
+	# correct: Ms are placed far away
+	even: M-S
+	odd:  -L-M
+	
+	# incorrect
+	even: S-M
+	odd:  -M-L
+	~~~
 
 ## interesting problems and tricks
 
@@ -79,3 +91,4 @@
 * [elimination-game](https://leetcode.com/problems/elimination-game/description/): recursion with odd/even number
 * [shortest-path-in-a-grid-with-obstacles-elimination](https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination): BFS with unusual state (r,c,elimination)
 * [bitwise-and-of-numbers-range](https://leetcode.com/problems/bitwise-and-of-numbers-range/): find leftmost different bit and clear all bits right to it
+* [integer-break](https://leetcode.com/problems/integer-break): Math solution, use 3 as many as possible in decomposition
