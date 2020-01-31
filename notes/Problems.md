@@ -74,6 +74,9 @@
 	* keywords: find min, 2nd min, ..., on demand, sorted arrays
 	* implementation: heap, sorted array, for each element keep track of pointer to the elements in the other array
 	* [find-k-pairs-with-smallest-sums](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/)
+* LIS
+	* [russian-doll-envelopes](https://leetcode.com/problems/russian-doll-envelopes)
+	* [largest-divisible-subset](https://leetcode.com/problems/largest-divisible-subset/)
 * [shortest-path-to-get-all-keys](https://leetcode.com/problems/shortest-path-to-get-all-keys): BFS with state combination: position + which keys are holding
 * [distant-barcodes](https://leetcode.com/problems/distant-barcodes/): watch out for element with the largest occurance (N+1)/2.
 * [candy](https://leetcode.com/problems/candy/): see my solution O(nlogn). sort and iterate from smallest to largest, update with max(left, right) + 1
@@ -92,3 +95,4 @@
 * [shortest-path-in-a-grid-with-obstacles-elimination](https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination): BFS with unusual state (r,c,elimination)
 * [bitwise-and-of-numbers-range](https://leetcode.com/problems/bitwise-and-of-numbers-range/): find leftmost different bit and clear all bits right to it
 * [integer-break](https://leetcode.com/problems/integer-break): Math solution, use 3 as many as possible in decomposition
+* [water-and-jug-problem](https://leetcode.com/problems/water-and-jug-problem): GCD
