@@ -224,7 +224,7 @@
 	* Read a file:
 		1. client query chunck server id of block from name node
 		2. client read from chunck server
-	* Write a file
+	* Write a file ([pipeline replication](https://hadoop.apache.org/docs/r1.2.1/hdfs_design.html#Replication+Pipelining))
 	 	1. client query chunck server id list (primary + replicas) of block from name node
 	 	2. client send data to primary
 	 	3. chunck server chain: primary->replica1->replica2
