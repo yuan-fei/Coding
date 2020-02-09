@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=1341 lang=java
+ * @lc app=leetcode id=1337 lang=java
  *
- * [1341] The K Weakest Rows in a Matrix
+ * [1337] The K Weakest Rows in a Matrix
  *
  * https://leetcode.com/problems/the-k-weakest-rows-in-a-matrix/description/
  *

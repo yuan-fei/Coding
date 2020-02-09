@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=1343 lang=java
+ * @lc app=leetcode id=1339 lang=java
  *
- * [1343] Maximum Product of Splitted Binary Tree
+ * [1339] Maximum Product of Splitted Binary Tree
  *
  * https://leetcode.com/problems/maximum-product-of-splitted-binary-tree/description/
  *

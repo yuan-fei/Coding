@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=1344 lang=java
+ * @lc app=leetcode id=1340 lang=java
  *
- * [1344] Jump Game V
+ * [1340] Jump Game V
  *
  * https://leetcode.com/problems/jump-game-v/description/
  *

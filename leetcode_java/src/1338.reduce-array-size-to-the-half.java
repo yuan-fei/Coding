@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=1342 lang=java
+ * @lc app=leetcode id=1338 lang=java
  *
- * [1342] Reduce Array Size to The Half
+ * [1338] Reduce Array Size to The Half
  *
  * https://leetcode.com/problems/reduce-array-size-to-the-half/description/
  *

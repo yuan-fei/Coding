@@ -96,3 +96,4 @@
 * [bitwise-and-of-numbers-range](https://leetcode.com/problems/bitwise-and-of-numbers-range/): find leftmost different bit and clear all bits right to it
 * [integer-break](https://leetcode.com/problems/integer-break): Math solution, use 3 as many as possible in decomposition
 * [water-and-jug-problem](https://leetcode.com/problems/water-and-jug-problem): GCD
+* [maximum-students-taking-exam/](https://leetcode.com/problems/maximum-students-taking-exam/): maximum independent set
