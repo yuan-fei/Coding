@@ -65,6 +65,8 @@
 * [insert-delete-getrandom-o1/](https://leetcode.com/problems/insert-delete-getrandom-o1): insert, delete, random in O(1)
 	* For random, we need to keep an compact array and delete in O(1)
 	* O(1) delete in array: move last element to location of deleted element
+* [maximum-number-of-events-that-can-be-attended/](https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended): interval
+	* sort by begin, scan from left to right day by day while keeping active intervals, choose the active event with the earliest end.
 
 ## interesting problems and tricks
 
@@ -100,3 +102,4 @@
 * [integer-break](https://leetcode.com/problems/integer-break): Math solution, use 3 as many as possible in decomposition
 * [water-and-jug-problem](https://leetcode.com/problems/water-and-jug-problem): GCD
 * [maximum-students-taking-exam/](https://leetcode.com/problems/maximum-students-taking-exam/): maximum independent set
+* [minimum-number-of-taps-to-open-to-water-a-garden/](https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/): Minimum segment covering

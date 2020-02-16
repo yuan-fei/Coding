@@ -221,17 +221,24 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 		* [sudoku-solver](https://leetcode.com/problems/sudoku-solver)
 
 ## Greedy
-* Activity Selection
-	* Given tasks each with start and end, find the max # of tasks that can be scheduled sequentially
-	* Given intervals each with start and end, find the min # of shoots that can eliminate all intervals (1 shoot at x can eliminate all intervals that intersect at x) ([Shooting baloons](https://mp.weixin.qq.com/s/iSHP4MJq-EkwjitMlPkT8g))
-* Task scheduling on 2 machines
-	* This task is about finding an optimal schedule for n jobs on two machines. Every item must first be processed on the first machine, and afterwards on the second one. The i-th job takes ai time on the first machine, and bi time on the second machine. Each machine can only process one job at a time.
-	* Johnson's rule
-		* sort: min(a<sub>i</sub>,b<sub>i</sub>) < min(a<sub>j</sub>,b<sub>j</sub>)
-		* schedule: for each task if a<sub>i</sub> < b<sub>i</sub> then put it front, otherwise put it end, until meet in the middle.
-	* Reference
-		* [Johnson's rule on cp-algorithms](https://cp-algorithms.com/schedules/schedule_two_machines.html)
-		* [paper](http://www.rspq.org/pubs/j2.pdf)
+* Interval problems
+	* Activity Selection
+		* Given tasks each with start and end, find the max # of tasks that can be scheduled sequentially
+		* Given intervals each with start and end, find the min # of shoots that can eliminate all intervals (1 shoot at x can eliminate all intervals that intersect at x) ([Shooting baloons](https://mp.weixin.qq.com/s/iSHP4MJq-EkwjitMlPkT8g))
+	* Task scheduling on 2 machines
+		* This task is about finding an optimal schedule for n jobs on two machines. Every item must first be processed on the first machine, and afterwards on the second one. The i-th job takes ai time on the first machine, and bi time on the second machine. Each machine can only process one job at a time.
+		* Johnson's rule
+			* sort: min(a<sub>i</sub>,b<sub>i</sub>) < min(a<sub>j</sub>,b<sub>j</sub>)
+			* schedule: for each task if a<sub>i</sub> < b<sub>i</sub> then put it front, otherwise put it end, until meet in the middle.
+		* Reference
+			* [Johnson's rule on cp-algorithms](https://cp-algorithms.com/schedules/schedule_two_machines.html)
+			* [paper](http://www.rspq.org/pubs/j2.pdf)
+	* Minimum Segment Covering
+		* Given n segments, find the minimum # of segments that cover all the segments
+			* [minimum-number-of-taps-to-open-to-water-a-garden/](https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/)
+	* [maximum-number-of-events-that-can-be-attended](https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/)
+		* choose 1 point in each interva, how many points as many as possible can we choose without conflict.
+		* sort by begin, scan from left to right day by day while keeping active intervals, choose the active event with the earliest end.
 * Longest increasing sequence (LIS)
 	* O(n^2) for DP, O(nlogn) for non-DP
 	* non-DP
@@ -269,6 +276,7 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 	~~~
 * [patching-array](https://leetcode.com/problems/patching-array/)
 	* reference: [Share-my-thinking-process](https://leetcode.com/problems/patching-array/discuss/78495/Share-my-thinking-process)
+
 
 
 ## Prefix Sum
