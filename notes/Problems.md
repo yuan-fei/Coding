@@ -62,6 +62,9 @@
 	even: S-M
 	odd:  -M-L
 	~~~
+* [insert-delete-getrandom-o1/](https://leetcode.com/problems/insert-delete-getrandom-o1): insert, delete, random in O(1)
+	* For random, we need to keep an compact array and delete in O(1)
+	* O(1) delete in array: move last element to location of deleted element
 
 ## interesting problems and tricks
 
