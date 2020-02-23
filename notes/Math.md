@@ -400,20 +400,24 @@ y = [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, b<sub>k<
 			2. \# of subsets of subsets: 3<sup>n</sup>
 				* f(n): =3f(n-1) : (i) f(n-1) subsets of subsets without number n; (ii) f(n-1) subsets of subsets with number n; (ii) f(n-1) subsets with subset {n};
 	* [Lattice Path](https://en.wikipedia.org/wiki/Lattice_path):
-		* North-East path: L((r<sub>1</sub>, c<sub>1</sub>), (r<sub>2</sub>, c<sub>2</sub>)) = C(r<sub>2</sub> - r<sub>1</sub> + r<sub>2</sub> - c<sub>2</sub>, r<sub>2</sub> - r<sub>1</sub>)
-		* Avoid 'bad' blocks [(Grid 2)](https://atcoder.jp/contests/dp/tasks/dp_y): paths from (1, 1) to (n, m) without touching any of the k bad blocks (r<sub>1</sub>, c<sub>1</sub>), (r<sub>2</sub>, c<sub>2</sub>)...(r<sub>k</sub>, c<sub>k</sub>), and **the bad blocks are ordered by r, c**
+		1. North-East path: L((r<sub>1</sub>, c<sub>1</sub>), (r<sub>2</sub>, c<sub>2</sub>)) = C(r<sub>2</sub> - r<sub>1</sub> + r<sub>2</sub> - c<sub>2</sub>, r<sub>2</sub> - r<sub>1</sub>)
+		2. Avoid 'bad' blocks [(Grid 2)](https://atcoder.jp/contests/dp/tasks/dp_y): paths from (1, 1) to (n, m) without touching any of the k bad blocks (r<sub>1</sub>, c<sub>1</sub>), (r<sub>2</sub>, c<sub>2</sub>)...(r<sub>k</sub>, c<sub>k</sub>), and **the bad blocks are ordered by r, c**
 			* DP
 				1. dp(r<sub>1</sub>, c<sub>1</sub>) = L((1, 1), (r<sub>1</sub>, c<sub>1</sub>))
 				2. dp(r<sub>i</sub>, c<sub>i</sub>) = L((1, 1), (r<sub>i</sub>, c<sub>i</sub>)) - sum(dp(r<sub>j</sub>, c<sub>j</sub>) * L((r<sub>j</sub>, c<sub>j</sub>), (r<sub>i</sub>, c<sub>i</sub>))) where j in [1, i-1] and block (r<sub>j</sub>, c<sub>j</sub>) is within the range of [(1, 1), (r<sub>i</sub>, c<sub>i</sub>)]
 					* dp(r<sub>j</sub>, c<sub>j</sub>) * L((r<sub>j</sub>, c<sub>j</sub>), (r<sub>i</sub>, c<sub>i</sub>)): bad paths from (1,1) to (r<sub>i</sub>, c<sub>i</sub>) with the first bad block (r<sub>j</sub>, c<sub>j</sub>)
 			* reference: [Change the object to dp](https://codeforces.com/blog/entry/47764)
+		3. 'Do not pass over diagonal' constraint
+			* Catalan(n) when n = m
 	* [Catalan number](https://en.wikipedia.org/wiki/Catalan_number)
 		* Catalan(n) = sum(Catalan(i) * Catalan(n-i)) where 0 <= i <= n
 		* Catalan(n) = C(2n, n) - C(2n, n+1) = C(2n, n)/(n+1)
-		* Counting: 
+		* Catalan(n) is biject with following Counting problems: 
+			* n matching pairs of parenthesis:
+				* s<sub>n</sub> = (s<sub>x</sub>)s<sub>n-x-1</sub>
+			* Dyck words of length 2n
 			* full binray tree
-			* all parenthesis matching
-			* lattice path
+			* lattice path without passing diagonal
 	* Stirling number (Concrete Math)
 		* Type I (n cycles k): devide a set of n distinct numbers to k non-empty circle
 			* StirlingI(n, k) = (n-1) * StirlingI(n-1, k) + StirlingI(n-1, k-1)
@@ -421,6 +425,9 @@ y = [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, b<sub>k<
 			* StirlingII(n, k) = k * StirlingII(n-1, k) + StirlingII(n-1, k-1)
 				* Consider the 2 scenarios of how to place the last element
 	* [Bertrand ballot problem](https://en.wikipedia.org/wiki/Bertrand%27s_ballot_theorem)
+		* In an election where candidate A receives p votes and candidate B receives q votes with p > q, 
+			* probability that A will be strictly ahead of B throughout the count: `(p - q) / (p + q)`
+			* probability that A will be non-strictly ahead of B throughout the count: `(p + 1 - q) / (p + 1)`
 	* Inclusion-exclusion principle
 ![inclusion-exclusion.png](../pics/inclusion-exclusion.png)
 		* Classic problems: \# of ways of n numbers sum to k with upperbound m: 
