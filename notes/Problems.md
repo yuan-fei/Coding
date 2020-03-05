@@ -67,6 +67,10 @@
 	* O(1) delete in array: move last element to location of deleted element
 * [maximum-number-of-events-that-can-be-attended/](https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended): interval
 	* sort by begin, scan from left to right day by day while keeping active intervals, choose the active event with the earliest end.
+* [shortest-path-in-a-grid-with-obstacles-elimination](https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination): BFS with unusual state (r,c,elimination)
+* [minimum-cost-to-make-at-least-one-valid-path-in-a-grid](https://leetcode.com/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/): 
+	* BFS + DFS: DFS layer by DFS layer
+
 
 ## interesting problems and tricks
 
@@ -97,7 +101,6 @@
 * [maximal-square](https://leetcode.com/problems/maximal-square/): square area dp with adjacent cells: `dp[i][j] = min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1`
 	* [count-square-submatrices-with-all-ones](https://leetcode.com/problems/count-square-submatrices-with-all-ones)
 * [elimination-game](https://leetcode.com/problems/elimination-game/description/): recursion with odd/even number
-* [shortest-path-in-a-grid-with-obstacles-elimination](https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination): BFS with unusual state (r,c,elimination)
 * [bitwise-and-of-numbers-range](https://leetcode.com/problems/bitwise-and-of-numbers-range/): find leftmost different bit and clear all bits right to it
 * [integer-break](https://leetcode.com/problems/integer-break): Math solution, use 3 as many as possible in decomposition
 * [water-and-jug-problem](https://leetcode.com/problems/water-and-jug-problem): GCD
