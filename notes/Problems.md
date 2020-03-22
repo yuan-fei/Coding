@@ -70,7 +70,12 @@
 * [shortest-path-in-a-grid-with-obstacles-elimination](https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination): BFS with unusual state (r,c,elimination)
 * [minimum-cost-to-make-at-least-one-valid-path-in-a-grid](https://leetcode.com/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/): 
 	* BFS + DFS: DFS layer by DFS layer
-
+* [pizza-with-3n-slices](https://leetcode.com/problems/pizza-with-3n-slices):
+	* This problem is equivalent to ["choose n slices which are not adjacent to each other and the sum of slices is max"](https://leetcode.com/problems/pizza-with-3n-slices/discuss/546627/Question-about-proof-of-correctness)
+	
+	> 	The proof is by induction on N. For N=3, it is immediate. For N>3, let S be a set of N/3 slices no two of which are adjacent. Each slice has at least 1 slice not in S to its left and right, and the key point is that at least one slice in S has at least two slices not in S on one side. So, for example, if N=9 and S=[0,2,4], then 4 has more than 1 slice not in S on its right. Choose any slice with at least two slices buffer on one side, and eat this slice first. Then, once the two slices on the right and left are eaten, the remaining pizza is a circular array of size N-3, the remaining S has size (N-3)/3, and no two slices are adjacent. So by induction you can eat all of the slices in S.
+	
+	* similar to [house-robber-ii](https://leetcode.com/problems/house-robber-ii)
 
 ## interesting problems and tricks
 
