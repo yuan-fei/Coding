@@ -111,3 +111,4 @@
 * [water-and-jug-problem](https://leetcode.com/problems/water-and-jug-problem): GCD
 * [maximum-students-taking-exam/](https://leetcode.com/problems/maximum-students-taking-exam/): maximum independent set
 * [minimum-number-of-taps-to-open-to-water-a-garden/](https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/): Minimum segment covering
+* [find-all-good-strings](https://leetcode.com/problems/find-all-good-strings): Digit DP + KMP
