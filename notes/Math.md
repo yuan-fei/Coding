@@ -293,6 +293,13 @@
 	* representation: [left, bottom, right, top]
 	* intersection(a, b): [Math.max(a.left, b.left), Math.max(a.bottom, b.bottom), Math.min(a.right, b.right), Math.min(a.top, b.top)]
 	* union area: inclusion-exclusion principle with bitmask
+	* Check if a ractangle is overlap with circle:
+		* find the closest point in rectangle to the center of circle, check if it's in the circle: 
+
+		~~~
+		double x = (x_center <= left) ? left : (x_center >= right) ? right : x_center;
+		double y = (y_center <= bottom) ? bottom : (y_center >= top) ? top : y_center;
+		~~~
 * Convex Hull: CH(Q)
 	* Graham's scan algorithm: O(nlogn)
 		1. Choose initial point p<sub>0</sub> who has the lowest y, it must be the point of CH

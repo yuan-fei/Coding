@@ -19,6 +19,8 @@ public class Rectangle {
 		System.out.println(Rectangle.unionArea(rects));
 		rects = new Rectangle[] { new Rectangle(0, 0, 1, 1), new Rectangle(2, 2, 3, 3) };
 		System.out.println(Rectangle.unionArea(rects));
+		Rectangle r = new Rectangle(-5203, -1795, -4648, 1721);
+		System.out.println(r.intersectWithCircle(1206, -5597, -276));
 	}
 
 	double left;
@@ -73,5 +75,17 @@ public class Rectangle {
 			area += (BitManipulation.countOnes(mask) % 2 == 1) ? intersectArea : -intersectArea;
 		}
 		return area;
+	}
+
+	/** https://leetcode.com/problems/circle-and-rectangle-overlapping/discuss/563341/4-lines-C%2B%2B-O(1)%3A-Test-shortest-distance-from-center-to-rect-(with-pics) */
+	public boolean intersectWithCircle(double radius, double x_center, double y_center) {
+		// find closest point
+		double x = (x_center <= left) ? left : (x_center >= right) ? right : x_center;
+		double y = (y_center <= bottom) ? bottom : (y_center >= top) ? top : y_center;
+		return checkInCircle(radius, x_center, y_center, x, y);
+	}
+
+	static boolean checkInCircle(double radius, double x_center, double y_center, double x, double y) {
+		return radius * radius >= (x_center - x) * (x_center - x) + (y_center - y) * (y_center - y);
 	}
 }

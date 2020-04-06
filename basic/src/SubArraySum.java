@@ -7,6 +7,8 @@ public class SubArraySum {
 	public static void main(String[] args) {
 		System.out.println(maxSubArraySum(new int[] { -2, -1, 0, 1, 2, -3 }));
 		System.out.println(maxSubArraySum(new int[] { -2, -1, -1, -2, -3 }));
+		System.out.println(maxSubArraySumNonEmpty(new int[] { -2, -1, 0, 1, 2, -3 }));
+		System.out.println(maxSubArraySumNonEmpty(new int[] { -2, -1, -1, -2, -3 }));
 		System.out.println(countSubArraySumToTarget(new int[] { -2, -1, 0, 1, 2, -3 }, 0));
 		System.out.println(countSubArraySumToTarget(new int[] { -2, -1, 0, 1, 2, -3 }, 1));
 		System.out.println(maxSubArraySumNoLargerThanTarget(new int[] { -2, -1, 0, 1, 2, -3 }, 1));
@@ -14,16 +16,22 @@ public class SubArraySum {
 	}
 
 	public static int maxSubArraySum(int[] a) {
-		int n = a.length;
 		int max = Integer.MIN_VALUE;
 		int sum = 0;
 		for (int i = 0; i < a.length; i++) {
-			if (sum < 0) {
-				sum = a[i];
-			} else {
-				sum += a[i];
-			}
+			sum = Math.max(0, sum + a[i]);
 			max = Math.max(max, sum);
+		}
+		return max;
+	}
+
+	public static int maxSubArraySumNonEmpty(int[] a) {
+		int max = Integer.MIN_VALUE;
+		int sum = 0;
+		for (int i = 0; i < a.length; i++) {
+			sum += a[i];
+			max = Math.max(max, sum);
+			sum = Math.max(0, sum);
 		}
 		return max;
 	}
