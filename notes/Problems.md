@@ -76,6 +76,11 @@
 	> 	The proof is by induction on N. For N=3, it is immediate. For N>3, let S be a set of N/3 slices no two of which are adjacent. Each slice has at least 1 slice not in S to its left and right, and the key point is that at least one slice in S has at least two slices not in S on one side. So, for example, if N=9 and S=[0,2,4], then 4 has more than 1 slice not in S on its right. Choose any slice with at least two slices buffer on one side, and eat this slice first. Then, once the two slices on the right and left are eaten, the remaining pizza is a circular array of size N-3, the remaining S has size (N-3)/3, and no two slices are adjacent. So by induction you can eat all of the slices in S.
 	
 	* similar to [house-robber-ii](https://leetcode.com/problems/house-robber-ii)
+* [circle-and-rectangle-overlapping](https://leetcode.com/problems/circle-and-rectangle-overlapping/): 
+	* find the closest point (x, y) in rectangle to center of circle
+	* check if (x, y) within circle
+* [valid-parenthesis-string](https://leetcode.com/problems/valid-parenthesis-string/):
+	* keep [min # of ')' required, max # of ')' allowed]
 
 ## interesting problems and tricks
 
