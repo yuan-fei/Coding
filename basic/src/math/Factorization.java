@@ -23,7 +23,7 @@ public class Factorization {
 		Map<Long, Integer> pFactors = new HashMap<>();
 		int cnt = 0;
 		long factor = 2;
-		while (factor <= n) {
+		while (factor * factor <= n) {
 			if (n % factor == 0) {
 				pFactors.put(factor, ++cnt);
 				n /= factor;
@@ -31,6 +31,9 @@ public class Factorization {
 				factor += 1;
 				cnt = 0;
 			}
+		}
+		if (n >= 2) {
+			pFactors.put(n, 1);
 		}
 
 		return pFactors;
