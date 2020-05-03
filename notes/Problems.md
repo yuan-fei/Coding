@@ -81,6 +81,8 @@
 	* check if (x, y) within circle
 * [valid-parenthesis-string](https://leetcode.com/problems/valid-parenthesis-string/):
 	* keep [min # of ')' required, max # of ')' allowed]
+* [find-the-kth-smallest-sum-of-a-matrix-with-sorted-rows](https://leetcode.com/problems/find-the-kth-smallest-sum-of-a-matrix-with-sorted-rows/)
+	* keep lowest k sum row by row
 
 ## interesting problems and tricks
 
@@ -93,6 +95,7 @@
 	* keywords: find min, 2nd min, ..., on demand, sorted arrays
 	* implementation: heap, sorted array, for each element keep track of pointer to the elements in the other array
 	* [find-k-pairs-with-smallest-sums](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/)
+	* [find-the-kth-smallest-sum-of-a-matrix-with-sorted-rows](https://leetcode.com/problems/find-the-kth-smallest-sum-of-a-matrix-with-sorted-rows/)
 * LIS
 	* [russian-doll-envelopes](https://leetcode.com/problems/russian-doll-envelopes)
 	* [largest-divisible-subset](https://leetcode.com/problems/largest-divisible-subset/)
@@ -117,3 +120,4 @@
 * [maximum-students-taking-exam/](https://leetcode.com/problems/maximum-students-taking-exam/): maximum independent set
 * [minimum-number-of-taps-to-open-to-water-a-garden/](https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/): Minimum segment covering
 * [find-all-good-strings](https://leetcode.com/problems/find-all-good-strings): Digit DP + KMP
+* [number-of-ways-to-wear-different-hats-to-each-other](https://leetcode.com/problems/number-of-ways-to-wear-different-hats-to-each-other/): bitmask dp, but use bitmask for person (1 << 10) instead of hat (1 << 40)
