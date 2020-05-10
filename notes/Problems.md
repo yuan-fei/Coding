@@ -83,6 +83,11 @@
 	* keep [min # of ')' required, max # of ')' allowed]
 * [find-the-kth-smallest-sum-of-a-matrix-with-sorted-rows](https://leetcode.com/problems/find-the-kth-smallest-sum-of-a-matrix-with-sorted-rows/)
 	* keep lowest k sum row by row
+* [longest-substring-with-at-least-k-repeating-characters](https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters)
+	* not binary search, sliding window
+	* A llegal substring contains no illegal char (cnt < k)
+	* illegal chars (cnt < k) split the string into parts, recursively check each part for max length
+
 
 ## interesting problems and tricks
 
