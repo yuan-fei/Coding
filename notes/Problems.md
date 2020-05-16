@@ -87,7 +87,9 @@
 	* not binary search, sliding window
 	* A llegal substring contains no illegal char (cnt < k)
 	* illegal chars (cnt < k) split the string into parts, recursively check each part for max length
-
+* [k-th-smallest-in-lexicographical-order/](https://leetcode.com/problems/k-th-smallest-in-lexicographical-order/)
+	* keywords: digits
+	* 10-nary tree + count legal number count of a certain prefix
 
 ## interesting problems and tricks
 
@@ -126,3 +128,6 @@
 * [minimum-number-of-taps-to-open-to-water-a-garden/](https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/): Minimum segment covering
 * [find-all-good-strings](https://leetcode.com/problems/find-all-good-strings): Digit DP + KMP
 * [number-of-ways-to-wear-different-hats-to-each-other](https://leetcode.com/problems/number-of-ways-to-wear-different-hats-to-each-other/): bitmask dp, but use bitmask for person (1 << 10) instead of hat (1 << 40)
+
+## Implementation heavy
+* [all-oone-data-structure](https://leetcode.com/problems/all-oone-data-structure)
