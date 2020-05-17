@@ -90,7 +90,9 @@
 * [k-th-smallest-in-lexicographical-order/](https://leetcode.com/problems/k-th-smallest-in-lexicographical-order/)
 	* keywords: digits
 	* 10-nary tree + count legal number count of a certain prefix
-
+* [maximum-number-of-darts-inside-of-a-circular-dartboard](https://leetcode.com/problems/maximum-number-of-darts-inside-of-a-circular-dartboard/)
+	* angular sweep in O(n^2logn)
+	
 ## interesting problems and tricks
 
 * [IPO](https://leetcode.com/problems/ipo): 

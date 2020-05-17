@@ -314,6 +314,14 @@
 	* Devide and Concur
 		1. Split the points set into 2 by splitter x=a, recursively get minimum distance from each part, and d = min(d<sub>l</sub>, d<sub>r</sub>).
 		2. Check if points between 2 parts has shorter distance. for each point in region (a-d, a+d) with y sorted, only check the points not d higher above it. It can be proven that at most 7 points have to be checked. 
+* Angular sweep `O(n^2logn)`
+	* [maximum-number-of-darts-inside-of-a-circular-dartboard](https://leetcode.com/problems/maximum-number-of-darts-inside-of-a-circular-dartboard)
+		* for each point, place it on the circle boundary. Then sweep (or "rotate") the circle around this point to see which direction contains the most points
+			* for each other point, record the legal angles ranges [enter, exit] that the point is within the circle
+			* we have 2 list of intervals, let's find the max number of intervals overlapping. which can be done in O(nlogn) with sort
+	* reference: [geeksforgeeks](https://www.geeksforgeeks.org/angular-sweep-maximum-points-can-enclosed-circle-given-radius/)
+	* problem: 
+
 
 ## <a name='Number_Theory_II'></a>Number theory II
 
