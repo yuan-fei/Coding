@@ -92,6 +92,11 @@
 	* 10-nary tree + count legal number count of a certain prefix
 * [maximum-number-of-darts-inside-of-a-circular-dartboard](https://leetcode.com/problems/maximum-number-of-darts-inside-of-a-circular-dartboard/)
 	* angular sweep in O(n^2logn)
+* [count-the-repetitions](https://leetcode.com/problems/count-the-repetitions/description/)
+	* keywords: circular pattern
+* [unique-substrings-in-wraparound-string](https://leetcode.com/problems/unique-substrings-in-wraparound-string/description/)
+	* O(n^2) for input string is too slow
+	* consider dp state about alphabet
 	
 ## interesting problems and tricks
 
