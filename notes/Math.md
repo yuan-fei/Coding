@@ -483,6 +483,9 @@ y = [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, b<sub>k<
 		* Prob. of getting the 1st head until the kth toss: <code>P(X = k) = (1-p)<sup>k</sup>p</code>
 		* Ecpected tosses to get the 1st head: `E(X) = 1/p` 
 		* Ecpected tail tosses before getting the 1st head: `E(Y) = 1/p - 1`
+	* How to sample in circle uniformly
+		* polar system: (r, theta)
+		* note r should be sampled from [0, 1)^0.5 [ref1](https://leetcode.com/problems/generate-random-point-in-a-circle/discuss/154037/Polar-Coordinates-10-lines), [ref2](https://meyavuz.wordpress.com/2018/11/15/generate-uniform-random-points-within-a-circle/)
 	* [Birthday paradox](https://en.wikipedia.org/wiki/Birthday_problem): Probs of born on same day
 		* The prob. of at least 1 pair out of k people have the same birthday is 100% when k=367, 99% when k=70, and **50% when k=23**
 		* The expected # of pair of people who have same birthday among k people is k(k-1)/2n (n is # of days in a year)
