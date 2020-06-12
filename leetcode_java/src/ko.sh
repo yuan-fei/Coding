@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 main () {
-	(($# == 1)) || err_exit 'Usage: lc_week.sh start#'
+	(($# > 0)) || err_exit 'Usage: ko.sh start# count'
 	pn=$1
-	for (( x = 0; x < 4; x++ )); do
+	cnt=${2:-1}
+	for (( x = 0; x < $cnt; x++ )); do
 		leetcode show -gx $pn
 		open $pn.*
 		(( pn++))
