@@ -97,7 +97,12 @@
 * [unique-substrings-in-wraparound-string](https://leetcode.com/problems/unique-substrings-in-wraparound-string/description/)
 	* O(n^2) for input string is too slow
 	* consider dp state about alphabet
-	
+* [count-submatrices-with-all-ones](https://leetcode.com/problems/count-submatrices-with-all-ones)
+	* solution for sub-matrix problem:
+		* O(n) histogram area problem
+		* DP: relationship between M[i][j], M[i][j - 1], M[i - 1][j]
+
+
 ## interesting problems and tricks
 
 * [IPO](https://leetcode.com/problems/ipo): 
