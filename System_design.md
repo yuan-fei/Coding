@@ -60,7 +60,10 @@
 				* update db + invalidate cache (cache aside pattern)
 					* pros: consistent over concurrency (different order of r/w operations)
 					* cons: inconsistent over failure (cache invalidation failure)
-		* Reference: [缓存更新的套路](https://coolshell.cn/articles/17416.html)
+		* Reference: 
+			* [缓存更新的套路](https://coolshell.cn/articles/17416.html)
+			* [缓存与数据库的双写一致性](https://github.com/doocs/advanced-java/blob/master/docs/high-concurrency/redis-consistence.md)
+			* [缓存雪崩、穿透和击穿](https://github.com/doocs/advanced-java/blob/master/docs/high-concurrency/redis-caching-avalanche-and-caching-penetration.md)
 * Database
 	* index
 		* implementation: 
