@@ -101,7 +101,9 @@
 	* solution for sub-matrix problem:
 		* O(n) histogram area problem
 		* DP: relationship between M[i][j], M[i][j - 1], M[i - 1][j]
-
+* [find-a-value-of-a-mysterious-function-closest-to-target](https://leetcode.com/problems/find-a-value-of-a-mysterious-function-closest-to-target/)
+	* characteristic of 'and' operation: the more 'and', the smaller reult
+	* at most 32 distinct values when adding a new number
 
 ## interesting problems and tricks
 
