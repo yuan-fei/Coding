@@ -94,23 +94,31 @@ class Solution {
     }
     int ans = 0;
     int[] dfs(TreeNode root, int distance){
-        if(root == null){
-            return new int[11];
+    	int[] ret = new int[11];
+    	if(root == null){
+    		return ret;
+    	}
+        if(root.left == null && root.right == null){
+            ret[1] = 1;
+            return ret;
         }
         int[] left = dfs(root.left, distance);
         int[] right = dfs(root.right, distance);
-        for(int i = 0; i < 11; i++){
-            for(int j = 0; j < 11; j++){
-                if(left[i] + right[j] <= distance){
-                    ans++;
+        // System.out.println(root.val + Arrays.toString(left));
+        // System.out.println(root.val + Arrays.toString(right));
+        for(int i = 1; i <= 10; i++){
+            for(int j = 1; j <= 10; j++){
+                if(i + j <= distance){
+                    ans += left[i] * right[j];
                 }
             }
         }
-        int[] ret = new int[11];
+        
         for(int i = 0; i < 10; i++){
             ret[i + 1] += left[i];
             ret[i + 1] += right[i];
         }
+        
         return ret;
     }
 }

@@ -80,7 +80,16 @@
 // @lc code=start
 class Solution {
     public int minFlips(String target) {
-        
+    	int flip = 0;
+        for (char c : target.toCharArray()) {
+        	if(c == '0'){
+        		flip += (flip % 2);
+        	}
+        	else{
+        		flip += ((flip + 1) % 2);
+        	}
+        }
+        return flip;
     }
 }
 // @lc code=end
