@@ -104,6 +104,9 @@
 * [find-a-value-of-a-mysterious-function-closest-to-target](https://leetcode.com/problems/find-a-value-of-a-mysterious-function-closest-to-target/)
 	* characteristic of 'and' operation: the more 'and', the smaller reult
 	* at most 32 distinct values when adding a new number
+* [string-compression-ii](https://leetcode.com/problems/string-compression-ii)
+	* dp with multiple dimension
+	* I don't know how to solve this...
 
 ## interesting problems and tricks
 
