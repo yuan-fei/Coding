@@ -89,7 +89,29 @@
  */
 class Solution {
     public int countPairs(TreeNode root, int distance) {
-        
+        dfs(root, distance);
+        return ans;
+    }
+    int ans = 0;
+    int[] dfs(TreeNode root, int distance){
+        if(root == null){
+            return new int[11];
+        }
+        int[] left = dfs(root.left, distance);
+        int[] right = dfs(root.right, distance);
+        for(int i = 0; i < 11; i++){
+            for(int j = 0; j < 11; j++){
+                if(left[i] + right[j] <= distance){
+                    ans++;
+                }
+            }
+        }
+        int[] ret = new int[11];
+        for(int i = 0; i < 10; i++){
+            ret[i + 1] += left[i];
+            ret[i + 1] += right[i];
+        }
+        return ret;
     }
 }
 // @lc code=end
