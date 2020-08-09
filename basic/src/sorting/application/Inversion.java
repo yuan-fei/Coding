@@ -1,6 +1,9 @@
 package sorting.application;
 
-/** count inversion with Merge sort in O(nlogn) */
+/**
+ * Count reverse pair: count inversion (i < j && a[i] > a[j]) with Merge sort in
+ * O(nlogn)
+ */
 public class Inversion {
 
 	public static void main(String[] args) {
@@ -22,33 +25,29 @@ public class Inversion {
 			int mid = (start + end) / 2;
 			sum += mergeSort(arr, aux, start, mid);
 			sum += mergeSort(arr, aux, mid, end);
-			sum += merge(arr, aux, start, mid, end);
+			sum += count(arr, start, mid, end);
+			merge(arr, aux, start, mid, end);
 			System.arraycopy(aux, start, arr, start, end - start);
 		}
 		return sum;
 	}
 
 	/** merge from[start..mid] and from[mid, end] to to[start..end] */
-	private static int merge(int[] from, int[] to, int start, int mid, int end) {
-		int totalInversion = 0;
-		int curInversion = 0;
+	private static void merge(int[] from, int[] to, int start, int mid, int end) {
 		int i = start;
 		int j = mid;
 		int k = start;
 		while (i < mid && j < end) {
 			if (from[i] <= from[j]) {
-				totalInversion += curInversion;
 				to[k] = from[i];
 				i++;
 			} else {
-				curInversion++;
 				to[k] = from[j];
 				j++;
 			}
 			k++;
 		}
 		while (i < mid) {
-			totalInversion += curInversion;
 			to[k] = from[i];
 			i++;
 			k++;
@@ -58,6 +57,19 @@ public class Inversion {
 			j++;
 			k++;
 		}
+	}
+
+	/** count inversions between from[start..mid] and from[mid, end] */
+	private static int count(int[] from, int start, int mid, int end) {
+		int totalInversion = 0;
+		int j = mid;
+		for (int i = start; i < mid; i++) {
+			while (j < end && from[i] > from[j]) {
+				j++;
+			}
+			totalInversion += j - mid;
+		}
 		return totalInversion;
 	}
+
 }
