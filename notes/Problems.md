@@ -107,6 +107,9 @@
 * [string-compression-ii](https://leetcode.com/problems/string-compression-ii)
 	* dp with multiple dimension
 	* I don't know how to solve this...
+* [super-washing-machines](https://leetcode.com/problems/super-washing-machines/)
+* [random-flip-matrix](https://leetcode.com/problems/random-flip-matrix/)
+	* keep [0, total] unpicked elements
 
 ## interesting problems and tricks
 
