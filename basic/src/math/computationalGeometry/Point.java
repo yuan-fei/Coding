@@ -21,7 +21,8 @@ class Point {
 		return x == that.x && y == that.y;
 	}
 
-	public double dotProduct(Point p) {
+	// a x b = |a||b|sin<a, b>
+	public double crossProduct(Point p) {
 		return this.x * p.y - this.y * p.x;
 	}
 

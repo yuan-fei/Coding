@@ -15,7 +15,7 @@ class Segment implements Comparable<Segment> {
 	}
 
 	public static int direction(Point p1, Point p2, Point p3) {
-		return (int) Math.signum(Point.getVector(p1, p2).dotProduct(Point.getVector(p2, p3)));
+		return (int) Math.signum(Point.getVector(p1, p2).crossProduct(Point.getVector(p2, p3)));
 	}
 
 	public static boolean onSegment(Segment s, Point p) {
