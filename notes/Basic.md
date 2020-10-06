@@ -495,7 +495,7 @@ while(it.hasNext()){
 
 ## Miscellaneous
 * [Next Permutation](https://leetcode.com/problems/next-permutation): O(n). 
-	1. Find the longest suffix that is in decreasing order. 
+	1. Find the longest suffix that is in non-increasing order. 
 	2. Swap the preceding element x with the smallest one from the decreasing sequence larger than x, let's say y
 	3. Sort the suffix after y in increasing order by reverse it
 * [Median of 2 sorted arrays](https://leetcode.com/problems/median-of-two-sorted-arrays)

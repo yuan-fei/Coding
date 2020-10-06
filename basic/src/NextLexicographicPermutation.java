@@ -4,6 +4,7 @@ public class NextLexicographicPermutation {
 
 	public static void main(String[] args) {
 		printAllPermutation(new int[] { 1, 2, 3, 4 });
+		printAllPermutation(new int[] { 1, 2, 3, 3 });
 	}
 
 	public static void printAllPermutation(int[] a) {
@@ -14,7 +15,7 @@ public class NextLexicographicPermutation {
 	}
 
 	/**
-	 * 1. Find the longest suffix that is in decreasing order.
+	 * 1. Find the longest suffix that is in non-increasing order.
 	 * 
 	 * 2. Swap the preceding element x with the smallest one from the decreasing
 	 * sequence larger than x, let's say y
@@ -26,7 +27,7 @@ public class NextLexicographicPermutation {
 	static boolean permuteNext(int[] a) {
 		int n = a.length;
 		int i = n - 2;
-		while (i >= 0 && a[i] > a[i + 1]) {
+		while (i >= 0 && a[i] >= a[i + 1]) {
 			i--;
 		}
 		if (i < 0) {
