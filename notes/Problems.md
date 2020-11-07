@@ -118,6 +118,9 @@
 * [super-washing-machines](https://leetcode.com/problems/super-washing-machines/)
 * [random-flip-matrix](https://leetcode.com/problems/random-flip-matrix/)
 	* keep [0, total] unpicked elements
+* [count-substrings-that-differ-by-one-character](https://leetcode.com/problems/count-substrings-that-differ-by-one-character)
+	1. count substrings with #diff = 1: the pattern is `{preSame}diff{postSame}`, and for each position of postSame, add #presame + 1 substrings to total count 
+	2. for each aligment (s[i..], t[j..]), we need to count all substrings with #diff = 1
 
 ## interesting problems and tricks
 
