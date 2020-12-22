@@ -277,6 +277,7 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 * [patching-array](https://leetcode.com/problems/patching-array/)
 	* reference: [Share-my-thinking-process](https://leetcode.com/problems/patching-array/discuss/78495/Share-my-thinking-process)
 
+* [stone-game-vi](https://leetcode.com/problems/stone-game-vi)
 
 
 ## Prefix Sum

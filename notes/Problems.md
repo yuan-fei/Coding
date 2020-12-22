@@ -121,10 +121,18 @@
 * [count-substrings-that-differ-by-one-character](https://leetcode.com/problems/count-substrings-that-differ-by-one-character)
 	1. count substrings with #diff = 1: the pattern is `{preSame}diff{postSame}`, and for each position of postSame, add #presame + 1 substrings to total count 
 	2. for each aligment (s[i..], t[j..]), we need to count all substrings with #diff = 1
-
 * [minimize-deviation-in-array](https://leetcode.com/problems/minimize-deviation-in-array/)
 	* a set of set-of-numbers {s1, s2}, choose 1 number from each set and form a sequence with min deviation |max - min|
 		* similar to merge sort: add smallest number in each set to priorityQueue, remove min in queue and fill in the 2nd smallest number in the same set
+* [checking-existence-of-edge-length-limited-paths/](https://leetcode.com/problems/checking-existence-of-edge-length-limited-paths/)
+	* queries can also be sorted
+	* edges are given, so Union-Find can be used to find connectivity for efficiency
+* [stone-game-vi](https://leetcode.com/problems/stone-game-vi)
+	* A and B value differently: 1 and 2 are equivalent
+		1. If A, B all start from 0, when A take 1, A get valueA, B will lose valueB
+		2. If we assume B starts from all taken: sum(valueB), then when A takes 1 stone, A will get valueA + valueB
+	* The question now becomes 'Take half of the stones and get the max sum of value'
+		* We can sort by valueA + valueB descending, and greedily take stones alternatively
 
 ## interesting problems and tricks
 
