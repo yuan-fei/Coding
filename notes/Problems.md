@@ -122,6 +122,10 @@
 	1. count substrings with #diff = 1: the pattern is `{preSame}diff{postSame}`, and for each position of postSame, add #presame + 1 substrings to total count 
 	2. for each aligment (s[i..], t[j..]), we need to count all substrings with #diff = 1
 
+* [minimize-deviation-in-array](https://leetcode.com/problems/minimize-deviation-in-array/)
+	* a set of set-of-numbers {s1, s2}, choose 1 number from each set and form a sequence with min deviation |max - min|
+		* similar to merge sort: add smallest number in each set to priorityQueue, remove min in queue and fill in the 2nd smallest number in the same set
+
 ## interesting problems and tricks
 
 * [IPO](https://leetcode.com/problems/ipo): 
