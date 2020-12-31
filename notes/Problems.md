@@ -133,6 +133,10 @@
 		2. If we assume B starts from all taken: sum(valueB), then when A takes 1 stone, A will get valueA + valueB
 	* The question now becomes 'Take half of the stones and get the max sum of value'
 		* We can sort by valueA + valueB descending, and greedily take stones alternatively
+* [minimum-adjacent-swaps-for-k-consecutive-ones/](https://leetcode.com/problems/minimum-adjacent-swaps-for-k-consecutive-ones/)
+  * trick 1: a[i] - i: [it is a common trick in competitive programming to use a[i] - i to convert a "min sum of moves to make numbers consecutive" problem into a "min sum of moves to a single point"](https://leetcode.com/problems/minimum-adjacent-swaps-for-k-consecutive-ones/discuss/987362/Python-The-trick-and-related-problems).
+  * traick 2: distance to median in O(1) with prefix sum
+    * `(pSum[i + k] - pSum[i + k / 2]) - (pSum[i + (k + 1) / 2] - pSum[i])`
 
 ## interesting problems and tricks
 
