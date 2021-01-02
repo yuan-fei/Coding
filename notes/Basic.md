@@ -697,6 +697,30 @@ int totalNQueensHelper(int n, boolean[] c, boolean[] d1, boolean[] d2, int r){
 	}  	
 }
 </code></pre>
+* find duplicates/missing whose value in range 1~n in array
+	* flip value of nums[i] to indicate number i is seen
+
+	~~~
+	public List<Integer> findDuplicates(int[] nums) {
+    	int n = nums.length;
+    	List<Integer> res = new ArrayList<>();
+        for(int i = 0; i < n; i++){
+        	int index = Math.abs(nums[i]) - 1;
+        	if(nums[index] > 0){
+        		nums[index] *= -1;
+        	}
+        	else{
+        		res.add(Math.abs(nums[i]));
+        	}
+        }
+        return res;
+    }
+	~~~
+	* Related Problems: 
+		* [find-all-duplicates-in-an-array](https://leetcode.com/problems/find-all-duplicates-in-an-array/description/)
+		* [find-the-duplicate-number](https://leetcode.com/problems/find-the-duplicate-number/)
+		* [missing-number](https://leetcode.com/problems/missing-number/)
+		* [set-mismatch](https://leetcode.com/problems/set-mismatch/description/)
 
 ## Tips
 * Increase Java stack size: -Xss256M
