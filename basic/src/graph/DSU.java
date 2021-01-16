@@ -1,12 +1,17 @@
-package tree;
+package graph;
 
 class DSU {
 	int[] parent;
 
 	public DSU(int N) {
 		this.parent = new int[N];
-		for (int i = 0; i < N; i++)
-			parent[i] = i;
+		for (int i = 0; i < N; i++) {
+			add(i);
+		}
+	}
+
+	public void add(int x) {
+		parent[x] = x;
 	}
 
 	public int find(int x) {

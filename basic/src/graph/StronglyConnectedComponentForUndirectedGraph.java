@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import tree.UnionFindSet;
-
 public class StronglyConnectedComponentForUndirectedGraph {
 	public static void main(String[] args) {
 		Graph<String> graph = new Graph<String>();
