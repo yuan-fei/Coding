@@ -71,6 +71,7 @@ public class ModularCombination {
 		iFact[0] = 1;
 		iFact[1] = 1;
 		for (int i = 2; i <= n; i++) {
+			// https://cp-algorithms.com/algebra/module-inverse.html
 			long t = (state[(int) (p % i)] * (p - p / i));
 			state[i] = t % p;
 			iFact[i] = (iFact[i - 1] * state[i]) % p;

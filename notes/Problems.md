@@ -135,10 +135,16 @@
 		* We can sort by valueA + valueB descending, and greedily take stones alternatively
 * [minimum-adjacent-swaps-for-k-consecutive-ones/](https://leetcode.com/problems/minimum-adjacent-swaps-for-k-consecutive-ones/)
   * trick 1: a[i] - i: [it is a common trick in competitive programming to use a[i] - i to convert a "min sum of moves to make numbers consecutive" problem into a "min sum of moves to a single point"](https://leetcode.com/problems/minimum-adjacent-swaps-for-k-consecutive-ones/discuss/987362/Python-The-trick-and-related-problems).
-  * traick 2: distance to median in O(1) with prefix sum
+  * trick 2: distance to median in O(1) with prefix sum
     * `(pSum[i + k] - pSum[i + k / 2]) - (pSum[i + (k + 1) / 2] - pSum[i])`
 * [distribute-repeating-integers](https://leetcode.com/problems/distribute-repeating-integers/)
 	* Given buckts of free memory bucket[], and array of reuqests for amount of memory request[], **there is no greedy way** to satisfy all the requests.
+* [count-ways-to-make-array-with-product](https://leetcode.com/problems/count-ways-to-make-array-with-product)
+	* Count # of k number whose product equals to n
+		* prime factorization: count each prime
+		* calculate # grouping ways for each permutation (with dup)
+			* grouping stars and bars
+			* permutation with dup 
 
 ## interesting problems and tricks
 
