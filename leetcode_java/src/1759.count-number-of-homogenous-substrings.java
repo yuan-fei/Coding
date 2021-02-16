@@ -1,0 +1,85 @@
+/*
+ * @lc app=leetcode id=1759 lang=java
+ *
+ * [1759] Count Number of Homogenous Substrings
+ *
+ * https://leetcode.com/problems/count-number-of-homogenous-substrings/description/
+ *
+ * algorithms
+ * Medium (40.59%)
+ * Likes:    91
+ * Dislikes: 13
+ * Total Accepted:    6.9K
+ * Total Submissions: 16.9K
+ * Testcase Example:  '"abbcccaa"'
+ *
+ * Given a string s, return the number of homogenous substrings of s. Since the
+ * answer may be too large, return it modulo 10^9 + 7.
+ * 
+ * A string is homogenous if all the characters of the string are the same.
+ * 
+ * A substring is a contiguous sequence of characters within a string.
+ * 
+ * 
+ * Example 1:
+ * 
+ * 
+ * Input: s = "abbcccaa"
+ * Output: 13
+ * Explanation: The homogenous substrings are listed as below:
+ * "a"   appears 3 times.
+ * "aa"  appears 1 time.
+ * "b"   appears 2 times.
+ * "bb"  appears 1 time.
+ * "c"   appears 3 times.
+ * "cc"  appears 2 times.
+ * "ccc" appears 1 time.
+ * 3 + 1 + 2 + 1 + 3 + 2 + 1 = 13.
+ * 
+ * Example 2:
+ * 
+ * 
+ * Input: s = "xy"
+ * Output: 2
+ * Explanation: The homogenous substrings are "x" and "y".
+ * 
+ * Example 3:
+ * 
+ * 
+ * Input: s = "zzzzz"
+ * Output: 15
+ * 
+ * 
+ * 
+ * Constraints:
+ * 
+ * 
+ * 1 <= s.length <= 10^5
+ * s consists of lowercase letters.
+ * 
+ */
+
+// @lc code=start
+class Solution {
+    public int countHomogenous(String s) {
+        int[] cnt = new int[s.length() + 1];
+        int left = 0;
+        for(int right = 0; right < s.length(); right++){
+        	if(s.charAt(left) != s.charAt(right)){
+        		cnt[right - left]++;
+        		left = right;
+        	}
+        }
+        cnt[s.length() - left]++;
+        // System.out.println(Arrays.toString(cnt));
+        long ans = 0;
+        for (int i = 0; i < cnt.length; i++) {
+        	long c = (1L * i * (i + 1) / 2) % 1000000007;
+        	c = (cnt[i] * c) % 1000000007;
+        	ans += c;
+        	ans %= 1000000007;
+        }
+        return (int)ans;
+    }
+}
+// @lc code=end
