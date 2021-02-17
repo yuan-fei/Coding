@@ -141,10 +141,10 @@
 	* Given buckts of free memory bucket[], and array of reuqests for amount of memory request[], **there is no greedy way** to satisfy all the requests.
 * [count-ways-to-make-array-with-product](https://leetcode.com/problems/count-ways-to-make-array-with-product)
 	* Count # of k number whose product equals to n
-		* prime factorization: count each prime
-		* calculate # grouping ways for each permutation (with dup)
-			* grouping stars and bars
-			* permutation with dup 
+		* prime factorization
+			* n = p<sub>1</sub><sup>n1</sup>\*p<sub>2</sub><sup>n2</sup>\*p<sub>i</sub><sup>ni</sup>
+		* calculate # grouping ways: for each prime i
+			* put i primes into k boxes with empty boxes allowed (stars and bars): C(ni + k - 1, k - 1)
 
 ## interesting problems and tricks
 
