@@ -34,7 +34,7 @@ public class MultipleBackpackAllPossibleValues {
 	}
 
 	/**
-	 * O(n*m)
+	 * O(V*m)
 	 * 
 	 * state[i][j]: the amount left for ith item to fullfill total value j
 	 */
