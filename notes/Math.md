@@ -376,11 +376,11 @@ y = [a<sub>0</sub>, a<sub>1</sub>, a<sub>2</sub>, …, a<sub>k-1</sub>, b<sub>k<
 		* [Post office location problem defined in CLRS p9.2](https://ita.skanev.com/09/problems/02.html)
 * Manhattan distance and Chebyshev distance
 	* Manhattan distance
-		* For points P1(x<sub>1</sub>, y<sub>1</sub>), P2(x<sub>2</sub>, y<sub>2</sub>), <code>d<sub>M</sub> = |x<sub>1</sub>-x<sub>2</sub>| + |y<sub>1</sub>-y<sub>2</sub>| = max(|(x<sub>1</sub>+y<sub>1</sub>) - (y<sub>2</sub>+y<sub>2</sub>)|,|(x<sub>1</sub>+y<sub>1</sub>) - (y<sub>2</sub>+y<sub>2</sub>)|)</code>
+		* For points P1(x<sub>1</sub>, y<sub>1</sub>), P2(x<sub>2</sub>, y<sub>2</sub>), <code>d<sub>M</sub> = |x<sub>1</sub>-x<sub>2</sub>| + |y<sub>1</sub>-y<sub>2</sub>| = max(|(x<sub>1</sub>+y<sub>1</sub>) - (x<sub>2</sub>+y<sub>2</sub>)|,|(x<sub>1</sub>-y<sub>1</sub>) - (x<sub>2</sub>-y<sub>2</sub>)|)</code>
 			* denote S = x+y, D = x-y, <code>d = max(diff(S), diff(D))</code>
 			* for points in 3-dimension like P(x, y, z), we can denote A = x+y+z, B = x-y+z, C = x+y-z, D = x-y-z, <code>d = max(diff(A), diff(B), diff(C), diff(D))</code>
 	* Chebyshev distance
-		* For points P1(x<sub>1</sub>, y<sub>1</sub>), P2(x<sub>2</sub>, y<sub>2</sub>), <code>d<sub>C</sub> = max(|x<sub>1</sub>-x<sub>2</sub>|, |y<sub>1</sub>-y<sub>2</sub>)</code>
+		* For points P1(x<sub>1</sub>, y<sub>1</sub>), P2(x<sub>2</sub>, y<sub>2</sub>), <code>d<sub>C</sub> = max(|x<sub>1</sub>-x<sub>2</sub>|, |y<sub>1</sub>-y<sub>2</sub>|)</code>
 	* Manhattan and Chebyshev distance are equivalent
 		* points in Manhattan coordintates and Chebyshev coordintates can be convereted to each other, and the distance are equal
 			* M->C: (x, y)<sub>M</sub> -> (x+y, x-y)<sub>C</sub>
