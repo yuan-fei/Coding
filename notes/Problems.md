@@ -145,6 +145,12 @@
 			* n = p<sub>1</sub><sup>n1</sup>\*p<sub>2</sub><sup>n2</sup>\*p<sub>i</sub><sup>ni</sup>
 		* calculate # grouping ways: for each prime i
 			* put i primes into k boxes with empty boxes allowed (stars and bars): C(ni + k - 1, k - 1)
+* [maximum-building-height](https://leetcode.com/problems/maximum-building-height)
+	* ref: [Using-stack](https://leetcode.com/problems/maximum-building-height/discuss/1175064/Python3.-O(N*log(N)).-Using-stack.-Explanation-added.)
+	* pattern: adjacent diff <= 1, max height restriction on some position
+		* max height is restricted by adjacent lower max heights
+		* solution 1: 2 pass: from left, from right
+		* solution 2: stack: remove redundant restrictions (see ref)
 
 ## interesting problems and tricks
 
