@@ -104,14 +104,17 @@
 * [find-a-value-of-a-mysterious-function-closest-to-target](https://leetcode.com/problems/find-a-value-of-a-mysterious-function-closest-to-target/)
 	* characteristic of 'and' operation: the more 'and', the smaller reult
 	* at most 32 distinct values when adding a new number
-* [remove-boxes](https://leetcode.com/problems/remove-boxes)
-	* similar to [string-compression-ii](https://leetcode.com/problems/string-compression-ii)
+* [remove-boxes](https://leetcode.com/problems/remove-boxes): [discussion](https://discuss.leetcode.com/topic/84687/java-top-down-and-bottom-up-dp-solutions)
+	* similar to 
+		* [string-compression-ii](https://leetcode.com/problems/string-compression-ii)
+		* [strange-printer](https://leetcode.com/problems/strange-printer): [discussion](https://leetcode.com/problems/strange-printer/discuss/106813/Same-as-Remove-Boxes)
 	* state[i, j] for subarray can't be used directly 
 		* after a removal, the remaining boxes could be merged, which makes it hard to be devided into non-overlap sub problems.
 	* we might want boxes with same color to be removed together, so we need to add information to state[i, j]
-		* state[i, j, streak]: streak means the # of boxes with same color to boxes[i]
-			* for case [1...1...1...], 
-				* 1[...][1...1...] or 1[...1...][1...]...: state[i + 1, m - 1, 0] + state[m, j, streak + 1]
+		* top-down solution: **state(i, j, streak)**: streak means the # of boxes with same color to boxes[i]
+			* for case seq = [1...1...1...], there are 2 transitions
+				1. [1]...1...1...: `state(i, j, streak) = cost(streak + 1) + state(i + 1, j, 0)`
+				2. 1[...1...]1......: for each following m where seq[m] == seq[i], take seq[i + 1, m - 1] first, and merge seq[i] and seq[m, j]: `state(i, j, streak) = max(state(i, j, streak), state(i + 1, m - 1, 0) + state(m, j, streak + 1))`
 * [string-compression-ii](https://leetcode.com/problems/string-compression-ii)
 	* dp with multiple dimension
 	* I don't know how to solve this...
