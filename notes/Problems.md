@@ -154,6 +154,9 @@
 		* max height is restricted by adjacent lower max heights
 		* solution 1: 2 pass: from left, from right
 		* solution 2: stack: remove redundant restrictions (see ref)
+* [minimum-skips-to-arrive-at-meeting-on-time](https://leetcode.com/problems/minimum-skips-to-arrive-at-meeting-on-time)
+	* dp on time: open-close (fail due to precision)
+	* dp on effective distance
 
 ## interesting problems and tricks
 
