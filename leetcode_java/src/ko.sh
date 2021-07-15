@@ -5,7 +5,7 @@ main () {
 	pn=$1
 	cnt=${2:-1}
 	for (( x = 0; x < $cnt; x++ )); do
-		leetcode show -gx $pn
+		leetcode show -gx $pn -l java
 		open $pn.*
 		(( pn++))
 	done
