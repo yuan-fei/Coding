@@ -724,6 +724,18 @@ int totalNQueensHelper(int n, boolean[] c, boolean[] d1, boolean[] d2, int r){
 
 ## Tips
 * Increase Java stack size: -Xss256M
+	* Note use this in 'VM arguments' (not Program arguments)
+* [Increase Java in code trick](https://codeforces.com/blog/entry/47003#comment-313792)
+
+~~~
+public static void main(String[] args) throws Exception {
+	new Thread(null, new Main(), "Main", 1<<26).start();
+}
+ 
+public void run() {
+	// solve the problem here
+}
+~~~
 
 ## References
 * [1]: [Leetcode solution](https://www.sigmainfy.com/blog/leetcode-handbook-all-problem-solution-index.html)
