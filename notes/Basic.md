@@ -446,6 +446,7 @@ long gap(int start, in endInclusive) {
 * [Maximum Frequency Stack](https://leetcode.com/problems/maximum-frequency-stack/)
 	* pop most frequent number in stack
 	* use frequency as index
+
 ## Bit operaton
 
 * Bit operation:
