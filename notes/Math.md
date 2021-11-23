@@ -211,7 +211,7 @@
 			* <a name='Euler'></a>Euler's theorem: a<sup>φ(n)</sup> ≡ 1 (mod n) for all a ∈ ℤ<sub>n</sub><sup>*</sup>
 			* <a name='Fermat'></a>Fermat's theorem: if p is prime, a<sup>p-1</sup> ≡ 1 (mod p) for all a ∈ ℤ<sub>p</sub><sup>*</sup>
 		* Compositivity: if there exists a **nontrivial square root of 1, modulo n**, then n is composite.
-			* Nontrivial square root of 1, modulo n: if the equation x<sup>2</sup> 􏰌≡ 1 mod n has solution other than the two “trivial” square roots: 1 or 􏰐-1, modulo n
+			* Nontrivial square root of 1, modulo n: if the equation x<sup>2</sup> ≡ 1 mod n has solution other than the two “trivial” square roots: 1 or -1, modulo n
 		* Modular exponentiation by repeated squaring
 			* a<sup>b</sup> mod n = (a<sup>b/2</sup> mod n)<sup>2</sup> mod n when n%2=0; a*(a<sup>b-1</sup> mod n) mod n when n%2=1
 	* Primality testing
@@ -223,7 +223,7 @@
 				1. simple sieve for small primes less than sqrt(b)
 				2. sieve for all primes in [a, b] with small primes
 		* The density of prime numbers
-			* 􏰄prime number theory: lim<sub>n->∞</sub>(􏰄π(n)lnn/n) = 1, where 􏰄π(n) is number of primes less or equal to n
+			* prime number theory: lim<sub>n->∞</sub>(π(n)lnn/n) = 1, where π(n) is number of primes less or equal to n
 			* Pick 1 number n and the probability of prime is 1/lnn 
 		* Fermat theorem for pseudo-prime testing: 
 			* if a<sup>n-1</sup> ≡ 1 (mod n), n could be 
