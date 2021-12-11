@@ -7,11 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-/** Hierholzer's algorithm: O(V+E) */
+/**
+ * Hierholzer's algorithm: O(V+E). This can also be used for euler path except
+ * we need to find the proper start
+ */
 public class EulerCircuitForDirectedGraph {
 
 	public static void main(String[] args) {
-		// undirected graph
+		// directed graph
 		{
 			EulerCircuitForDirectedGraph ep = new EulerCircuitForDirectedGraph();
 			ep.addEdges(0, 1);
