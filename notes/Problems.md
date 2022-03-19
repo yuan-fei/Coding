@@ -159,6 +159,8 @@
 	* dp on effective distance
 * [partition-to-k-equal-sum-subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets)
 	* [O(n*2^n) solution](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/discuss/335668/DP-with-Bit-Masking-Solution-%3A-Best-for-Interviews) : dp[mask] indicates the subset is legal: current subset can form several groups of 'target' (sum/k) and a partial group (whose sum is less than the target)
+* [minimum-number-of-moves-to-make-palindrome](https://leetcode.com/problems/minimum-number-of-moves-to-make-palindrome/)
+	* greedy from left to right
 
 ## interesting problems and tricks
 
