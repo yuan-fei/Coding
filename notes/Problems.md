@@ -161,6 +161,9 @@
 	* [O(n*2^n) solution](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/discuss/335668/DP-with-Bit-Masking-Solution-%3A-Best-for-Interviews) : dp[mask] indicates the subset is legal: current subset can form several groups of 'target' (sum/k) and a partial group (whose sum is less than the target)
 * [minimum-number-of-moves-to-make-palindrome](https://leetcode.com/problems/minimum-number-of-moves-to-make-palindrome/)
 	* greedy from left to right
+* [count-different-palindromic-subsequences](https://leetcode.com/problems/count-different-palindromic-subsequences/)
+	* state transition : dp[start][end][char]
+		* when `s[start] == s[end] == char`, then dp[start][end][char] = 2 + sum(dp[start + 1][end - 1][c]). It means for all the palindromes in [start + 1, end - 1] map to `a...palindrome...a` with the addition of `a` and `aa`
 
 ## interesting problems and tricks
 
