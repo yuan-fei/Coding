@@ -163,10 +163,11 @@ for (int i = 2; i <= n; i++) {
 ```
 //iterative
 String s; //input
+int[][][] dp = new int[s.length() + 1][2][nState];
 dp[0][0][0] = 1;
 for(int d = 0; d < n; i++){
 	for(int isLess=0; isLess < 2; isLess++){
-		int max = (isLess == 1)? 9 : s.charAt(i) - '0';
+		int max = (isLess == 1)? 9 : s.charAt(d) - '0';
 		for(int k=0; k<=max; k++){
 			isLessNext = (!isLess && (k==max))? 0 : 1;
 			dp[d+1][isLessNext][state'] = dp[d][isLess][state] + ...;
@@ -195,6 +196,7 @@ long solve(String s, int i, boolean isLess, state){
 ```
 * Problems
 	* [Digit Sum](https://atcoder.jp/contests/dp/tasks/dp_s)
+	* NumDupDigitsAtMostN
 * Reference: 
 	* [桁DP入門](https://pekempey.hatenablog.com/entry/2015/12/09/000603)
 
