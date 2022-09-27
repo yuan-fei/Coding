@@ -57,13 +57,13 @@
 // @lc code=start
 class Solution {
     public int mostFrequentEven(int[] nums) {
-        int[] cnt = new int[2001];
+        int[] cnt = new int[100005];
         for(int x : nums){
             cnt[x]++;
         }
         int max = 0;
         int ans = -1;
-        for(int i = 0; i < 2001; i += 2){
+        for(int i = 0; i < 100005; i += 2){
             if(cnt[i] > max){
                 max = cnt[i];
                 ans = i;
