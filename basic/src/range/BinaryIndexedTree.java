@@ -4,7 +4,7 @@ package range;
  * An index data structure, which update and sum-in-range query for an array can
  * be done in O(logM) (M is the size of array).
  * 
- * Note BIT is a 1-based data structure
+ * Note BIT internally use 1-based arrays for indexing
  */
 public class BinaryIndexedTree {
 
@@ -12,37 +12,29 @@ public class BinaryIndexedTree {
 		int[] a = new int[] { 0, 9, 5, 7, 3 };
 		BinaryIndexedTree t = new BinaryIndexedTree(a.length);
 		for (int i = 0; i < a.length; i++) {
-			t.update(i + 1, a[i]);
+			t.inc(i, a[i]);
 		}
 
-		System.out.println(t.sumRange(4, 4));
-		System.out.println(t.sumRange(2, 5));
 		System.out.println(t.sumRange(3, 3));
-		t.update(4, 5);
-		t.update(1, 7);
-		t.update(1, 8);
-		System.out.println(t.sumRange(1, 2));
-		t.update(1, 9);
-		System.out.println(t.sumRange(4, 5));
-		System.out.println(t.prefixSum(5));
+		System.out.println(t.sumRange(1, 4));
+		System.out.println(t.sumRange(2, 2));
+		t.inc(3, -2);
+		t.inc(0, 7);
+		t.inc(0, 1);
+		System.out.println(t.sumRange(0, 2));
+		t.inc(0, 1);
+		System.out.println(t.sumRange(3, 4));
+		System.out.println(t.prefixSum(4));
 	}
 
 	int N;
 
-	long[] nums;
 	// range from 1 to N
 	int[] bit;
 
 	public BinaryIndexedTree(int size) {
 		N = size;
-		nums = new long[N + 1];
 		bit = new int[N + 1];
-	}
-
-	public void update(int i, long val) {
-		long delta = val - nums[i];
-		nums[i] = val;
-		inc(i, delta);
 	}
 
 	public long sumRange(int i, int j) {
@@ -50,13 +42,21 @@ public class BinaryIndexedTree {
 	}
 
 	public void inc(int i, long delta) {
+		incInternal(i + 1, delta);
+	}
+
+	public long prefixSum(int i) {
+		return prefixSumInternal(i + 1);
+	}
+
+	private void incInternal(int i, long delta) {
 		while (i <= N) {
 			bit[i] += delta;
 			i += (i & (-i));
 		}
 	}
 
-	public long prefixSum(int i) {
+	private long prefixSumInternal(int i) {
 		long sum = 0;
 		while (i > 0) {
 			sum += bit[i];
