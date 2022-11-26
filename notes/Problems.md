@@ -164,6 +164,20 @@
 * [count-different-palindromic-subsequences](https://leetcode.com/problems/count-different-palindromic-subsequences/)
 	* state transition : dp[start][end][char]
 		* when `s[start] == s[end] == char`, then dp[start][end][char] = 2 + sum(dp[start + 1][end - 1][c]). It means for all the palindromes in [start + 1, end - 1] map to `a...palindrome...a` with the addition of `a` and `aa`
+* [cherry-pickup](https://leetcode.com/problems/cherry-pickup)
+	* 	greedy 2 round dp is wrong
+
+		~~~
+		[1,1,1,1,0,0,0]
+		[0,0,0,1,0,0,0]
+		[0,0,0,1,0,0,1]
+		[1,0,0,1,0,0,0]
+		[0,0,0,1,0,0,0]
+		[0,0,0,1,0,0,0]
+		[0,0,0,1,1,1,1]
+		~~~
+	* convert to 2 inter-dependent trips from top-left to bottom-right
+		* 	At time t, the 2 trips can stop at (r1, t - r1) and (r2, t - r2), thus the state is dp[t][r1][r2]
 
 ## interesting problems and tricks
 
