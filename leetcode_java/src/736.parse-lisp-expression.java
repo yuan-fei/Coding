@@ -187,17 +187,13 @@ class Solution {
     }
 
     void push(String varName, int value){
-        if(!variableScope.containsKey(varName)){
-            variableScope.put(varName, new Stack<>());
-        }
+        variableScope.putIfAbsent(varName, new Stack<>());
         variableScope.get(varName).push(value);
+
     }
 
     void pop(String varName){
         variableScope.get(varName).pop();
-        if(variableScope.get(varName).isEmpty()){
-            variableScope.remove(varName);
-        }
     }
 }
 // @lc code=end
