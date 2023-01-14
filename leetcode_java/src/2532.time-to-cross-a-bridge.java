@@ -119,9 +119,10 @@
  */
 
 // @lc code=start
+import java.io.Serializable;
 class Solution {
 
-    public static int findCrossingTime(int n, int k, int[][] time) {
+    public static int findCrossingTime2(int n, int k, int[][] time) {
         // [id, direction, arrivedTime]
         PriorityQueue<int[]> arrivedQueue = new PriorityQueue<>(Comparator.comparing(a -> a[2]));
         // [id, direction, arrivedTime]
@@ -132,9 +133,52 @@ class Solution {
         // PriorityQueue<int[]> waitingQueueR = new PriorityQueue<>(Comparator.comparing((int[] a) -> -a[1])
         //         .thenComparing(a -> -time[a[0]][0] - time[a[0]][2]).thenComparing(a -> -a[0]));
         
+        // time consuming
+        // PriorityQueue<int[]> waitingQueueL = new PriorityQueue<>(Comparator.comparingInt((int[] a) -> -a[1])
+        //         .thenComparingInt(a -> -time[a[0]][0] - time[a[0]][2]).thenComparingInt(a -> -a[0]));
+        // PriorityQueue<int[]> waitingQueueR = new PriorityQueue<>(Comparator.comparingInt((int[] a) -> -a[1])
+        //         .thenComparingInt(a -> -time[a[0]][0] - time[a[0]][2]).thenComparingInt(a -> -a[0]));
+
         // time efficient
-        PriorityQueue<int[]> waitingQueueL = new PriorityQueue<>(Comparator.comparing((int[] a) -> -time[a[0]][0] - time[a[0]][2]).thenComparing(a -> -a[0]));
-        PriorityQueue<int[]> waitingQueueR = new PriorityQueue<>(Comparator.comparing((int[] a) -> -time[a[0]][0] - time[a[0]][2]).thenComparing(a -> -a[0]));
+        // PriorityQueue<int[]> waitingQueueL = new PriorityQueue<>(Comparator.comparing((int[] a) -> -time[a[0]][0] - time[a[0]][2]).thenComparing(a -> -a[0]));
+        // PriorityQueue<int[]> waitingQueueR = new PriorityQueue<>(Comparator.comparing((int[] a) -> -time[a[0]][0] - time[a[0]][2]).thenComparing(a -> -a[0]));
+
+        // time efficient
+        // PriorityQueue<int[]> waitingQueueL = new PriorityQueue<>(
+        //     (a, b) -> Integer.compare(b[1], a[1]) != 0 ? Integer.compare(b[1], a[1]) :
+        //         (Integer.compare(time[b[0]][0] + time[b[0]][2], time[a[0]][0] + time[a[0]][2]) != 0? Integer.compare(time[b[0]][0] + time[b[0]][2], time[a[0]][0] + time[a[0]][2]):
+        //         Integer.compare(b[0], a[0]))
+        // );
+        // PriorityQueue<int[]> waitingQueueR = new PriorityQueue<>(
+        //     (a, b) -> Integer.compare(b[1], a[1]) != 0 ? Integer.compare(b[1], a[1]) :
+        //         (Integer.compare(time[b[0]][0] + time[b[0]][2], time[a[0]][0] + time[a[0]][2]) != 0? Integer.compare(time[b[0]][0] + time[b[0]][2], time[a[0]][0] + time[a[0]][2]):
+        //         Integer.compare(b[0], a[0]))
+        // );
+
+        // time efficient
+        // PriorityQueue<int[]> waitingQueueL = new PriorityQueue<>(comparing((int[] a) -> -a[1], (int[] a) -> -time[a[0]][0] - time[a[0]][2], (int[] a) -> -a[0]));
+        // PriorityQueue<int[]> waitingQueueR = new PriorityQueue<>(comparing((int[] a) -> -a[1], (int[] a) -> -time[a[0]][0] - time[a[0]][2], (int[] a) -> -a[0]));
+
+        PriorityQueue<int[]> waitingQueueL = new PriorityQueue<>(
+            combine(
+                combine(
+                    comparing((int[] a) -> -a[1]), 
+                    comparing((int[] a) -> -time[a[0]][0] - time[a[0]][2])
+                ), 
+                comparing((int[] a) -> -a[0])
+            )
+        );
+        PriorityQueue<int[]> waitingQueueR = new PriorityQueue<>(
+            combine(
+                combine(
+                    comparing((int[] a) -> -a[1]), 
+                    comparing((int[] a) -> -time[a[0]][0] - time[a[0]][2])
+                ), 
+                comparing((int[] a) -> -a[0])
+            )
+        );
+
+
         var waitingQueue = new WaitingQueueArray(waitingQueueL, waitingQueueR);
         int lastCrossBridgeTime = 0;
         for (int i = 0; i < k; i++) {
@@ -169,8 +213,156 @@ class Solution {
             }
         }
         return lastCrossBridgeTime;
+    }
 
+    public static int findCrossingTime(int n, int k, int[][] time) {
+        // [id, direction, arrivedTime]
+        PriorityQueue<int[]> arrivedQueue = new PriorityQueue<>(Comparator.comparing(a -> a[2]));
+        // [id, direction, arrivedTime]
+        PriorityQueue<int[]> waitingQueue = new PriorityQueue<>(
+            (a, b) -> Integer.compare(b[1], a[1]) != 0 ? Integer.compare(b[1], a[1]) :
+                (Integer.compare(time[b[0]][0] + time[b[0]][2], time[a[0]][0] + time[a[0]][2]) != 0? Integer.compare(time[b[0]][0] + time[b[0]][2], time[a[0]][0] + time[a[0]][2]):
+                Integer.compare(b[0], a[0]))
+        );
+        int lastCrossBridgeTime = 0;
+        for (int i = 0; i < k; i++) {
+            arrivedQueue.offer(new int[] { i, 0, 0 });
+        }
 
+        while (!arrivedQueue.isEmpty() || !waitingQueue.isEmpty()) {
+            if (waitingQueue.isEmpty()) {
+                int[] cur = arrivedQueue.poll();
+                waitingQueue.offer(cur);
+                while (!arrivedQueue.isEmpty() && arrivedQueue.peek()[2] == waitingQueue.peek()[2]) {
+                    waitingQueue.offer(arrivedQueue.poll());
+                }
+            }
+            int c = 0;
+            while (!waitingQueue.isEmpty()) {
+                int[] cur = waitingQueue.poll();
+                // System.out.println(Arrays.toString(cur) + ", " + Arrays.asList(n,
+                // lastCrossBridgeTime, waitingQueue.size(), arrivedQueue.size()));
+
+                if (n != 0 || cur[1] == 1) {
+                    lastCrossBridgeTime = Math.max(lastCrossBridgeTime, cur[2]);
+                    lastCrossBridgeTime += time[cur[0]][cur[1] * 2];
+                    if (cur[1] == 0) {
+                        n--;
+                    }
+
+                    while (!arrivedQueue.isEmpty() && arrivedQueue.peek()[2] <= lastCrossBridgeTime) {
+                        waitingQueue.offer(arrivedQueue.poll());
+                    }
+                    arrivedQueue.offer(
+                            new int[] { cur[0], 1 - cur[1], lastCrossBridgeTime + time[cur[0]][cur[1] * 2 + 1] });
+                }
+            }
+        }
+        return lastCrossBridgeTime;
+
+    }
+
+    public static int findCrossingTime1(int n, int k, int[][] time) {
+        // [id, direction, arrivedTime]
+        PriorityQueue<Integer[]> arrivedQueue = new PriorityQueue<>(Comparator.comparing(a -> a[2]));
+        // [id, direction, arrivedTime]
+
+        // time consuming
+        // PriorityQueue<int[]> waitingQueueL = new PriorityQueue<>(Comparator.comparing((int[] a) -> -a[1])
+        //         .thenComparing(a -> -time[a[0]][0] - time[a[0]][2]).thenComparing(a -> -a[0]));
+        // PriorityQueue<int[]> waitingQueueR = new PriorityQueue<>(Comparator.comparing((int[] a) -> -a[1])
+        //         .thenComparing(a -> -time[a[0]][0] - time[a[0]][2]).thenComparing(a -> -a[0]));
+        
+        // time consuming
+        // PriorityQueue<int[]> waitingQueueL = new PriorityQueue<>(Comparator.comparingInt((int[] a) -> -a[1])
+        //         .thenComparingInt(a -> -time[a[0]][0] - time[a[0]][2]).thenComparingInt(a -> -a[0]));
+        // PriorityQueue<int[]> waitingQueueR = new PriorityQueue<>(Comparator.comparingInt((int[] a) -> -a[1])
+        //         .thenComparingInt(a -> -time[a[0]][0] - time[a[0]][2]).thenComparingInt(a -> -a[0]));
+
+        // time efficient
+        // PriorityQueue<int[]> waitingQueueL = new PriorityQueue<>(Comparator.comparing((int[] a) -> -time[a[0]][0] - time[a[0]][2]).thenComparing(a -> -a[0]));
+        // PriorityQueue<int[]> waitingQueueR = new PriorityQueue<>(Comparator.comparing((int[] a) -> -time[a[0]][0] - time[a[0]][2]).thenComparing(a -> -a[0]));
+
+        // time efficient
+        // PriorityQueue<int[]> waitingQueueL = new PriorityQueue<>(
+        //     (a, b) -> Integer.compare(b[1], a[1]) != 0 ? Integer.compare(b[1], a[1]) :
+        //         (Integer.compare(time[b[0]][0] + time[b[0]][2], time[a[0]][0] + time[a[0]][2]) != 0? Integer.compare(time[b[0]][0] + time[b[0]][2], time[a[0]][0] + time[a[0]][2]):
+        //         Integer.compare(b[0], a[0]))
+        // );
+        // PriorityQueue<int[]> waitingQueueR = new PriorityQueue<>(
+        //     (a, b) -> Integer.compare(b[1], a[1]) != 0 ? Integer.compare(b[1], a[1]) :
+        //         (Integer.compare(time[b[0]][0] + time[b[0]][2], time[a[0]][0] + time[a[0]][2]) != 0? Integer.compare(time[b[0]][0] + time[b[0]][2], time[a[0]][0] + time[a[0]][2]):
+        //         Integer.compare(b[0], a[0]))
+        // );
+
+        // time efficient
+        // PriorityQueue<int[]> waitingQueueL = new PriorityQueue<>(comparing((int[] a) -> -a[1], (int[] a) -> -time[a[0]][0] - time[a[0]][2], (int[] a) -> -a[0]));
+        // PriorityQueue<int[]> waitingQueueR = new PriorityQueue<>(comparing((int[] a) -> -a[1], (int[] a) -> -time[a[0]][0] - time[a[0]][2], (int[] a) -> -a[0]));
+
+        // PriorityQueue<Integer[]> waitingQueueL = new PriorityQueue<>(
+        //     combine(
+        //         combine(
+        //             comparing((Integer[] a) -> -a[1]), 
+        //             comparing((Integer[] a) -> -time[a[0]][0] - time[a[0]][2])
+        //         ), 
+        //         comparing((Integer[] a) -> -a[0])
+        //     )
+        // );
+        // PriorityQueue<Integer[]> waitingQueueR = new PriorityQueue<>(
+        //     combine(
+        //         combine(
+        //             comparing((Integer[] a) -> -a[1]), 
+        //             comparing((Integer[] a) -> -time[a[0]][0] - time[a[0]][2])
+        //         ), 
+        //         comparing((Integer[] a) -> -a[0])
+        //     )
+        // );
+
+        PriorityQueue<Integer[]> waitingQueue = new PriorityQueue<>(
+            combine(
+                combine(
+                    comparing((Integer[] a) -> -a[1]), 
+                    comparing((Integer[] a) -> -time[a[0]][0] - time[a[0]][2])
+                ), 
+                comparing((Integer[] a) -> -a[0])
+            )
+        );
+        // PriorityQueue<Integer[]> waitingQueue = new PriorityQueue<>(Comparator.comparing((Integer[] a) -> -a[1])
+        //         .thenComparing(a -> -time[a[0]][0] - time[a[0]][2]).thenComparing(a -> -a[0]));
+
+        int lastCrossBridgeTime = 0;
+        for (int i = 0; i < k; i++) {
+            arrivedQueue.offer(new Integer[] { i, 0, 0 });
+        }
+
+        while (!arrivedQueue.isEmpty() || !waitingQueue.isEmpty()) {
+            if (waitingQueue.isEmpty()) {
+                Integer[] cur = arrivedQueue.poll();
+                waitingQueue.offer(cur);
+                while (!arrivedQueue.isEmpty() && arrivedQueue.peek()[2] == cur[2]) {
+                    waitingQueue.offer(arrivedQueue.poll());
+                }
+            }
+            int c = 0;
+            while (!waitingQueue.isEmpty()) {
+                Integer[] cur = waitingQueue.poll();
+
+                if (n != 0 || cur[1] == 1) {
+                    lastCrossBridgeTime = Math.max(lastCrossBridgeTime, cur[2]);
+                    lastCrossBridgeTime += time[cur[0]][cur[1] * 2];
+                    if (cur[1] == 0) {
+                        n--;
+                    }
+
+                    while (!arrivedQueue.isEmpty() && arrivedQueue.peek()[2] <= lastCrossBridgeTime) {
+                        waitingQueue.offer(arrivedQueue.poll());
+                    }
+                    arrivedQueue.offer(
+                            new Integer[] { cur[0], 1 - cur[1], lastCrossBridgeTime + time[cur[0]][cur[1] * 2 + 1] });
+                }
+            }
+        }
+        return lastCrossBridgeTime;
     }
 
     static class WaitingQueueArray{
@@ -196,6 +388,38 @@ class Solution {
         }
     }
 
+    public static <T, U extends Comparable<? super U>> Comparator<T> 
+       comparing2(
+            Function<? super T, ? extends U> ke1,
+            Function<? super T, ? extends U> ke2,
+            Function<? super T, ? extends U> ke3)
+    {
+        return  (c1, c2) -> {
+            int comp = ke1.apply(c1).compareTo(ke1.apply(c2));
+            if (comp == 0) {
+                comp = ke2.apply(c1).compareTo(ke2.apply(c2));
+                if (comp == 0) {
+                    comp = ke3.apply(c1).compareTo(ke3.apply(c2));
+                }
+            }
+            return comp;
+        };
+    }
     
+    static <T, U extends Comparable<? super U>> Comparator<T> comparing(
+            Function<? super T, ? extends U> keyExtractor)
+    {
+        Objects.requireNonNull(keyExtractor);
+        return (Comparator<T> & Serializable)
+            (c1, c2) -> keyExtractor.apply(c1).compareTo(keyExtractor.apply(c2));
+    }
+
+    static <T> Comparator<T> combine(Comparator<? super T> previous, Comparator<? super T> other) {
+        Objects.requireNonNull(other);
+        return (Comparator<T> & Serializable) (c1, c2) -> {
+            int res = previous.compare(c1, c2);
+            return (res != 0) ? res : other.compare(c1, c2);
+        };
+    }
 }
 // @lc code=end
