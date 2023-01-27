@@ -178,6 +178,9 @@
 		~~~
 	* convert to 2 inter-dependent trips from top-left to bottom-right
 		* 	At time t, the 2 trips can stop at (r1, t - r1) and (r2, t - r2), thus the state is dp[t][r1][r2]
+*  [bricks-falling-when-hit](https://leetcode.com/problems/bricks-falling-when-hit/description/)
+	*  reverse the drop process and leverage DSU
+	*  generalization: given a graph, when query connectivities between nodes while removing edges, we can reverse the process by adding edges one by one until orignal graph is recovered. DSU can be used after this problem conversion.
 
 ## interesting problems and tricks
 
