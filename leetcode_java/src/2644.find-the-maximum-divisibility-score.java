@@ -80,7 +80,7 @@
 // @lc code=start
 class Solution {
     public int maxDivScore(int[] nums, int[] divisors) {
-        int maxScore =0;
+        int maxScore = -1;
         int ans = 0;
         for(int x : divisors){
             int score = 0;
@@ -89,8 +89,10 @@ class Solution {
                     score++;
                 }
             }
+
             if(maxScore < score || (maxScore == score && x < ans)){
                 ans = x;
+                maxScore = score;
             }
         }
         return ans;
