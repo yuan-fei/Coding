@@ -32,7 +32,7 @@ public class Factorization {
 				cnt = 0;
 			}
 		}
-		if (n >= 2) {
+		if (n > 1) {
 			pFactors.put(n, 1);
 		}
 

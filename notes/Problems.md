@@ -181,6 +181,8 @@
 *  [bricks-falling-when-hit](https://leetcode.com/problems/bricks-falling-when-hit/description/)
 	*  reverse the drop process and leverage DSU
 	*  generalization: given a graph, when query connectivities between nodes while removing edges, we can reverse the process by adding edges one by one until orignal graph is recovered. DSU can be used after this problem conversion.
+*  [tallest-billboard](https://leetcode.com/problems/tallest-billboard)
+	*  meet in the middle: use state (left stand, right stand) so the problem can be divided into 2 halfs whose states are overlapped
 
 ## interesting problems and tricks
 
