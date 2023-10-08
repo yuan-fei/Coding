@@ -18,7 +18,13 @@ package dp;
 public class IntegerPartition {
 
 	public static void main(String[] args) {
+		System.out.println(positivePartition(2)); // 2
+		System.out.println(positivePartition(3)); // 3
+		System.out.println(positivePartition(4)); // 5
 		System.out.println(positivePartition(5)); // 7
+		System.out.println(positivePartition(6)); // 11
+		System.out.println(positivePartition(7)); // 15
+		System.out.println(positivePartition(41)); // 44583
 		System.out.println(positiveIncUpperboundPartition(3, 2)); // 2
 		System.out.println(positiveIncUpperboundPartition(5, 3, 3)); // 2
 	}
@@ -27,13 +33,17 @@ public class IntegerPartition {
 	 * a1+...=k, 0<ai
 	 * 
 	 * all combination of positive numbers sum to k
+	 * 
+	 * equivalent to complete backpack
+	 * 
+	 * (1*c1 + 2*c2 + ... +k*ck) = k
 	 */
 	public static long positivePartition(int k) {
 		int[] dp = new int[k + 1];
 		dp[0] = 1;
-		for (int j = 1; j <= k; j++) {
-			for (int i = j; i <= k; i++) {
-				dp[i] += dp[i - j];
+		for (int itemValue = 1; itemValue <= k; itemValue++) {
+			for (int totalValue = itemValue; totalValue <= k; totalValue++) {
+				dp[totalValue] += dp[totalValue - itemValue];
 			}
 		}
 		return dp[k];

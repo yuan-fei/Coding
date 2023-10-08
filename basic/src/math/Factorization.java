@@ -9,6 +9,8 @@ public class Factorization {
 
 	public static void main(String[] args) {
 		System.out.println(getAllPrimeFactorsQuick(15));
+		System.out.println(getAllPrimeFactorsQuick(2023));
+		System.out.println(getAllPrimeFactors(2023));
 		System.out.println(getAllPrimeFactors(36));
 		System.out.println(getAllPrimeFactors(35));
 		System.out.println(getAllPrimeFactors(1));
@@ -21,15 +23,14 @@ public class Factorization {
 	/** O(n^0.5) */
 	public static Map<Long, Integer> getAllPrimeFactors(long n) {
 		Map<Long, Integer> pFactors = new HashMap<>();
-		int cnt = 0;
-		long factor = 2;
-		while (factor * factor <= n) {
-			if (n % factor == 0) {
-				pFactors.put(factor, ++cnt);
+		for (long factor = 2; factor * factor <= n; factor++) {
+			int cnt = 0;
+			while (n % factor == 0) {
+				cnt++;
 				n /= factor;
-			} else {
-				factor += 1;
-				cnt = 0;
+			}
+			if (cnt > 0) {
+				pFactors.put(factor, cnt);
 			}
 		}
 		if (n > 1) {

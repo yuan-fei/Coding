@@ -1,9 +1,11 @@
 package math;
 
 /**
+ * https://en.wikipedia.org/wiki/Composition_(combinatorics)
+ * 
  * All permutations sum to k
  * 
- * Composition of 5
+ * Composition of 5 (order matters)
  * 
  * 5
  * 
@@ -39,7 +41,7 @@ package math;
  * 
  * inclusion-exclusion principle
  * 
- * see dp.backpack.IntegerComposition for DP solution
+ * see dp.IntegerComposition for DP solution
  */
 public class IntegerComposition {
 
