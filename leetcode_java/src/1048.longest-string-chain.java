@@ -50,6 +50,17 @@
  */
 class Solution {
     public int longestStrChain(String[] words) {
-        
+        Map<String, Integer> wordToLength = new HashMap<>();
+        Arrays.sort(words, (a,b) -> a.length() - b.length());
+        int ans = 0;
+        for(String w : words){
+            for(int i = 0; i < w.length(); i++){
+                String newWord = w.substring(0, i) + w.substring(i + 1);
+                wordToLength.put(w, Math.max(wordToLength.getOrDefault(newWord, 0) + 1, wordToLength.getOrDefault(w, 1))); 
+                ans = Math.max(ans, wordToLength.getOrDefault(w, 0));
+            }
+        }
+        // System.out.println(wordToLength);
+        return ans;
     }
 }
