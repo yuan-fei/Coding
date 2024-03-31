@@ -278,6 +278,7 @@ private static void _getFullPermutations(List<int[]> result, int[] source, int p
 	* reference: [Share-my-thinking-process](https://leetcode.com/problems/patching-array/discuss/78495/Share-my-thinking-process)
 
 * [stone-game-vi](https://leetcode.com/problems/stone-game-vi)
+* [maximum-number-of-groups-with-increasing-length](https://leetcode.com/problems/maximum-number-of-groups-with-increasing-length)
 
 
 ## Prefix Sum

@@ -183,6 +183,8 @@
 	*  generalization: given a graph, when query connectivities between nodes while removing edges, we can reverse the process by adding edges one by one until orignal graph is recovered. DSU can be used after this problem conversion.
 *  [tallest-billboard](https://leetcode.com/problems/tallest-billboard)
 	*  meet in the middle: use state (left stand, right stand) so the problem can be divided into 2 halfs whose states are overlapped
+*  [maximum-number-of-groups-with-increasing-length](https://leetcode.com/problems/maximum-number-of-groups-with-increasing-length)
+	*  sort and greedily calculate the max layer: [solution](https://leetcode.com/problems/maximum-number-of-groups-with-increasing-length/solutions/3803904/java-c-python-math-o-n/)
 
 ## interesting problems and tricks
 
