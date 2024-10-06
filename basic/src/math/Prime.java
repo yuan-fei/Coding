@@ -33,8 +33,8 @@ public class Prime {
 	 * 
 	 * n = smallest_prime_in_n * other_larger_primes
 	 * 
-	 * for a "other_larger_primes" x, iterate all primes p_i less then x's
-	 * smallest prime, and mark p_i * x to composite.
+	 * for a "other_larger_primes" x, iterate all primes p_i less then x's smallest
+	 * prime, and mark p_i * x to composite.
 	 */
 	public static List<Integer> linearSieve(int n) {
 		List<Integer> primes = new ArrayList<>();
@@ -43,7 +43,7 @@ public class Prime {
 			if (!isComposite[i]) {
 				primes.add(i);
 			}
-			for (int j = 0; j < primes.size() && i * primes.get(j) <= n; j++) {
+			for (int j = 0; j < primes.size() && 1L * i * primes.get(j) <= n; j++) {
 				isComposite[i * primes.get(j)] = true;
 				if (i % primes.get(j) == 0) {
 					break;
