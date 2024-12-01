@@ -18,7 +18,7 @@ public class ModularMultiplicativeInverse {
 		return r;
 	}
 
-	/** Note modulo p must be prime. inv(n) = (inv(p%n) * (p - p/n)) % n */
+	/** Note modulo p must be prime. inv(n) = (inv(p%n) * (p - p/n)) % p */
 	public static long getModularMultiplicativeInverseFast(int n, long p) {
 		long[] state = new long[n + 1];
 		state[0] = 1;

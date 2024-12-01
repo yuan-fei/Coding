@@ -340,7 +340,7 @@
 
 *  Quick Inverse fact (x!)<sup>-1</sup> mod p
   	*  Quick modular multiplicative inverse modulo p for all [1..x] 
-		*  DP in O(n) ([ref1](https://www.quora.com/How-do-I-find-the-value-of-nCr-1000000007-for-the-large-number-n-n-10-6-in-C), [ref2](https://www.geeksforgeeks.org/modular-multiplicative-inverse-1-n)): inverse(x, p) = (inverse(p%x)(x-p/x))%x
+		*  DP in O(n) ([ref1](https://www.quora.com/How-do-I-find-the-value-of-nCr-1000000007-for-the-large-number-n-n-10-6-in-C), [ref2](https://www.geeksforgeeks.org/modular-multiplicative-inverse-1-n)): inverse(x, p) = (inverse(p%x)(p-p/x))%p
 	*  inverseFact(x) = (inverseFact(x-1) * inverse(x,p)) % p
 *  Quick nCr % p with large p ([ref](https://www.geeksforgeeks.org/queries-of-ncrp-in-o1-time-complexity/)): 
 	*  nCr % p = (Fact(n) * inverseFact(n-r) * inverseFact(r))%p
