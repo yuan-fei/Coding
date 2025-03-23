@@ -90,6 +90,15 @@
  */
 
 // @lc code=start
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 class Solution {
     public int[] resultArray(int[] nums) {
         int n = nums.length;
@@ -107,11 +116,10 @@ class Solution {
         for (int i = 2; i < n; i++) {
             int greaterCount1 = st1.query(indexToCompressedNumber[i] + 1, n - 1);
             int greaterCount2 = st2.query(indexToCompressedNumber[i] + 1, n - 1);
-            if(greaterCount1 > greaterCount2 || (greaterCount1 == greaterCount2 && arr1.size() <= arr2.size())){
+            if (greaterCount1 > greaterCount2 || (greaterCount1 == greaterCount2 && arr1.size() <= arr2.size())) {
                 arr1.add(nums[i]);
                 st1.increase(indexToCompressedNumber[i]);
-            }
-            else{
+            } else {
                 arr2.add(nums[i]);
                 st2.increase(indexToCompressedNumber[i]);
             }
@@ -119,10 +127,10 @@ class Solution {
         return Stream.concat(arr1.stream(), arr2.stream()).mapToInt(x -> x).toArray();
     }
 
-    int[] compress(int[] nums){
+    int[] compress(int[] nums) {
         int[] values = Arrays.stream(nums).distinct().sorted().toArray();
         Map<Integer, Integer> valueToCompressed = IntStream.range(0, values.length)
-                                                        .boxed().collect(Collectors.toMap(x -> values[x], x -> x));
+                .boxed().collect(Collectors.toMap(x -> values[x], x -> x));
         return Arrays.stream(nums).map(valueToCompressed::get).toArray();
     }
 
@@ -133,7 +141,8 @@ class Solution {
             int end;
             Node left;
             Node right;
-            Node(int s, int e, int c){
+
+            Node(int s, int e, int c) {
                 start = s;
                 end = e;
                 count = c;
@@ -143,41 +152,41 @@ class Solution {
         Node root;
         int n = 0;
 
-        SegmentTree(int n){
+        SegmentTree(int n) {
             this.n = n;
             root = init(0, n - 1);
         }
 
-        Node init(int start, int end){
+        Node init(int start, int end) {
             Node cur = new Node(start, end, 0);
-            if(start < end){
+            if (start < end) {
                 cur.left = init(start, (start + end) / 2);
-                cur.right = init((start + end) / 2 + 1, end);    
+                cur.right = init((start + end) / 2 + 1, end);
             }
             return cur;
         }
 
-        void increase(int i){
+        void increase(int i) {
             increase(i, root);
         }
 
-        void increase(int i, Node cur){
-            if(cur != null && cur.start <= i && i <= cur.end){
+        void increase(int i, Node cur) {
+            if (cur != null && cur.start <= i && i <= cur.end) {
                 cur.count++;
                 increase(i, cur.left);
                 increase(i, cur.right);
             }
         }
 
-        int query(int start, int end){
+        int query(int start, int end) {
             return query(start, end, root);
         }
 
-        int query(int start, int end, Node cur){
-            if(cur.start > end || cur.end < start){
+        int query(int start, int end, Node cur) {
+            if (cur.start > end || cur.end < start) {
                 return 0;
             }
-            if(start <= cur.start && cur.end <= end){
+            if (start <= cur.start && cur.end <= end) {
                 return cur.count;
             }
             return query(start, end, cur.left) + query(start, end, cur.right);
