@@ -91,11 +91,20 @@
  */
 
 // @lc code=start
+
+import java.util.Arrays;
+
 class Solution {
     public int minimumArrayLength(int[] nums) {
         int min = Arrays.stream(nums).min().getAsInt();
-        
-        return (int)(Arrays.stream(nums).filter(x -> x == min).count() + 1) / 2;
+        int countMin = (int) Arrays.stream(nums).filter(x -> x == min).count();
+        boolean allDividableByMin = Arrays.stream(nums).allMatch(x -> x % min == 0);
+        if (allDividableByMin) {
+            return (int) (countMin + 1) / 2;
+        } else {
+            return 1;
+        }
+
     }
 }
 // @lc code=end

@@ -34,22 +34,26 @@
  * S will consist of lowercase letters ('a' to 'z') only.
  * 
  */
+
+import java.util.ArrayList;
+import java.util.List;
+
 class Solution {
     public List<Integer> partitionLabels(String S) {
-    	int[] last = new int[26];
-    	int n = S.length();
+        int[] last = new int[26];
+        int n = S.length();
         for (int i = 0; i < n; i++) {
-        	last[S.charAt(i)-'a'] = i;
+            last[S.charAt(i) - 'a'] = i;
         }
         int right = -1;
         int left = 0;
         List<Integer> res = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-        	right = Math.max(last[S.charAt(i)-'a'], right);
-        	if(right == i){
-        		res.add(right - left + 1);
-        		left = right+1;
-        	}
+            right = Math.max(last[S.charAt(i) - 'a'], right);
+            if (right == i) {
+                res.add(right - left + 1);
+                left = right + 1;
+            }
         }
         return res;
     }
