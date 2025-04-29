@@ -67,7 +67,7 @@ public class FastPower {
 
 	private static long modularExpRecursive(int base, long exp, long m) {
 		if (exp == 0) {
-			return 1;
+			return 1 % m;
 		} else if (exp % 2 == 1) {
 			long l = base * modularExpRecursive(base, exp - 1, m);
 			return l % m;
